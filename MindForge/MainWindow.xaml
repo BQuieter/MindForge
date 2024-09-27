@@ -1,0 +1,12 @@
+﻿<Window x:Name="MindForge" x:Class="MindForge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MindForge"
+        mc:Ignorable="d"
+        Title="MindForge" Height="768" Width="1024" Background="#FF1F1F1F" WindowStartupLocation="CenterScreen" Icon="/Logo2.png" FontFamily="Cambria" FontSize="14" MinWidth="932" MinHeight="512">
+    <Grid x:Name="MainGrid" MinWidth="768" MinHeight="496">
+        <Button Content="Button" HorizontalAlignment="Left" Margin="382,179,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
