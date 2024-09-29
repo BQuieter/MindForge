@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Shell;
+using System.Runtime.CompilerServices;
 
 namespace MindForge
 {
@@ -60,10 +61,23 @@ namespace MindForge
                 this.WindowState = WindowState.Maximized;
             }
         }
-
-        private void MindForge_Closed(object sender, EventArgs e)
-        {
+        //
+        private void MindForge_Closed(object sender, EventArgs e) =>
             mutex.ReleaseMutex();
+
+        private void LoginBox_GotFocus(object sender, RoutedEventArgs e) =>
+            TextBoxHelp((TextBox)sender, "Логин или email", "", new SolidColorBrush(Color.FromRgb(160, 160, 160)));
+
+        private void LoginBox_LostFocus(object sender, RoutedEventArgs e) =>   
+            TextBoxHelp((TextBox)sender, "", "Логин или email", new SolidColorBrush(Color.FromRgb(112, 112, 112)));
+
+        private void TextBoxHelp(TextBox textBox, string expectedText, string changeText, SolidColorBrush brush)
+        {
+            if (textBox.Text == expectedText)
+            {
+                textBox.Text = changeText;
+                textBox.Foreground = brush;
+            }
         }
     }
 }

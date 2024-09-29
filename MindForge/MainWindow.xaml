@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Closed="MindForge_Closed"
         Title="MindForge" Height="768" Width="1024" Background="#FF1F1F1F" WindowStartupLocation="CenterScreen" Icon="/Images/Logo.png" FontFamily="Cambria" FontSize="14" MinWidth="932" MinHeight="512" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
-
+    
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="10"/>
     </WindowChrome.WindowChrome>
@@ -17,12 +17,36 @@
         <Button x:Name="CloseButton" Content="X" Click="Button_Click" WindowChrome.IsHitTestVisibleInChrome="True" Height="25" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"/>
         <Button x:Name="MinimizeButton" Content="-" Click="MinimizeButton_Click" Height="25" Width="30" WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 60 0" Panel.ZIndex="1"/>
         <Button x:Name="MaximizeButton" Content="U" Click="MaximizeButton_Click" Height="25" Width="30" WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 30 0" Panel.ZIndex="1"/>
-
+        
+        <Grid x:Name="LoadingGrid" Visibility="Collapsed" MinWidth="768" MinHeight="496">
+            <Image gif:ImageBehavior.AnimatedSource="Images/Loading.gif" Height="50" Width="50" Margin="0 250 0 0"/>
+            <Image Source="Images/FullLogo.jpg" Height="250" Width="250" Margin="0 0 0 200" Panel.ZIndex="-1"/>
+        </Grid>
+        
         <DockPanel MinWidth="768" MinHeight="496">
             <Rectangle DockPanel.Dock="Top" Fill="#171717" Height="25" MouseDown="Rectangle_MouseDown"/>
-            <Grid x:Name="LoadingGrid" MinWidth="768" MinHeight="496">
-                <Image gif:ImageBehavior.AnimatedSource="Images/Loading.gif" Height="50" Width="50" Margin="0 250 0 0"/>
-                <Image Source="Images/FullLogo.jpg" Height="350" Width="350" Margin="0 0 0 100" Panel.ZIndex="-1"/>
+            <Grid x:Name="AuthorizationGrid" MinWidth="624" MinHeight="496" Visibility="Visible">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="600"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" MinWidth="200" MinHeight="496">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+                    <Image  Grid.Row="0" Source="Images/FullLogo.jpg" Height="250" Width="250" Panel.ZIndex="10"/>
+                    <TextBox x:Name="LoginBox" MaxLength="30" Text="Логин или email" TextAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Foreground="#707070" Grid.Row="1" MaxWidth="300" MaxHeight="30" Background="#1F1F1F" GotFocus="LoginBox_GotFocus" LostFocus="LoginBox_LostFocus"/>
+                    <PasswordBox x:Name="PasswordBox" FontSize="10" VerticalContentAlignment="Center" Foreground="#707070" Grid.Row="2" MaxWidth="300" MaxHeight="30" Background="#1F1F1F"/>
+
+                </Grid>
+                <Grid Grid.Column="0" MinWidth="200" MinHeight="496" HorizontalAlignment="Stretch" Background ="#FF1F1F1F"/>
+                <Grid Grid.Column="2" MinWidth="200" MinHeight="496" HorizontalAlignment="Stretch" Background ="#FF1F1F1F"/>
             </Grid>
         </DockPanel>
     </Grid>
