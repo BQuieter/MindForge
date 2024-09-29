@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "rhm+MszoN/E=",
+  "dgSpecHash": "8GNVPRoZmv4=",
   "success": true,
   "projectFilePath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MindForge.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\BQuiet\\.nuget\\packages\\wpfanimatedgif\\2.0.2\\wpfanimatedgif.2.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

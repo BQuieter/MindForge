@@ -18,3 +18,7 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\refint
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.pdb
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.genruntimeconfig.cache
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\ref\MindForge.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\WpfAnimatedGif.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.csproj.AssemblyReference.cache
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.sourcelink.json
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.csproj.Up2Date

@@ -9,24 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Images\**" />
-    <EmbeddedResource Remove="Images\**" />
-    <None Remove="Images\**" />
-    <Page Remove="Images\**" />
+    <None Remove="Images\FullLogo.jpg" />
+    <None Remove="Images\Loading.gif" />
+    <None Remove="Images\Logo.png" />
+    <None Remove="Images\Logo1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Logo.jpg" />
-    <None Remove="Logo2.png" />
-    <None Remove="Test1Logo.png" />
-    <None Remove="TestLogo.png" />
+    <Resource Include="Images\Loading.gif" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Logo.jpg" />
-    <Resource Include="Logo2.png" />
-    <Resource Include="Test1Logo.png" />
-    <Resource Include="TestLogo.png" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\FullLogo.jpg" />
+    <Resource Include="Images\Logo.png" />
+    <Resource Include="Images\Logo1.jpg" />
   </ItemGroup>
 
 </Project>
