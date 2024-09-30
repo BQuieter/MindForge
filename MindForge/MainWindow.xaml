@@ -7,25 +7,114 @@
         xmlns:local="clr-namespace:MindForge"
         mc:Ignorable="d"
         Closed="MindForge_Closed"
-        Title="MindForge" Height="768" Width="1024" Background="#FF1F1F1F" WindowStartupLocation="CenterScreen" Icon="/Images/Logo.png" FontFamily="Cambria" FontSize="14" MinWidth="932" MinHeight="512" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
-    
+        Title="MindForge" Height="768" Width="1024" Background="#1F1F1F" WindowStartupLocation="CenterScreen" Icon="/Images/Logo.png" FontFamily="Cambria" FontSize="14" MinWidth="932" MinHeight="608" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
+
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="10"/>
     </WindowChrome.WindowChrome>
 
-    <Grid x:Name="MainGrid" MinWidth="768" MinHeight="496">
-        <Button x:Name="CloseButton" Content="X" Click="Button_Click" WindowChrome.IsHitTestVisibleInChrome="True" Height="25" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"/>
-        <Button x:Name="MinimizeButton" Content="-" Click="MinimizeButton_Click" Height="25" Width="30" WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 60 0" Panel.ZIndex="1"/>
-        <Button x:Name="MaximizeButton" Content="U" Click="MaximizeButton_Click" Height="25" Width="30" WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 30 0" Panel.ZIndex="1"/>
-        
+    <Window.Resources>
+        <Style x:Key="SignInButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#262626"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="2" CornerRadius="10" BorderBrush="#353535">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#303030"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="CaptionButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#171717"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#202020"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ClickableTextBlock" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="#ccc"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#999"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#adadad"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#ccc"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#adadad"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#ccc"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid x:Name="MainGrid" MinWidth="768" MinHeight="496" Focusable="True" MouseLeftButtonDown="LoseFocus">
+        <Button x:Name="CloseButton" Style="{StaticResource CaptionButton}" Foreground="#ccc" Content="X" Click="Button_Click" WindowChrome.IsHitTestVisibleInChrome="True" Height="25" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1" IsTabStop="False"/>
+        <Button x:Name="MinimizeButton" Style="{StaticResource CaptionButton}" Foreground="#ccc" Content="—" Click="MinimizeButton_Click" Height="25" Width="30" WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 60 0" Panel.ZIndex="1" IsTabStop="False"/>
+        <Button x:Name="MaximizeButton" Style="{StaticResource CaptionButton}" Foreground="#ccc" Content="U" Click="MaximizeButton_Click" Height="25" Width="30" WindowChrome.IsHitTestVisibleInChrome="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 0 30 0" Panel.ZIndex="1" IsTabStop="False"/>
+
         <Grid x:Name="LoadingGrid" Visibility="Collapsed" MinWidth="768" MinHeight="496">
             <Image gif:ImageBehavior.AnimatedSource="Images/Loading.gif" Height="50" Width="50" Margin="0 250 0 0"/>
             <Image Source="Images/FullLogo.jpg" Height="250" Width="250" Margin="0 0 0 200" Panel.ZIndex="-1"/>
         </Grid>
-        
-        <DockPanel MinWidth="768" MinHeight="496">
+
+        <DockPanel MinWidth="768" MinHeight="496" >
             <Rectangle DockPanel.Dock="Top" Fill="#171717" Height="25" MouseDown="Rectangle_MouseDown"/>
-            <Grid x:Name="AuthorizationGrid" MinWidth="624" MinHeight="496" Visibility="Visible">
+            <Grid x:Name="AuthorizationGrid" MinWidth="624" MinHeight="496" Focusable="True" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="600"/>
@@ -33,20 +122,29 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1" MinWidth="200" MinHeight="496">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="0.3*"/>
-                        <RowDefinition Height="0.3*"/>
-                        <RowDefinition Height="0.3*"/>
-                        <RowDefinition Height="0.3*"/>
+                        <RowDefinition Height="*" MaxHeight="297.2" MinHeight="260"/>
+                        <RowDefinition Height="0.15*" MaxHeight="65" MinHeight="65"/>
+                        <RowDefinition Height="0.15*" MaxHeight="65" MinHeight="65"/>
+                        <RowDefinition Height="0.3*" MaxHeight="89" MinHeight="89"/>
+                        <RowDefinition Height="0.3*" MaxHeight="89" MinHeight="75"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
                     <Image  Grid.Row="0" Source="Images/FullLogo.jpg" Height="250" Width="250" Panel.ZIndex="10"/>
-                    <TextBox x:Name="LoginBox" MaxLength="30" Text="Логин или email" TextAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Foreground="#707070" Grid.Row="1" MaxWidth="300" MaxHeight="30" Background="#1F1F1F" GotFocus="LoginBox_GotFocus" LostFocus="LoginBox_LostFocus"/>
-                    <PasswordBox x:Name="PasswordBox" FontSize="10" VerticalContentAlignment="Center" Foreground="#707070" Grid.Row="2" MaxWidth="300" MaxHeight="30" Background="#1F1F1F"/>
+                    <TextBox x:Name="LoginBox" Style="{StaticResource TextBoxStyle}" Background="#1f1f1f" TextAlignment="Left" VerticalContentAlignment="Center" FontSize="20" Foreground="#707070" MaxLength="30" Text="Логин или email" Grid.Row="1" MaxWidth="300" MaxHeight="30" GotFocus="LoginBox_GotFocus" LostFocus="LoginBox_LostFocus" KeyDown="EnterKeyFocus" PreviewMouseRightButtonUp="DisableContextMenu" TextChanged="LoginBox_TextChanged" SelectionBrush="#FF121212" BorderBrush="#FF828282"/>
+                    <PasswordBox x:Name="PasswordBox" Style="{StaticResource PasswordBoxStyle}" Password="*****" FontSize="10" VerticalContentAlignment="Center" Foreground="#707070" Grid.Row="2" MaxWidth="300" MaxHeight="30" Background="#1F1F1F" GotFocus="PasswordBox_GotFocus" LostFocus="PasswordBox_LostFocus" KeyDown="EnterKeyFocus" PreviewMouseRightButtonUp="DisableContextMenu" BorderBrush="#FF828282" PasswordChanged="PasswordBox_PasswordChanged"/>
 
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Нет аккаунта?" Margin="-160 0 0 0" TextAlignment="Left" Height="30" Width="130" FontSize="20" Foreground="#828282"/>
+                        <TextBlock x:Name="GoToRegisterButton" Style="{StaticResource ClickableTextBlock }" Grid.Row="0" Text="Зарегистрироваться" Margin="140 0 0 3"  TextAlignment="Right" Height="20" Width="160" FontSize="17"/>
+                        <Button x:Name="SingInButton" Style="{StaticResource SignInButton}" Grid.Row="1" Content="Войти" Foreground="#ccc" FontSize="25" Height="45" Width="250"/>
+                    </Grid>
                 </Grid>
-                <Grid Grid.Column="0" MinWidth="200" MinHeight="496" HorizontalAlignment="Stretch" Background ="#FF1F1F1F"/>
-                <Grid Grid.Column="2" MinWidth="200" MinHeight="496" HorizontalAlignment="Stretch" Background ="#FF1F1F1F"/>
+                <Grid Grid.Column="0" MinWidth="200" HorizontalAlignment="Stretch" Background ="#202020"/>
+                <Grid Grid.Column="2" MinWidth="200" HorizontalAlignment="Stretch" Background ="#202020"/>
             </Grid>
         </DockPanel>
     </Grid>

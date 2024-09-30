@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|solutionrelative:mindforge\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|solutionrelative:mindforge\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\windowhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|solutionrelative:mindforge\\windowhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|solutionrelative:mindforge\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForge.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,6 +27,18 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\App.xaml",
+              "RelativeDocumentMoniker": "MindForge\\App.xaml",
+              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\App.xaml",
+              "RelativeToolTip": "MindForge\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-09-30T11:39:11.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MindForge\\MainWindow.xaml",
@@ -38,26 +50,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "WindowHelper.cs",
-              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\WindowHelper.cs",
-              "RelativeDocumentMoniker": "MindForge\\WindowHelper.cs",
-              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\WindowHelper.cs",
-              "RelativeToolTip": "MindForge\\WindowHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-29T09:24:53.806Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MindForge\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MainWindow.xaml.cs",
               "RelativeToolTip": "MindForge\\MainWindow.xaml.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAA6wD8AAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAswHcAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T11:28:32.775Z",
               "EditorCaption": ""
