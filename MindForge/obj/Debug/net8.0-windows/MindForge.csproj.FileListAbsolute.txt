@@ -22,3 +22,4 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\WpfAni
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.csproj.AssemblyReference.cache
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.sourcelink.json
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.csproj.Up2Date
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\App.baml
