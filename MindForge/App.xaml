@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:MindForge"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style x:Key="SignInButton" TargetType="{x:Type Button}">
+        <Style x:Key="Button" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#262626"/>
             <Setter Property="Template">
                 <Setter.Value>
