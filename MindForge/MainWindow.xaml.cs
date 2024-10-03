@@ -73,26 +73,6 @@ namespace MindForge
         private void MindForge_Closed(object sender, EventArgs e) =>
             mutex.ReleaseMutex();
 
-        private void LoginBox_GotFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, LoginBlock, Visibility.Collapsed);
-        private void LoginBox_LostFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, LoginBlock, Visibility.Visible);
-        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, PasswordBlock, Visibility.Collapsed);
-        private void PasswordBox_LostFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, PasswordBlock, Visibility.Visible);
-        private void RegistrationLoginBox_GotFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, RegistrationLoginBlock, Visibility.Collapsed);
-        private void RegistrationLoginBox_LostFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, RegistrationLoginBlock, Visibility.Visible);
-        private void RegistrationEmailBox_GotFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, RegistrationEmailBlock, Visibility.Collapsed);
-        private void RegistrationEmailBox_LostFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, RegistrationEmailBlock, Visibility.Visible);
-        private void RegistrationPasswordBox_GotFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, RegistrationPasswordBlock, Visibility.Collapsed);
-        private void RegistrationPasswordBox_LostFocus(object sender, RoutedEventArgs e) =>
-            ChangeWatermarkVisible(sender, RegistrationPasswordBlock, Visibility.Visible);
         private void LoginBox_TextChanged(object sender, TextChangedEventArgs e) =>
             ChangeWatermarkVisible(sender, LoginBlock);
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e) =>
@@ -103,27 +83,6 @@ namespace MindForge
             ChangeWatermarkVisible(sender, RegistrationEmailBlock);
         private void RegistrationPasswordBox_TextChanged(object sender, TextChangedEventArgs e) =>
             ChangeWatermarkVisible(sender, RegistrationPasswordBlock);
-        private void ChangeWatermarkVisible(object sender,TextBlock textBlock, Visibility visible)
-        {
-            if (visible == Visibility.Visible)
-            {
-                bool isEmpty = false;
-                if (sender is TextBox)
-                {
-                    TextBox textBox = (TextBox)sender;
-                    isEmpty = textBox.Text.Length == 0;
-                }
-                else if(sender is PasswordBox)
-                {
-                    PasswordBox passwordBox = (PasswordBox)sender;
-                    isEmpty = passwordBox.Password.Length == 0;
-                }
-                if (isEmpty)
-                    textBlock.Visibility = visible;
-            }
-            else
-                textBlock.Visibility = visible;
-        }
         private void ChangeWatermarkVisible(object sender, TextBlock textBlock)
         {
             bool isEmpty = false;
