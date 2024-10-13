@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "8GNVPRoZmv4=",
+  "dgSpecHash": "iQesR97CquA=",
   "success": true,
   "projectFilePath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MindForge.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\BQuiet\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\BQuiet\\.nuget\\packages\\wpfanimatedgif\\2.0.2\\wpfanimatedgif.2.0.2.nupkg.sha512"
   ],
   "logs": []

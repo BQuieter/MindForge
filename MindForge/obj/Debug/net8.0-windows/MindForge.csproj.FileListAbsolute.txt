@@ -23,4 +23,4 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindFo
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.sourcelink.json
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForge.csproj.Up2Date
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\App.baml
-C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\BCrypt.Net-Next.dll

@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using BCrypt.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Shell;
 using System.Runtime.CompilerServices;
 using System.Reflection;
+using System.Net.Mail;
 
 namespace MindForge
 {
@@ -26,7 +28,7 @@ namespace MindForge
         private readonly string regexPassword = @"^[a-zA-Z0-9-_!@#$&.,]*$";
 
         private Mutex mutex;
-        private string mutexName = "MyApplicationMutex";
+        private string mutexName = "MindForge";
         public LoadingWindow()
         {
             //Перенеси в статик метод чтоль
@@ -41,12 +43,12 @@ namespace MindForge
             InitializeComponent();
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
             ///////////////////////// Когда будет сервак, переделай
-            Dispatcher.InvokeAsync(async () => 
+            /*Dispatcher.InvokeAsync(async () => 
             {
                 await Task.Delay(1500);
                 LoadingGrid.Visibility = Visibility.Collapsed;
                 SignInGrid.Visibility = Visibility.Visible;
-            });
+            });*/
         }
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
@@ -135,8 +137,56 @@ namespace MindForge
                 {
                     PasswordBox passwordBox = (PasswordBox)a;
                     passwordBox.Password = "";
-                }    
+                }
+                else if (a is TextBlock)
+                {
+                    TextBlock textBlock = (TextBlock)a;
+                    if (Regex.IsMatch(textBlock.Name, "^.*Warn$"))
+                        textBlock.Text = "";
+                }
             }
+        }
+
+        private void SingInButton_Click(object sender, RoutedEventArgs e)
+        {//Сначала парол в Bcrypt потом запрос
+            string password = PasswordBox.Password;
+            LoginBox.Text = BCrypt.Net.BCrypt.HashPassword(password);
+        }
+        private void RegistrationButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWarn.Text = CheckLogin();
+            EmailWarn.Text = CheckEmail();
+            PasswordWarn.Text = CheckPassword();
+            if (LoginWarn.Text != "" || PasswordWarn.Text != "" || EmailWarn.Text != "")
+                return;
+        }
+
+        private string CheckLogin()
+        {
+            string login = RegistrationLoginBox.Text;
+            if (login.Length < 3)
+                return "Логин должен содержать минимум 3 символа";
+            if (!Regex.IsMatch(login, regexLogin))
+                return "Допустимые символы: а-я, А-Я, a-z, A-Z, 0-9, -_@.";
+            return "";
+        }
+
+        private string CheckPassword()
+        {
+            string password = RegistrationPasswordBox.Text;
+            if (password.Length < 6)
+                return "Пароль должен содержать минимум 6 символов";
+            if (!Regex.IsMatch(password, regexPassword))
+                return "Допустимые символы: a-z, A-Z, 0-9, -_!@#$&amp;.,";
+            return "";
+        }
+
+        private string CheckEmail() 
+        {
+            string email = RegistrationEmailBox.Text;
+            if (!MailAddress.TryCreate(email, out var address))
+                return "Недопустимый Email";
+            return "";
         }
     }
 }
