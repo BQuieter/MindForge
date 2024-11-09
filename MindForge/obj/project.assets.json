@@ -30,6 +30,16 @@
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WPF"
         ]
+      },
+      "MindForgeClasses/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/MindForgeClasses.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MindForgeClasses.dll": {}
+        }
       }
     }
   },
@@ -84,11 +94,17 @@
         "wpfanimatedgif.2.0.2.nupkg.sha512",
         "wpfanimatedgif.nuspec"
       ]
+    },
+    "MindForgeClasses/1.0.0": {
+      "type": "project",
+      "path": "../MindForgeClasses/MindForgeClasses.csproj",
+      "msbuildProject": "../MindForgeClasses/MindForgeClasses.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
       "BCrypt.Net-Next >= 4.0.3",
+      "MindForgeClasses >= 1.0.0",
       "WpfAnimatedGif >= 2.0.2"
     ]
   },
@@ -98,9 +114,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MindForge.csproj",
-      "projectName": "MindForge",
-      "projectPath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MindForge.csproj",
+      "projectUniqueName": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MindForgeClient.csproj",
+      "projectName": "MindForgeClient",
+      "projectPath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\MindForgeClient.csproj",
       "packagesPath": "C:\\Users\\BQuiet\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\obj\\",
       "projectStyle": "PackageReference",
@@ -119,7 +135,11 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeClasses\\MindForgeClasses.csproj": {
+              "projectPath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeClasses\\MindForgeClasses.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

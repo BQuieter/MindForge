@@ -16,6 +16,11 @@ using System.Windows.Shell;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 using System.Net.Mail;
+using MindForgeClient;
+using MindForgeClasses;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Net.Http.Headers;
 
 namespace MindForge
 {
@@ -29,11 +34,11 @@ namespace MindForge
 
         private Mutex mutex;
         private string mutexName = "MindForge";
+        HttpClient httpClient;
         public LoadingWindow()
         {
             //Перенеси в статик метод чтоль
             mutex = new Mutex(false, mutexName, out bool createdNew);
-
             if (!createdNew)
             {
                 WindowHelper.MaximizeWindow("MindForge");
@@ -41,6 +46,9 @@ namespace MindForge
                 return;
             }
             InitializeComponent();
+
+            HttpClientSingleton.Set();
+            httpClient = HttpClientSingleton.httpClient!;
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
             ///////////////////////// Когда будет сервак, переделай
             /*Dispatcher.InvokeAsync(async () => 
@@ -79,12 +87,21 @@ namespace MindForge
             ChangeWatermarkVisible(sender, LoginBlock);
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e) =>
             ChangeWatermarkVisible(sender, PasswordBlock);
-        private void RegistrationLoginBox_TextChanged(object sender, TextChangedEventArgs e) =>
+        private void RegistrationLoginBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
             ChangeWatermarkVisible(sender, RegistrationLoginBlock);
-        private void RegistrationEmailBox_TextChanged(object sender, TextChangedEventArgs e) =>
+            LoginWarn.Text = RegistrationLoginBox.Text.Length > 0 ? CheckLogin() : "";
+        }
+        private void RegistrationEmailBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
             ChangeWatermarkVisible(sender, RegistrationEmailBlock);
-        private void RegistrationPasswordBox_TextChanged(object sender, TextChangedEventArgs e) =>
+            EmailWarn.Text = RegistrationEmailBox.Text.Length > 0 ? CheckEmail() : "";
+        }
+        private void RegistrationPasswordBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
             ChangeWatermarkVisible(sender, RegistrationPasswordBlock);
+            PasswordWarn.Text = RegistrationPasswordBox.Text.Length > 0 ? CheckPassword() : "";
+        }
         private void ChangeWatermarkVisible(object sender, TextBlock textBlock)
         {
             bool isEmpty = false;
@@ -147,18 +164,36 @@ namespace MindForge
             }
         }
 
-        private void SingInButton_Click(object sender, RoutedEventArgs e)
-        {//Сначала парол в Bcrypt потом запрос
-            string password = PasswordBox.Password;
-            LoginBox.Text = BCrypt.Net.BCrypt.HashPassword(password);
-        }
-        private void RegistrationButton_Click(object sender, RoutedEventArgs e)
+        private async void SingInButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginWarn.Text = CheckLogin();
-            EmailWarn.Text = CheckEmail();
-            PasswordWarn.Text = CheckPassword();
+            string password = PasswordBox.Password;
+            AuthorizationInformation inform = new(LoginBox.Text, PasswordBox.Password);
+            var response = await httpClient!.PostAsJsonAsync<AuthorizationInformation>("https://localhost:7236/login", inform);
+            if (await GetJwtToken(response))
+            {
+                await httpClient!.GetAsync("https://localhost:7236/aut");
+            }
+
+
+        }
+        private async void RegistrationButton_Click(object sender, RoutedEventArgs e)
+        {
             if (LoginWarn.Text != "" || PasswordWarn.Text != "" || EmailWarn.Text != "")
                 return;
+            RegistrationInformation inform = new(RegistrationLoginBox.Text, BCrypt.Net.BCrypt.HashPassword(RegistrationPasswordBox.Text), RegistrationEmailBox.Text);
+            var response = await httpClient!.PostAsJsonAsync<RegistrationInformation>("https://localhost:7236/registration", inform);
+            bool a = await GetJwtToken(response);
+        }
+        private async Task<bool> GetJwtToken(HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                string jwt = await response.Content.ReadAsStringAsync();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
+                MessageBox.Show(jwt);
+                return true;
+            }
+            return false;
         }
 
         private string CheckLogin()
