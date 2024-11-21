@@ -7,6 +7,7 @@ using MindForgeClasses;
 
 using System.Runtime.CompilerServices;
 using BCrypt.Net;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MindForgeServer
 {
@@ -14,39 +15,36 @@ namespace MindForgeServer
     {
         static public async Task<object> Login(HttpContext context, MindForgeDbContext db)
         {
-            Console.WriteLine("a");
-            var authorizationInformation = await context.Request.ReadFromJsonAsync<AuthorizationInformation>();
+            var authorizationInformation = await context.Request.ReadFromJsonAsync<UserLoginInformation>();
             if (authorizationInformation == null)
-                return Results.BadRequest("Bad Request");
-            var user = db.Users.ToList().FirstOrDefault(u => u.Login == authorizationInformation!.Login && BCrypt.Net.BCrypt.Verify(authorizationInformation.Password, u.Password, false, HashType.SHA384) );
+                return Results.BadRequest(new { message = "Некорректный запрос" });
+            var user = db.Users.ToList().FirstOrDefault(u => u.Login == authorizationInformation.Login);
             if (user == null)
-                return Results.NotFound("User not found");
+                return Results.NotFound(new { message = "Пользователь не найден"});
+
+            if (!BCrypt.Net.BCrypt.Verify(authorizationInformation.Password, user.Password))
+                return Results.Unauthorized();
+
             user.RoleNavigation = db.Roles.Find(user.Role)!;
 
-            Results.Ok();
-            return CreateJwtToken(user);
+            return Results.Ok(new { message = CreateJwtToken(user) });
         }
 
         static public async Task<object> Registration(HttpContext context, MindForgeDbContext db)
         {
-            var registrationInformation = await context.Request.ReadFromJsonAsync<RegistrationInformation>();
+            var registrationInformation = await context.Request.ReadFromJsonAsync<UserLoginInformation>();
             if (registrationInformation == null)
-                return Results.BadRequest("Bad Request");
+                return Results.BadRequest(new { message = "Некорректный запрос"});
             bool loginNotUnique = await db.Users.AnyAsync(u => u.Login == registrationInformation!.Login);
-            bool emailNotUnique = await db.Users.AnyAsync(u => u.Email == registrationInformation!.Email);
-            if (loginNotUnique && emailNotUnique)
-                return Results.Conflict("Login and email already exists");
             if (loginNotUnique)
-                return Results.Conflict("Login already exists");
-            if (emailNotUnique)
-                return Results.Conflict("Email already exists");
+                return Results.Conflict( new { message = "Логин уже существует"});
 
-            User user = new User { Login = registrationInformation!.Login, Password = registrationInformation.Password, Email = registrationInformation.Email, Role = 1, RoleNavigation = db.Roles.Find(1)!};
+            User user = new User { Login = registrationInformation!.Login, Password = registrationInformation.Password, Role = 1, RoleNavigation = db.Roles.Find(1)!};
             await db.Users.AddAsync(user);
             await db.SaveChangesAsync();
-
-            Results.Ok();
-            return CreateJwtToken(user);
+            if (!await CreateProfile(db,user))
+                return Results.Conflict(new {message = "Профиль не создан. Данный профиль пользовтеля существует"});
+            return Results.Ok(new { message = CreateJwtToken(user)});
         }
 
         static private string CreateJwtToken(User user)
@@ -60,6 +58,20 @@ namespace MindForgeServer
                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
+        }
+
+        static private async Task<bool> CreateProfile(MindForgeDbContext db, User user)
+        {
+            if (db.Profiles.FirstOrDefault(p => p.User == user.UserId) is not null)
+                return false;
+
+            Profile profile = new();
+            profile.User = user.UserId;
+            profile.Status = 1;
+            profile.ProfileRegistrationDate = DateOnly.FromDateTime(DateTime.Now); ;
+            db.Profiles.Add(profile);
+            await db.SaveChangesAsync();
+            return true;
         }
     }
 }

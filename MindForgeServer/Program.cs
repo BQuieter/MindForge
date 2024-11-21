@@ -37,7 +37,12 @@ namespace MindForgeServer
 
             app.MapPost("/login", InitialHelper.Login);
 
-            app.MapGet("/aut",  [Authorize] (HttpContext context) => Console.WriteLine("Æîïûûûû"));
+            app.MapGet("/profile", [Authorize] (MindForgeDbContext db, HttpContext context) =>
+            {
+                return context.User.Identity.Name;
+            });
+
+            app.Map("/", (HttpContext context) => Results.Ok("Connected"));
 
             app.Run();
         }

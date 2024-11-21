@@ -1,4 +1,5 @@
 C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\bin\Debug\net8.0\MindForgeClasses.deps.json
+C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\bin\Debug\net8.0\MindForgeClasses.runtimeconfig.json
 C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\bin\Debug\net8.0\MindForgeClasses.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\bin\Debug\net8.0\MindForgeClasses.pdb
 C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\obj\Debug\net8.0\MindForgeClasses.GeneratedMSBuildEditorConfig.editorconfig
@@ -9,6 +10,5 @@ C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\obj\Debug\net8.0\MindFor
 C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\obj\Debug\net8.0\MindForgeClasses.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\obj\Debug\net8.0\refint\MindForgeClasses.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\obj\Debug\net8.0\MindForgeClasses.pdb
-C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\obj\Debug\net8.0\ref\MindForgeClasses.dll
-C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\bin\Debug\net8.0\MindForgeClasses.runtimeconfig.json
 C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\obj\Debug\net8.0\MindForgeClasses.genruntimeconfig.cache
+C:\Users\BQuiet\source\repos\MindForge\MindForgeClasses\obj\Debug\net8.0\ref\MindForgeClasses.dll

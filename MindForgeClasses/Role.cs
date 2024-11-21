@@ -1,11 +1,13 @@
-﻿namespace MindForgeClasses
+﻿using System;
+using System.Collections.Generic;
+
+namespace MindForgeClasses;
+
+public partial class Role
 {
-    public partial class Role
-    {
-        public int RoleId { get; set; }
+    public int RoleId { get; set; }
 
-        public string RoleName { get; set; } = null!;
+    public string RoleName { get; set; } = null!;
 
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
-    }
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

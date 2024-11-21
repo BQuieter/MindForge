@@ -1,0 +1,42 @@
+﻿<Page x:Class="MindForgeClient.Pages.RegistrationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MindForgeClient.Pages"
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      mc:Ignorable="d" 
+      d:DesignHeight="743" d:DesignWidth="600"
+      Title="RegistrationPage">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock Style="{StaticResource BasicTextBlock}" Text="Регистрация" Margin="0 0 0 20" FontSize="25" HorizontalAlignment="Center"/>
+            <Grid>
+                <TextBox x:Name="LoginBox" Style="{StaticResource LoginTextBox}" TextChanged="LoginBox_TextChanged"/>
+                <TextBlock Style="{StaticResource Watermark}" Text="Логин" Margin="128 0 0 0"/>
+            </Grid>
+            <TextBlock x:Name="LoginWarn" Style="{StaticResource WarnBlock}"/>
+            <Grid>
+                <PasswordBox x:Name="PasswordBox" Style="{StaticResource PasswordBox}" PasswordChanged="PasswordBox_PasswordChanged"/>
+                <TextBlock Style="{StaticResource Watermark}" Text="Пароль" Margin="128 0 0 0"/>
+            </Grid>
+            <TextBlock x:Name="PasswordWarn" Style="{StaticResource WarnBlock}"/>
+            <Grid>
+                <PasswordBox x:Name="ConfirmPasswordBox" Style="{StaticResource PasswordBox}" PasswordChanged="ConfirmPasswordBox_PasswordChanged"/>
+                <TextBlock Style="{StaticResource Watermark}" Text="Подтвердите пароль" Margin="128 0 0 0"/>
+            </Grid>
+            <TextBlock x:Name="ConfirmPasswordWarn" Style="{StaticResource WarnBlock}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource BasicTextBlock}" Grid.Column="0" Text="Есть аккаунт?" Margin="155 0 0 0"/>
+                <TextBlock Style="{StaticResource ClickableTextBlock}" Grid.Column="1" Text="Авторизоваться" MouseLeftButtonDown="GoToSignInPage"/>
+            </Grid>
+            <Button x:Name="RegistrationButton" Style="{StaticResource ButtonBase}" Content="Зарегистрироваться" Width="225" Height="40" Click="Registration"/>
+            <Image x:Name="LoadingGif" Style="{StaticResource LoadingGif}" gif:ImageBehavior.AnimatedSource ="..\Images\Loading.gif" Visibility="Collapsed"/>
+        </StackPanel>
+    </Grid>
+</Page>

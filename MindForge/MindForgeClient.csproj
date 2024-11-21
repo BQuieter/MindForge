@@ -9,10 +9,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Images\MenuIcons\a\**" />
+    <Compile Remove="Images\MenuIcons\Новая папка\**" />
+    <EmbeddedResource Remove="Images\MenuIcons\a\**" />
+    <EmbeddedResource Remove="Images\MenuIcons\Новая папка\**" />
+    <None Remove="Images\MenuIcons\a\**" />
+    <None Remove="Images\MenuIcons\Новая папка\**" />
+    <Page Remove="Images\MenuIcons\a\**" />
+    <Page Remove="Images\MenuIcons\Новая папка\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\FullLogo.jpg" />
+    <None Remove="Images\Icon.png" />
     <None Remove="Images\Loading.gif" />
     <None Remove="Images\Logo.png" />
     <None Remove="Images\Logo1.jpg" />
+    <None Remove="Images\MenuIcons\AddFriend.png" />
+    <None Remove="Images\MenuIcons\Chats.png" />
+    <None Remove="Images\MenuIcons\Communities.png" />
+    <None Remove="Images\MenuIcons\Friends.png" />
+    <None Remove="Images\MenuIcons\Groups.png" />
+    <None Remove="Images\MenuIcons\Settings.png" />
+    <None Remove="Images\MiniLogo.png" />
+    <None Remove="Images\Profile.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +52,18 @@
     <Resource Include="Images\FullLogo.jpg" />
     <Resource Include="Images\Logo.png" />
     <Resource Include="Images\Logo1.jpg" />
+    <Resource Include="Images\MenuIcons\AddFriend.png" />
+    <Resource Include="Images\MenuIcons\Chats.png" />
+    <Resource Include="Images\MenuIcons\Communities.png" />
+    <Resource Include="Images\MenuIcons\Friends.png" />
+    <Resource Include="Images\MenuIcons\Groups.png" />
+    <Resource Include="Images\MenuIcons\Settings.png" />
+    <Resource Include="Images\MiniLogo.png" />
+    <Resource Include="Images\Profile.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="App.xaml" />
   </ItemGroup>
 
 </Project>
