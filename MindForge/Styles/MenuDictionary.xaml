@@ -1,14 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:MindForgeClient">
-    
-    <Style x:Key="MenuGrid" TargetType="{x:Type local:MenuGrid}">
+
+    <Style x:Key="BaseGrid" TargetType="Grid">
         <Setter Property="Margin" Value="5 5 0 5"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#303030"/>
             </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="MenuGrid" TargetType="{x:Type local:MenuGrid}" BasedOn="{StaticResource BaseGrid}">
+        <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="#353535"/>
             </Trigger>
@@ -33,6 +38,7 @@
         <Setter Property="Height" Value="32"/>
         <Setter Property="Width" Value="32"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="4 0 0 0"/>
     </Style>
 
     <Style x:Key="BaseLabel" TargetType="Label">
@@ -42,7 +48,8 @@
     </Style>
     
     <Style x:Key="MenuLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
-        <Setter Property="Margin" Value="35 3 0 0"/>
+        <Setter Property="Margin" Value="35 0 0 0"/>
         <Setter Property="Focusable" Value="False"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
     </Style>
 </ResourceDictionary>

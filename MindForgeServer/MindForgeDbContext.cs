@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using MindForgeClasses;
+using MindForgeDbClasses;
 
 namespace MindForgeServer;
 
@@ -27,6 +27,8 @@ public partial class MindForgeDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UsersProfession> UsersProfessions { get; set; }
+    public virtual DbSet<FriendshipStatus> FriendshipStatuses { get; set; }
+    public virtual DbSet<Friendship> Friendships { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,6 +50,9 @@ public partial class MindForgeDbContext : DbContext
             entity.Property(e => e.ProfessionName)
                 .HasMaxLength(50)
                 .HasColumnName("profession_name");
+            entity.Property(e => e.ProfessionColor)
+                .HasMaxLength(7)
+                .HasColumnName("profession_color");
         });
 
         modelBuilder.Entity<Profile>(entity =>
@@ -104,11 +109,10 @@ public partial class MindForgeDbContext : DbContext
 
         modelBuilder.Entity<UsersProfession>(entity =>
         {
-            entity.HasKey(e => e.UsersProfessionId).HasName("PK__Users_pr__A2F31E62B5309F5C");
-
             entity.ToTable("Users_professions");
+            entity.HasKey(e => e.User).HasName("PK_Users_professions");
+            entity.HasKey(e => e.Profession).HasName("PK_Users_professions");
 
-            entity.Property(e => e.UsersProfessionId).HasColumnName("Users_profession_id");
             entity.Property(e => e.Profession).HasColumnName("profession");
             entity.Property(e => e.User).HasColumnName("user");
 
@@ -121,6 +125,42 @@ public partial class MindForgeDbContext : DbContext
                 .HasForeignKey(d => d.User)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Users_prof__user__4D94879B");
+        });
+
+        modelBuilder.Entity<FriendshipStatus>(entity =>
+        {
+            entity.HasKey(e => e.StatusId).HasName("PK__Friendsh__3683B531F03FC31D");
+
+            entity.Property(e => e.StatusId).HasColumnName("status_id");
+            entity.Property(e => e.StatusName)
+                .HasMaxLength(20)
+                .HasColumnName("status_name");
+        });
+
+        modelBuilder.Entity<Friendship>(entity =>
+        {
+            entity.ToTable("Friendships");
+            entity.HasKey(e => e.User1).HasName("PK_Friendships");
+            entity.HasKey(e => e.User2).HasName("PK_Friendships");
+
+            entity.Property(e => e.User1).HasColumnName("user_1");
+            entity.Property(e => e.User2).HasColumnName("user_2");
+            entity.Property(e => e.Status).HasColumnName("status");
+
+            entity.HasOne(d => d.User1Navigation).WithMany(p => p.Friendships1)
+                .HasForeignKey(d => d.User1)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Friendshi__user___03F0984C");
+
+            entity.HasOne(d => d.User2Navigation).WithMany(p => p.Friendships2)
+                .HasForeignKey(d => d.User2)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Friendshi__user___04E4BC85");
+
+            entity.HasOne(d => d.StatusNavigation).WithMany(p => p.Friendships)
+                .HasForeignKey(d => d.User2)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Friendshi__statu__05D8E0BE");
         });
 
         OnModelCreatingPartial(modelBuilder);

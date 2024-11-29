@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MindForgeClasses\MindForgeClasses.csproj" />
+    <ProjectReference Include="..\MindForgeDbClasses\MindForgeDbClasses.csproj" />
   </ItemGroup>
 
 </Project>

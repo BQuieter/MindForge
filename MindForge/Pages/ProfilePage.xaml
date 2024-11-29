@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:MindForgeClient.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="743" d:DesignWidth="881"
-      Title="ProfilePage">
+      Title="ProfilePage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -20,10 +20,65 @@
                 <ColumnDefinition MaxWidth="100"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1" Background="#202020">
-                <Image x:Name="ProfileImage" Source="pack://application:,,,/Images/Profile.png" Width="100" Height="100" Margin="0 30 0 10"/>
+                <Image x:Name="ProfileImage" Source="pack://application:,,,/Images/Profile.png" Width="100" Height="100" Margin="0 30 0 10" MouseLeftButtonDown="ProfileImage_MouseLeftButtonDown" MouseEnter="ProfileImage_MouseEnter" MouseLeave="ProfileImage_MouseLeave"/>
                 <TextBlock x:Name="LoginTextBlock" Style="{StaticResource BasicTextBlock}" Text="Логин" HorizontalAlignment="Center" Margin="0 0 0 20"/>
-                <!-- Тут кароче метки ебани -->
-                <Grid/>
+                <ListBox x:Name="ProfessionListBox" Width="300">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0 0 0 10" MinHeight="25">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="33"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse Height="20" Width="20" Fill="{Binding Path=Color}" Grid.Column="0" Margin="0 0 5 0"/>
+                                <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Name}" Grid.Column="1" FontSize="17" VerticalAlignment="Center" Margin="5 0 5 0"/>
+                                <Button Style="{StaticResource InvisibleButton}" Width="25" Height="25" Grid.Column="2" Visibility="Collapsed" Click="DeleteProfession">
+                                    <Image Source="pack://application:,,,/Images/Delete.png"/>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>    
+                </ListBox>
+                <ComboBox x:Name="ProfessionsComboBox" Style="{StaticResource ProfessionComboBox}" Width="300" Visibility="Collapsed" SelectionChanged="ChooseProfession" IsVisibleChanged="ProfessionsComboBox_IsVisibleChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Name}" Margin="5 2 0 2"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Grid Style="{StaticResource BaseGrid}" x:Name="AddProfessionGrid" Width="300" Visibility="Collapsed" MouseLeftButtonDown="AddProfessionGrid_MouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="230"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Style="{StaticResource MenuIcon}" Width="25" Height="25" Source="pack://application:,,,/Images/Add.png" HorizontalAlignment="Right" Grid.Column="0" Margin="0 0 10 0"/>
+                    <TextBlock Style="{StaticResource BasicTextBlock}" Text="Добавить профессию" Grid.Column="1" FontSize="18"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column ="1" Background="#202020">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Обо мне:" Style="{StaticResource BaseLabel}" Margin="5 20 0 0" FontSize="18" Grid.Row="0"/>
+                    <Grid Grid.Row="1">
+                        <TextBox x:Name="Description" Style="{StaticResource LoginTextBox}" MaxLength="200" IsReadOnly="True" HorizontalAlignment="Left" Margin="10 5 0 0" Height="100" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AcceptsReturn="True" TextChanged="Description_TextChanged"/>
+                        <TextBlock Style="{StaticResource Watermark}" Text="Напишите о себе" Margin="13 6 0 0"/>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Row="1">
+                <Button x:Name="CancelButton" Style="{StaticResource ButtonBase}" Content="Отмена" Margin="10" Height="35" Width="90" FontSize="15" Visibility="Collapsed" Click="Cancel_Click"/>
+                <Button x:Name="EditButton" Style="{StaticResource ButtonBase}" Content="Редактировать" Margin="10" Height="35" Width="140" FontSize="15" Click="Edit_Click"/>
+                <Button x:Name="SaveButton" Style="{StaticResource ButtonBase}" Content="Сохранить" Margin="10" Height="35" Width="140" Visibility="Collapsed" FontSize="15" Click="Save_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

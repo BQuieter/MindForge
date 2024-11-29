@@ -1593,6 +1593,16 @@
         "runtime": {
           "bin/placeholder/MindForgeClasses.dll": {}
         }
+      },
+      "MindForgeDbClasses/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/MindForgeDbClasses.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MindForgeDbClasses.dll": {}
+        }
       }
     }
   },
@@ -4502,6 +4512,11 @@
       "type": "project",
       "path": "../MindForgeClasses/MindForgeClasses.csproj",
       "msbuildProject": "../MindForgeClasses/MindForgeClasses.csproj"
+    },
+    "MindForgeDbClasses/1.0.0": {
+      "type": "project",
+      "path": "../MindForgeDbClasses/MindForgeDbClasses.csproj",
+      "msbuildProject": "../MindForgeDbClasses/MindForgeDbClasses.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4511,7 +4526,8 @@
       "Microsoft.EntityFrameworkCore >= 9.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.0",
-      "MindForgeClasses >= 1.0.0"
+      "MindForgeClasses >= 1.0.0",
+      "MindForgeDbClasses >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -4544,6 +4560,9 @@
           "projectReferences": {
             "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeClasses\\MindForgeClasses.csproj": {
               "projectPath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeClasses\\MindForgeClasses.csproj"
+            },
+            "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\MindForgeDbClasses.csproj": {
+              "projectPath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\MindForgeDbClasses.csproj"
             }
           }
         }

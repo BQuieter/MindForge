@@ -1,12 +1,15 @@
 ﻿using MindForge;
+using MindForgeClasses;
 using MindForgeClient.Pages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,7 +34,8 @@ namespace MindForgeClient
             InitializeComponent();
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
             httpClient = HttpClientSingleton.httpClient!;
-            GetLogin();
+            GetProfile();
+            GetProfessions();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e) =>
@@ -45,7 +49,7 @@ namespace MindForgeClient
         {
             MenuGrid grid = (sender as MenuGrid)!;
             Grid parent;
-            if (grid.Name != "ProfileGrid") 
+            if (grid.Name != "Profile") 
                 parent = (Grid)VisualTreeHelper.GetParent(VisualTreeHelper.GetParent(grid));
             else
                 parent = (Grid)VisualTreeHelper.GetParent(grid);
@@ -59,6 +63,8 @@ namespace MindForgeClient
                 else
                 {
                     StackPanel panel = (child as StackPanel)!;
+                    if (panel == null)
+                        continue;
                     foreach (MenuGrid menu in panel.Children)
                     {
                         menu.IsSelected = false;
@@ -66,13 +72,47 @@ namespace MindForgeClient
                 }
             }
             grid.IsSelected = true;
-            MainFrame.Navigate(new ProfilePage());
+
+            var typeOfGridContent = MainFrame.Content?.GetType();
+            if (grid.Name == "Friends" && typeOfGridContent != typeof(FriendsMenuPage))
+                MainFrame.Navigate(new FriendsMenuPage());
+            if (grid.Name == "Profile" && typeOfGridContent != typeof(ProfilePage))
+                MainFrame.Navigate(new ProfilePage());
         }
 
-        private async void GetLogin()
+        private async void GetProfile()
         {
-            string login = await httpClient.GetStringAsync("https://localhost:7236/profile");
-            LoginLabel.Content = login;
+            var response = await httpClient.GetAsync(App.HttpsStr + "/profile");
+            if (!response.IsSuccessStatusCode)
+                return;
+            ProfileInformation profileInformation = await response.Content.ReadFromJsonAsync<ProfileInformation>();
+            this.Resources.Add("Profile",profileInformation);
+            LoginLabel.Content = profileInformation!.Login;
+            if (profileInformation.ImageByte is null)
+                return;
+            var image = App.GetImageFromByteArray(profileInformation.ImageByte);
+            ProfileImage.Source = image;
+            SetProfileImage(image);
         }
+        private async void GetProfessions()
+        {
+            var response = await httpClient.GetAsync(App.HttpsStr + "/professions");
+            if (!response.IsSuccessStatusCode)
+                return;
+            this.Resources.Add("Professions",await response.Content.ReadFromJsonAsync<List<ProfessionResponse>>());
+
+        }
+
+        private async void Logout(object sender, MouseButtonEventArgs e)
+        {
+            var response = await httpClient.PostAsync(App.HttpsStr + "/logout", null);
+            httpClient.DefaultRequestHeaders.Authorization = null;
+            Window window = new InitialWindow();
+            window.Show();
+            this.Close();
+        }
+
+        internal void SetProfileImage(BitmapImage image) =>
+            ProfileImage.Source = image;
     }
 }

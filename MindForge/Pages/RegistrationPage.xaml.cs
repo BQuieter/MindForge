@@ -30,7 +30,8 @@ namespace MindForgeClient.Pages
         private Regex passwordHasLowerChar  = new(@"[a-zа-я]+");
         private Regex passwordHasUpperChar = new(@"[A-ZА-Я]+");
         private Regex passwordHasNumber = new(@"[0-9]+");
-        private Regex hasQuotes = new("""["']+""");
+        private Regex hasIncorrectSymbols = new("""["' ]+""");
+        private Regex hasSpace = new(" ");
         private HttpClient httpClient;
         public RegistrationPage()
         {
@@ -55,8 +56,8 @@ namespace MindForgeClient.Pages
 
             if (text.Length < 3 && text.Length != 0)
                 warn = "Логин должен содержать минимум 3 символа";
-            if (hasQuotes.IsMatch(text))
-                warn = "Логин не должен содержать символы \" \'";
+            if (hasIncorrectSymbols.IsMatch(text))
+                warn = "Логин не должен содержать символы \" \' и пробел";
 
             LoginWarn.Text = warn;
         }
@@ -77,8 +78,8 @@ namespace MindForgeClient.Pages
                     warn = "Пароль должен содержать букву в верхнем регистре";
                 if (!passwordHasLowerChar.IsMatch(password))
                     warn = "Пароль должен содержать букву в нижнем регистре";
-                if (hasQuotes.IsMatch(password))
-                    warn = "Логин не должен содержать символы \" \'";
+                if (hasIncorrectSymbols.IsMatch(password))
+                    warn = "Логин не должен содержать символы \" \' и пробел";
             }
             ConfirmPasswordBox_PasswordChanged(ConfirmPasswordBox as object, new());
 
@@ -98,9 +99,9 @@ namespace MindForgeClient.Pages
             ConfirmPasswordWarn.Text = warn;
         }
         private void WatermarkHelper(object sender, TextChangedEventArgs e) =>
-            InitialWindow.WatermarkHelper(sender, e);
+            App.WatermarkHelper(sender, e);
         private void WatermarkHelper(object sender, RoutedEventArgs e) =>
-            InitialWindow.WatermarkHelper(sender, e);
+            App.WatermarkHelper(sender, e);
 
         private async void Registration(object sender, RoutedEventArgs e)
         {
@@ -124,7 +125,7 @@ namespace MindForgeClient.Pages
                 return;
             InitialWindow.ShowLoadingGif(LoadingGif, RegistrationButton);
             UserLoginInformation information = new(LoginBox.Text, BCrypt.Net.BCrypt.HashPassword(PasswordBox.Password));
-            var response = await httpClient.PostAsJsonAsync<UserLoginInformation>("https://localhost:7236/registration", information);
+            var response = await httpClient.PostAsJsonAsync<UserLoginInformation>(App.HttpsStr + "/registration", information);
             if (response.IsSuccessStatusCode)
             {
                 await InitialWindow.GetJwtToken(response);
@@ -139,8 +140,8 @@ namespace MindForgeClient.Pages
 
         private async Task LoginExists(HttpResponseMessage response)
         {
-            var responseDictionary = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-            LoginWarn.Text = responseDictionary?["message"];
+            var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+            LoginWarn.Text = error!.Message;
         }
     }
 }

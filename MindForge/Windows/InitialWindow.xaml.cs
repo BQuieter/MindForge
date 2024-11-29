@@ -37,7 +37,6 @@ namespace MindForge
         {
             InitializeComponent();
 
-            HttpClientSingleton.Set();
             httpClient = HttpClientSingleton.httpClient!;
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
             //InitialFrame.Navigate(new SignInPage());
@@ -56,10 +55,11 @@ namespace MindForge
                     return true;
                 }
             });
+
         }
         private async Task<bool> CheckServerConnection()
         {
-            var response = await httpClient.GetAsync("https://localhost:7236/");
+            var response = await httpClient.GetAsync(App.HttpsStr + "/");
             return response.IsSuccessStatusCode;
         }
 
@@ -70,25 +70,11 @@ namespace MindForge
             App.MinimizeWindow(this);
         private void MaximizeButton_Click(object sender, RoutedEventArgs e) =>
             App.MaximizeWindow(this);
-        
-        public static void WatermarkHelper(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = (sender as TextBox)!;
-            var grid = VisualTreeHelper.GetParent(textBox) as Grid;
-            grid!.Children[1].Visibility = textBox.Text == string.Empty ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public static void WatermarkHelper(object sender, RoutedEventArgs e)
-        {
-            PasswordBox passwordBox = (sender as PasswordBox)!;
-            var grid = VisualTreeHelper.GetParent(passwordBox) as Grid;
-            grid!.Children[1].Visibility = passwordBox.Password == string.Empty ? Visibility.Visible : Visibility.Collapsed;
-        }
 
         public static async Task GetJwtToken(HttpResponseMessage response)
         {
-            var responseDictionary = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", responseDictionary?["message"]);
+            var jwtTokenResponse = await response.Content.ReadFromJsonAsync<JwtTokenResponse>();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(jwtTokenResponse!.TokenType, jwtTokenResponse.Token);
         }
 
         public static void ShowLoadingGif(Image gif, Button button)

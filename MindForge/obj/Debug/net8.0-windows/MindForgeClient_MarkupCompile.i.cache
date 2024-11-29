@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\BQuiet\source\repos\MindForge\MindForge\App.xaml
-82114821289
+131627826284
 
-141633237337
-201901967419
-Pages\ProfilePage.xaml;Pages\RegistrationPage.xaml;Pages\SignInPage.xaml;Styles\InitialDictionary.xaml;Styles\MenuDictionary.xaml;Styles\WindowDictionary.xaml;Windows\InitialWindow.xaml;Windows\MainWindow.xaml;
+18299208207
+2022099403254
+Pages\FriendsMenuPage.xaml;Pages\FriendsPages\AddFriendsPage.xaml;Pages\FriendsPages\AllFriendsPage.xaml;Pages\FriendsPages\RequestsPage.xaml;Pages\ProfilePage.xaml;Pages\RegistrationPage.xaml;Pages\SignInPage.xaml;Styles\InitialDictionary.xaml;Styles\MenuDictionary.xaml;Styles\ProfileDictionary.xaml;Styles\WindowDictionary.xaml;Windows\InitialWindow.xaml;Windows\MainWindow.xaml;
 
 True
 

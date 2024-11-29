@@ -30,6 +30,9 @@ namespace MindForgeClient.Pages
         {
             InitializeComponent();
             httpClient = HttpClientSingleton.httpClient!;
+            LoginBox.Text = "qwerty";
+            PasswordBox.Password = "Qwerty12";
+            SignIn(new object(), new RoutedEventArgs());
         }
 
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
@@ -52,9 +55,9 @@ namespace MindForgeClient.Pages
             PasswordWarn.Text = string.Empty;
         }
         private void WatermarkHelper(object sender, TextChangedEventArgs e) =>
-             InitialWindow.WatermarkHelper(sender, e);
+             App.WatermarkHelper(sender, e);
         private void WatermarkHelper(object sender, RoutedEventArgs e) =>
-            InitialWindow.WatermarkHelper(sender, e);
+            App.WatermarkHelper(sender, e);
 
 
         private async void SignIn(object sender, RoutedEventArgs e)
@@ -75,7 +78,7 @@ namespace MindForgeClient.Pages
 
             UserLoginInformation information = new(LoginBox.Text, PasswordBox.Password);
             InitialWindow.ShowLoadingGif(LoadingGif, SignInButton);
-            var response = await httpClient.PostAsJsonAsync<UserLoginInformation>("https://localhost:7236/login", information);
+            var response = await httpClient.PostAsJsonAsync<UserLoginInformation>(App.HttpsStr + "/login", information);
             if (response.IsSuccessStatusCode)
             {
                 await InitialWindow.GetJwtToken(response);
@@ -91,8 +94,8 @@ namespace MindForgeClient.Pages
         }
         private async Task WriteWarn(HttpResponseMessage response)
         {
-            var responseDictionary = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-            LoginWarn.Text = responseDictionary?["message"];
+            var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+            LoginWarn.Text = error!.Message;
         }
     }
 }

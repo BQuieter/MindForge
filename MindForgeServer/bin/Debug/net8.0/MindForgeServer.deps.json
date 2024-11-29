@@ -13,7 +13,8 @@
           "Microsoft.EntityFrameworkCore": "9.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.0",
-          "MindForgeClasses": "1.0.0"
+          "MindForgeClasses": "1.0.0",
+          "MindForgeDbClasses": "1.0.0"
         },
         "runtime": {
           "MindForgeServer.dll": {}
@@ -1046,6 +1047,14 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "MindForgeDbClasses/1.0.0": {
+        "runtime": {
+          "MindForgeDbClasses.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -1588,6 +1597,11 @@
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
     },
     "MindForgeClasses/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MindForgeDbClasses/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

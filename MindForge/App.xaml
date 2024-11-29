@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Styles/InitialDictionary.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Styles/WindowDictionary.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Styles/MenuDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Styles/ProfileDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

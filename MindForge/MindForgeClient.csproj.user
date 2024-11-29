@@ -3,6 +3,18 @@
   <PropertyGroup />
   <ItemGroup />
   <ItemGroup>
+    <Compile Update="Pages\FriendsMenuPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\FriendsPages\AddFriendsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\FriendsPages\AllFriendsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\FriendsPages\RequestsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ProfilePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -17,7 +29,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\FriendsMenuPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\FriendsPages\AddFriendsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\FriendsPages\AllFriendsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\FriendsPages\RequestsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\ProfilePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ProfileDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\WindowDictionary.xaml">

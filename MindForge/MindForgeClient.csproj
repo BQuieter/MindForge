@@ -20,43 +20,61 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\Add.png" />
+    <None Remove="Images\AddProfession.png" />
+    <None Remove="Images\Delete.png" />
     <None Remove="Images\FullLogo.jpg" />
     <None Remove="Images\Icon.png" />
     <None Remove="Images\Loading.gif" />
     <None Remove="Images\Logo.png" />
     <None Remove="Images\Logo1.jpg" />
     <None Remove="Images\MenuIcons\AddFriend.png" />
+    <None Remove="Images\MenuIcons\AllFriends.png" />
     <None Remove="Images\MenuIcons\Chats.png" />
     <None Remove="Images\MenuIcons\Communities.png" />
     <None Remove="Images\MenuIcons\Friends.png" />
+    <None Remove="Images\MenuIcons\Friends\AddFriend.png" />
+    <None Remove="Images\MenuIcons\Friends\AllFriends.png" />
+    <None Remove="Images\MenuIcons\Friends\ApplyRequest.png" />
+    <None Remove="Images\MenuIcons\Friends\DeleteFriend.png" />
+    <None Remove="Images\MenuIcons\Friends\DeleteRequest.png" />
+    <None Remove="Images\MenuIcons\Friends\RequestFriend.png" />
     <None Remove="Images\MenuIcons\Groups.png" />
+    <None Remove="Images\MenuIcons\Logout.png" />
+    <None Remove="Images\MenuIcons\RequestFriend.png" />
     <None Remove="Images\MenuIcons\Settings.png" />
     <None Remove="Images\MiniLogo.png" />
     <None Remove="Images\Profile.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Add.png" />
+    <Resource Include="Images\AddProfession.png" />
+    <Resource Include="Images\Delete.png" />
     <Resource Include="Images\Loading.gif" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\MindForgeClasses\MindForgeClasses.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\FullLogo.jpg" />
     <Resource Include="Images\Logo.png" />
     <Resource Include="Images\Logo1.jpg" />
-    <Resource Include="Images\MenuIcons\AddFriend.png" />
     <Resource Include="Images\MenuIcons\Chats.png" />
     <Resource Include="Images\MenuIcons\Communities.png" />
     <Resource Include="Images\MenuIcons\Friends.png" />
+    <Resource Include="Images\MenuIcons\Friends\AddFriend.png" />
+    <Resource Include="Images\MenuIcons\Friends\AllFriends.png" />
+    <Resource Include="Images\MenuIcons\Friends\ApplyRequest.png" />
+    <Resource Include="Images\MenuIcons\Friends\DeleteFriend.png" />
+    <Resource Include="Images\MenuIcons\Friends\DeleteRequest.png" />
+    <Resource Include="Images\MenuIcons\Friends\RequestFriend.png" />
     <Resource Include="Images\MenuIcons\Groups.png" />
+    <Resource Include="Images\MenuIcons\Logout.png" />
     <Resource Include="Images\MenuIcons\Settings.png" />
     <Resource Include="Images\MiniLogo.png" />
     <Resource Include="Images\Profile.png" />
@@ -64,6 +82,10 @@
 
   <ItemGroup>
     <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MindForgeClasses\MindForgeClasses.csproj" />
   </ItemGroup>
 
 </Project>

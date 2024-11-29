@@ -38,3 +38,13 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindFo
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\ref\MindForgeClient.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\ProfilePage.g.cs
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\ProfilePage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Styles\ProfileDictionary.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\SixLabors.ImageSharp.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsMenuPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsMenuPage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsPages\AllFriendsPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsPages\AllFriendsPage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsPages\AddFriendsPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsPages\AddFriendsPage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsPages\RequestsPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsPages\RequestsPage.baml
