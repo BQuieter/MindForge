@@ -27,11 +27,10 @@ namespace MindForgeClient.Pages.FriendsPages
     public partial class AllFriendsPage : Page
     {
         private HttpClient httpClient;
-        ProfileInformation profileInformation;
         private readonly string NoFriendsWarn = "У тебя пока что нет ни одного друга :(";
         private readonly string NotFoundFilterWarn = "Нет друзей с таким логином";
-        ObservableCollection<ProfileInformation> usersSource = new ObservableCollection<ProfileInformation>();
-        ObservableCollection<ProfileInformation> usersFilterList = new ObservableCollection<ProfileInformation>();
+        private ObservableCollection<ProfileInformation> usersFilterList = new ObservableCollection<ProfileInformation>();
+        private ApplicationData applicationData;
         public AllFriendsPage()
         {
             InitializeComponent();
@@ -40,30 +39,15 @@ namespace MindForgeClient.Pages.FriendsPages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Window currentWindow = Window.GetWindow(this);
-            profileInformation = (ProfileInformation)currentWindow.Resources["Profile"];
-            var friendsResponse = await httpClient.GetAsync(App.HttpsStr + "/friends/all");
-            if (friendsResponse.StatusCode == System.Net.HttpStatusCode.NoContent)
-            {
-                ShowWarn(NoFriendsWarn);
-                return;
-            }
-            var friends = await friendsResponse.Content.ReadFromJsonAsync<List<ProfileInformation>>();
-            if (friends is not null && friends.Count > 0)
-            {
-                usersSource = new ObservableCollection<ProfileInformation>(friends);
-                UsersListBox.ItemsSource = usersSource;
-            }
+            MainWindow currentWindow = Window.GetWindow(this) as MainWindow;
+            applicationData = currentWindow.applicationData;
+            UsersListBox.ItemsSource = applicationData.UsersFriends;
             CheckSource();
-    }
-
-    private void Image_Loaded(object sender, RoutedEventArgs e)
-        {
-            var image = (Image)sender;
-            var profile = image.DataContext as ProfileInformation;
-            if (profile!.ImageByte is not null)
-                image.Source = App.GetImageFromByteArray(profile.ImageByte);
         }
+
+        private void Image_Loaded(object sender, RoutedEventArgs e) => 
+            FriendsMenuPage.Image_Loaded(sender, e);
+        
 
         private async void DeleteFriend(object sender, RoutedEventArgs e)
         {
@@ -72,7 +56,7 @@ namespace MindForgeClient.Pages.FriendsPages
             var response = await FriendsMenuPage.MakeRelationshipAction(RelationshipAction.Delete, profile.Login);
             if (response.IsSuccessStatusCode)
             {
-                usersSource.Remove(profile);
+                applicationData.UsersFriends.Remove(profile);
                 usersFilterList.Remove(profile);
                 CheckSource();
                 CheckFilter();
@@ -86,11 +70,11 @@ namespace MindForgeClient.Pages.FriendsPages
             if (textBox.Text.Length == 0)
             {
                 CheckSource();
-                UsersListBox.ItemsSource = usersSource;
+                UsersListBox.ItemsSource = applicationData.UsersFriends;
             }
             else
             {
-                var filteredCollection = usersSource.Where(u => Regex.IsMatch(u.Login.ToLower(), $"^.*{textBox.Text.ToLower()}.*$"));
+                var filteredCollection = applicationData.UsersFriends.Where(u => Regex.IsMatch(u.Login.ToLower(), $"^.*{textBox.Text.ToLower()}.*$"));
                 usersFilterList = new ObservableCollection<ProfileInformation>(filteredCollection);
                 CheckFilter();
                 UsersListBox.ItemsSource = usersFilterList;
@@ -98,14 +82,16 @@ namespace MindForgeClient.Pages.FriendsPages
         }
         private void CheckSource()
         {
-            if (usersSource is null || usersSource.Count == 0)
+            if (applicationData.UsersFriends.Count == 0)
                 ShowWarn(NoFriendsWarn);
             else UserWarn.Visibility = Visibility.Collapsed;
         }
 
         private void CheckFilter()
         {
-            if ( usersFilterList is null || usersFilterList.Count == 0)
+            if (LoginTextBox.Text.Length == 0)
+                return;
+            if (usersFilterList is null || usersFilterList.Count == 0)
                 ShowWarn(NotFoundFilterWarn);
             else UserWarn.Visibility = Visibility.Collapsed;
         }

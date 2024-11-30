@@ -14,17 +14,17 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal" Background="#252525">
-                <local:MenuGrid x:Name="AllFriends" Style="{StaticResource MenuGrid}" Margin="0" IsSelected ="True">
-                    <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Friends/AllFriends.png" Panel.ZIndex="1"/>
+            <StackPanel Orientation="Horizontal" Background="#262626">
+                <local:MenuGrid x:Name="IncomingRequests" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick" Margin="0" IsSelected ="True">
+                    <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Friends/IncomingRequest.png" Panel.ZIndex="1"/>
                     <Label Style="{StaticResource MenuLabel}" Content="Входящие запросы"/>
                 </local:MenuGrid>
-                <local:MenuGrid x:Name="RequestFriend" Style="{StaticResource MenuGrid}"  Margin="0">
-                    <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Friends/RequestFriend.png" Panel.ZIndex="1"/>
+                <local:MenuGrid x:Name="OutgoingRequests" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick" Margin="0">
+                    <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Friends/outgoingRequest.png" Panel.ZIndex="1"/>
                     <Label Style="{StaticResource MenuLabel}" Content="Исходящие запросы"/>
                 </local:MenuGrid>
             </StackPanel>
         </Grid>
-        <Frame x:Name="FriendsFrame" Grid.Row="1"/>
+        <Frame x:Name="MainFrame" Grid.Row="1"/>
     </Grid>
 </Page>

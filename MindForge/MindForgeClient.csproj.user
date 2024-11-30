@@ -1,15 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup />
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\BQuiet\source\repos\MindForge\MindForge\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Update="Pages\FriendsMenuPage.xaml.cs">
+    <Compile Update="Pages\FriendsPages\FriendsMenuPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\FriendsPages\AddFriendsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\FriendsPages\AllFriendsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\FriendsPages\IncomingRequestsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\FriendsPages\OutgoingRequestsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\FriendsPages\RequestsPage.xaml.cs">
@@ -29,13 +37,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\FriendsMenuPage.xaml">
+    <Page Update="Pages\FriendsPages\FriendsMenuPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\FriendsPages\AddFriendsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\FriendsPages\AllFriendsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\FriendsPages\IncomingRequestsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\FriendsPages\OutgoingRequestsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\FriendsPages\RequestsPage.xaml">

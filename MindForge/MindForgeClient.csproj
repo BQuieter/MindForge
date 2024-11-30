@@ -38,6 +38,8 @@
     <None Remove="Images\MenuIcons\Friends\ApplyRequest.png" />
     <None Remove="Images\MenuIcons\Friends\DeleteFriend.png" />
     <None Remove="Images\MenuIcons\Friends\DeleteRequest.png" />
+    <None Remove="Images\MenuIcons\Friends\IncomingRequest.png" />
+    <None Remove="Images\MenuIcons\Friends\OutgoingRequest.png" />
     <None Remove="Images\MenuIcons\Friends\RequestFriend.png" />
     <None Remove="Images\MenuIcons\Groups.png" />
     <None Remove="Images\MenuIcons\Logout.png" />
@@ -72,6 +74,8 @@
     <Resource Include="Images\MenuIcons\Friends\ApplyRequest.png" />
     <Resource Include="Images\MenuIcons\Friends\DeleteFriend.png" />
     <Resource Include="Images\MenuIcons\Friends\DeleteRequest.png" />
+    <Resource Include="Images\MenuIcons\Friends\IncomingRequest.png" />
+    <Resource Include="Images\MenuIcons\Friends\OutgoingRequest.png" />
     <Resource Include="Images\MenuIcons\Friends\RequestFriend.png" />
     <Resource Include="Images\MenuIcons\Groups.png" />
     <Resource Include="Images\MenuIcons\Logout.png" />

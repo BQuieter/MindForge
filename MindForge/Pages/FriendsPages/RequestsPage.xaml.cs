@@ -23,6 +23,26 @@ namespace MindForgeClient.Pages.FriendsPages
         public RequestsPage()
         {
             InitializeComponent();
+            MainFrame.Navigate(new IncomingRequestsPage());
+        }
+
+        private void MenuClick(object sender, MouseButtonEventArgs e)
+        {
+            MenuGrid grid = (sender as MenuGrid)!;
+            StackPanel parent = (StackPanel)VisualTreeHelper.GetParent(grid);
+            foreach (var child in parent.Children)
+            {
+                if (child is MenuGrid menuGrid)
+                    menuGrid.IsSelected = false;
+            }
+            grid.IsSelected = true;
+
+            var typeOfGridContent = MainFrame.Content?.GetType();
+            if (grid.Name == "IncomingRequests" && typeOfGridContent != typeof(IncomingRequestsPage))
+                MainFrame.Navigate(new IncomingRequestsPage());
+            if (grid.Name == "OutgoingRequests" && typeOfGridContent != typeof(OutgoingRequestsPage))
+                MainFrame.Navigate(new OutgoingRequestsPage());
+           
         }
     }
 }

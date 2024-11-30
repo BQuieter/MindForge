@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MindForgeClient"
         mc:Ignorable="d"
-        Style="{StaticResource BasicWindowStyle}"
+        Style="{StaticResource BasicWindowStyle}" Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen" >
     
     <WindowChrome.WindowChrome>

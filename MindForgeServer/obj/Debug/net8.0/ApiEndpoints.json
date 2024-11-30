@@ -70,7 +70,7 @@
   {
     "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
     "Method": "\u003CMain\u003Eb__0_6",
-    "RelativePath": "professions/{user?}",
+    "RelativePath": "professions",
     "HttpMethod": "PUT",
     "IsController": false,
     "Order": 0,
@@ -203,6 +203,38 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_10",
+    "RelativePath": "requests/incoming",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_11",
+    "RelativePath": "requests/outgoing",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "System.Void",

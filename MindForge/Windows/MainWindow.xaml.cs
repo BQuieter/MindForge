@@ -28,14 +28,18 @@ namespace MindForgeClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        internal ApplicationData applicationData;
         private static HttpClient httpClient;
         public MainWindow()
         {
             InitializeComponent();
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
             httpClient = HttpClientSingleton.httpClient!;
-            GetProfile();
-            GetProfessions();
+            applicationData = new();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetProfileInformation();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e) =>
@@ -80,27 +84,15 @@ namespace MindForgeClient
                 MainFrame.Navigate(new ProfilePage());
         }
 
-        private async void GetProfile()
+        private async void SetProfileInformation()
         {
-            var response = await httpClient.GetAsync(App.HttpsStr + "/profile");
-            if (!response.IsSuccessStatusCode)
+            await applicationData.LoadedTask;
+            LoginLabel.Content = applicationData.UserProfile.Login;
+            if (applicationData.UserProfile.ImageByte is null)
                 return;
-            ProfileInformation profileInformation = await response.Content.ReadFromJsonAsync<ProfileInformation>();
-            this.Resources.Add("Profile",profileInformation);
-            LoginLabel.Content = profileInformation!.Login;
-            if (profileInformation.ImageByte is null)
-                return;
-            var image = App.GetImageFromByteArray(profileInformation.ImageByte);
+            var image = App.GetImageFromByteArray(applicationData.UserProfile.ImageByte);
             ProfileImage.Source = image;
             SetProfileImage(image);
-        }
-        private async void GetProfessions()
-        {
-            var response = await httpClient.GetAsync(App.HttpsStr + "/professions");
-            if (!response.IsSuccessStatusCode)
-                return;
-            this.Resources.Add("Professions",await response.Content.ReadFromJsonAsync<List<ProfessionResponse>>());
-
         }
 
         private async void Logout(object sender, MouseButtonEventArgs e)

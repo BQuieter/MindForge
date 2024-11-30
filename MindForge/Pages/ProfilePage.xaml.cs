@@ -36,17 +36,11 @@ namespace MindForgeClient.Pages
     public partial class ProfilePage : Page
     {
         private bool isEdit = false;
-        //Штука чтоб сохранить поля профиля для отката
-        private Dictionary<string, object> oldData = new();
         private byte[] currentImage = null;
         private HttpClient httpClient;
-        // -----------------------------------
-        private Window currentWindow;
-        private ProfileInformation profileInformation;
-        private List<ProfessionResponse> exitingProfessions;
-        private ObservableCollection<ProfessionResponse> userProfessions = new ObservableCollection<ProfessionResponse>();
-        private ObservableCollection<ProfessionResponse> oldUserProfessions = new ObservableCollection<ProfessionResponse>();
-
+        private MainWindow currentWindow;
+        private ApplicationData applicationData;
+        private Dictionary<ProfessionInformation, bool> professionsDifferences = new();
         public ProfilePage()
         {
             InitializeComponent();
@@ -54,11 +48,10 @@ namespace MindForgeClient.Pages
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            currentWindow = Window.GetWindow(this);
-            profileInformation = (ProfileInformation)currentWindow.Resources["Profile"];
-            exitingProfessions = (List<ProfessionResponse>)currentWindow.Resources["Professions"];
+            currentWindow = (Window.GetWindow(this) as MainWindow)!;
+            applicationData = currentWindow.applicationData;
+            ProfessionListBox.ItemsSource = applicationData.UserProfessions;
             SetInitialInformation();
-            ProfessionListBox.ItemsSource = userProfessions;
         }
 
         private void ProfileImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -71,71 +64,70 @@ namespace MindForgeClient.Pages
             if (photoDialog.ShowDialog() == false)
                 return;
             byte[] imageByte = CompressImageAndGetBytes(photoDialog.FileName);
-                currentImage = imageByte;
+            currentImage = imageByte;
             SetImage(imageByte);
-
         }
 
         private void SetImage(byte[] imageByte)
         {
             var image = App.GetImageFromByteArray(imageByte);
             ProfileImage.Source = image;
-            MainWindow window = (currentWindow as MainWindow)!;
-            window.SetProfileImage(image);
+            currentWindow.SetProfileImage(image);
         }
 
         private void Description_TextChanged(object sender, TextChangedEventArgs e) =>
             App.WatermarkHelper(sender, e);
 
+        private void ChangeProfessions()
+        {
+            foreach (var profession in professionsDifferences)
+            {
+                if (profession.Value)
+                    applicationData.UserProfessions.Remove(profession.Key);
+                else
+                    applicationData.UserProfessions.Add(profession.Key);
+            }
+        }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Description.Text = oldData["Description"].ToString();
-            if (oldData["Image"] is not null)
-            {
-                currentImage = (byte[])oldData["Image"];
-                SetImage(currentImage);
-            }
+            Description.Text = applicationData.UserProfile.Description;
+            if (applicationData.UserProfile.ImageByte is not null)
+                SetImage(applicationData.UserProfile.ImageByte);
             else
                 ProfileImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/Profile.png"));
-            if (oldUserProfessions.Count > 0)
-            {
-                userProfessions.Clear();
-                userProfessions = new ObservableCollection<ProfessionResponse>(oldUserProfessions.Select(p => p));
-            }
-            else
-                userProfessions.Clear();
+
+            ChangeProfessions();
             StopEdit();
         }
 
         private async void Edit_Click(object sender, RoutedEventArgs e)
         {
             isEdit = true;
+            currentImage = applicationData.UserProfile.ImageByte;
             Description.IsReadOnly = false;
             EditButton.Visibility = Visibility.Collapsed;
             SaveButton.Visibility = Visibility.Visible;
             CancelButton.Visibility = Visibility.Visible;
-            if (userProfessions.Count != exitingProfessions.Count)
+            if (applicationData.UserProfessions.Count != applicationData.AllProfessions.Count)
                 AddProfessionGrid.Visibility = Visibility.Visible;
             SetVisibleListBoxItemButton(true, await GetGrids());
         }
 
         private async void Save_Click(object sender, RoutedEventArgs e)
         {
-            var response = await httpClient.PutAsJsonAsync<ProfileInformation>(App.HttpsStr + "/profile", new ProfileInformation { Description = Description.Text, ImageByte = currentImage });
-            var responsea = await httpClient.PutAsJsonAsync<List<ProfessionResponse>>(App.HttpsStr + $"/professions/{profileInformation.Login}", userProfessions.ToList());
-            if (!response.IsSuccessStatusCode)
+            var response1 = await httpClient.PutAsJsonAsync<ProfileInformation>(App.HttpsStr + "/profile", new ProfileInformation { Description = Description.Text, ImageByte = currentImage });
+            var response2 = await httpClient.PutAsJsonAsync<List<ProfessionInformation>>(App.HttpsStr + $"/professions", applicationData.UserProfessions.ToList());
+            if (!response1.IsSuccessStatusCode || !response2.IsSuccessStatusCode)
                 return;
-            oldData["Description"] = Description.Text;
-            oldData["Image"] = currentImage;
-            oldUserProfessions = new ObservableCollection<ProfessionResponse>(userProfessions.Select(p => p));
+            applicationData.UserProfile.Description = Description.Text;
             StopEdit();
         }
 
         private async void StopEdit()
         {
-            ProfessionListBox.ItemsSource = userProfessions;
             isEdit = false;
             Description.IsReadOnly = true;
+            professionsDifferences.Clear();
             EditButton.Visibility = Visibility.Visible;
             SaveButton.Visibility = Visibility.Collapsed;
             CancelButton.Visibility = Visibility.Collapsed;
@@ -162,28 +154,13 @@ namespace MindForgeClient.Pages
             }
             return grids;
         }
-        private async void SetInitialInformation()
+        private void SetInitialInformation()
         {
-            LoginTextBlock.Text = profileInformation.Login;
-            Description.Text = profileInformation.Description;
-            oldData["Description"] = profileInformation.Description;
-            await GetUserProfessions();
-            oldUserProfessions = new ObservableCollection<ProfessionResponse>(userProfessions.Select(p => p));
-
-            if (profileInformation.ImageByte is null)
+            LoginTextBlock.Text = applicationData.UserProfile.Login;
+            Description.Text = applicationData.UserProfile.Description;
+            if (applicationData.UserProfile.ImageByte is null)
                 return;
-            oldData["Image"] = profileInformation.ImageByte;
-            currentImage = profileInformation.ImageByte;
-            SetImage(profileInformation.ImageByte);
-        }
-
-        private async Task GetUserProfessions()
-        {
-            var response = await httpClient.GetAsync(App.HttpsStr + $"/professions/{profileInformation.Login}");
-            if (!response.IsSuccessStatusCode)
-                return;
-            userProfessions = new ObservableCollection<ProfessionResponse>(await response.Content.ReadFromJsonAsync<List<ProfessionResponse>>());
-            ProfessionListBox.ItemsSource = userProfessions;
+            SetImage(applicationData.UserProfile.ImageByte);
         }
 
         private void ProfileImage_MouseEnter(object sender, MouseEventArgs e)
@@ -212,10 +189,14 @@ namespace MindForgeClient.Pages
         private void DeleteProfession(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            var profession = button.DataContext as ProfessionResponse;
-            userProfessions.Remove(userProfessions.FirstOrDefault(p => p.Name == profession.Name));
+            var profession = button.DataContext as ProfessionInformation;
+            applicationData.UserProfessions.Remove(profession);
+            if (professionsDifferences.ContainsKey(profession))
+                professionsDifferences.Remove(profession);
+            else
+                professionsDifferences.Add(profession, false);
             RecalculateComboBoxItems();
-            if (userProfessions.Count != exitingProfessions.Count && ProfessionsComboBox.Visibility == Visibility.Collapsed)
+            if (applicationData.UserProfessions.Count != applicationData.AllProfessions.Count && ProfessionsComboBox.Visibility == Visibility.Collapsed)
                 AddProfessionGrid.Visibility = Visibility.Visible;
         }
 
@@ -232,11 +213,15 @@ namespace MindForgeClient.Pages
             if (professionComboBox.SelectedItem is null)
                 return;
             professionComboBox.Visibility = Visibility.Collapsed;
-            ProfessionResponse selectedItem = (ProfessionsComboBox.SelectedItem as ProfessionResponse)!;
-            userProfessions.Add(selectedItem);
-            ProfessionListBox.ItemsSource = userProfessions;
+            ProfessionInformation selectedItem = (ProfessionsComboBox.SelectedItem as ProfessionInformation)!;
+            applicationData.UserProfessions.Add(selectedItem);
+            if (professionsDifferences.ContainsKey(selectedItem))
+                professionsDifferences.Remove(selectedItem);
+            else
+                professionsDifferences.Add(selectedItem, true);
+
             RecalculateComboBoxItems();
-            if (userProfessions.Count != exitingProfessions.Count)
+            if (applicationData.UserProfessions.Count != applicationData.AllProfessions.Count)
                 AddProfessionGrid.Visibility = Visibility.Visible;
             professionComboBox.SelectedItem = null;
             SetVisibleListBoxItemButton(true, await GetGrids());
@@ -244,9 +229,9 @@ namespace MindForgeClient.Pages
 
         private void RecalculateComboBoxItems()
         {
-            List<ProfessionResponse> exitingProfessionsCopy = new List<ProfessionResponse>(exitingProfessions);
+            List<ProfessionInformation> exitingProfessionsCopy = new List<ProfessionInformation>(applicationData.AllProfessions);
 
-            foreach (var a in userProfessions)
+            foreach (var a in applicationData.UserProfessions)
                 exitingProfessionsCopy.RemoveAll(p => p.Name == a.Name);
 
             ProfessionsComboBox.ItemsSource = exitingProfessionsCopy;
@@ -308,5 +293,8 @@ namespace MindForgeClient.Pages
                 return null; 
             }
         }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e) =>
+            ChangeProfessions();
     }
 }

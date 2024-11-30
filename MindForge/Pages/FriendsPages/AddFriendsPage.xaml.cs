@@ -27,8 +27,8 @@ namespace MindForgeClient.Pages.FriendsPages
     public partial class AddFriendsPage : Page
     {
         private HttpClient httpClient;
-        ProfileInformation profileInformation;
-        string currentTarget;
+        private ProfileInformation currentTarget;
+        private ApplicationData applicationData;
         public AddFriendsPage()
         {
             InitializeComponent();
@@ -36,8 +36,8 @@ namespace MindForgeClient.Pages.FriendsPages
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Window currentWindow = Window.GetWindow(this);
-            profileInformation = (ProfileInformation)currentWindow.Resources["Profile"];
+            MainWindow currentWindow = Window.GetWindow(this) as MainWindow;
+            applicationData = currentWindow.applicationData;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e) 
@@ -51,20 +51,20 @@ namespace MindForgeClient.Pages.FriendsPages
         {
             if (LoginTextBox.Text == "")
                 return;
-            if(LoginTextBox.Text == profileInformation.Login)
+            if(LoginTextBox.Text == applicationData.UserProfile.Login)
             {
                 UserWarn.Text = "Пользователь с данным логином это ты";
                 UserWarn.Visibility = Visibility.Visible;
                 return;
             }
-            if (currentTarget == LoginTextBox.Text)
+            if (currentTarget is not null && currentTarget.Login == LoginTextBox.Text)
                 return;
-            currentTarget = LoginTextBox.Text;
             var profileResponse = await httpClient.GetAsync(App.HttpsStr + $"/profile/{LoginTextBox.Text}");
             var relationshipResponse = await httpClient.GetAsync(App.HttpsStr + $"/relationship/{LoginTextBox.Text}");
             if (profileResponse.IsSuccessStatusCode && relationshipResponse.IsSuccessStatusCode)
             {
                 var userInform = await profileResponse.Content.ReadFromJsonAsync<ProfileInformation>();
+                currentTarget = userInform;
                 var relationshipInform = await relationshipResponse.Content.ReadFromJsonAsync<UserRelationshipResponse>();
                 UserLogin.Text = userInform!.Login;
                 UserImage.Source = App.GetImageFromByteArray(userInform.ImageByte);
@@ -114,34 +114,39 @@ namespace MindForgeClient.Pages.FriendsPages
         private void RequestAction(object sender, RoutedEventArgs e)
         {
             MakeAction(RelationshipAction.Request, Relationship.RequestSented);
+            applicationData.UsersOutgoingRequests.Add(currentTarget);
             ActionTextBlock.Text = "Запрос отправлен";
         }
 
         private void DeleteFriend(object sender, RoutedEventArgs e)
         {
             MakeAction(RelationshipAction.Delete, Relationship.None);
+            applicationData.UsersFriends.Remove(applicationData.UsersFriends.FirstOrDefault(f => f.Login == currentTarget.Login));
             ActionTextBlock.Text = "Друг удалён";
         }
         private void DeleteRequest(object sender, RoutedEventArgs e)
         {
             MakeAction(RelationshipAction.Delete, Relationship.None);
+            applicationData.UsersOutgoingRequests.Remove(applicationData.UsersOutgoingRequests.FirstOrDefault(f => f.Login == currentTarget.Login));
             ActionTextBlock.Text = "Запрос отозван";
         }
         private void RejectRequest(object sender, RoutedEventArgs e)
         {
             MakeAction(RelationshipAction.Delete, Relationship.None);
+            applicationData.UsersIncomingRequests.Remove(applicationData.UsersIncomingRequests.FirstOrDefault(f => f.Login == currentTarget.Login));
             ActionTextBlock.Text = "Запрос отклонён";
         }
 
         private void ApplyAction(object sender, RoutedEventArgs e)
         {
             MakeAction(RelationshipAction.Apply, Relationship.Friends);
+            applicationData.UsersFriends.Add(currentTarget);
             ActionTextBlock.Text = "Запрос принят";
         }
 
         private async void MakeAction(RelationshipAction action, Relationship relationship)
         {
-            var relationshipResponse = await FriendsMenuPage.MakeRelationshipAction(action, currentTarget);
+            var relationshipResponse = await FriendsMenuPage.MakeRelationshipAction(action, currentTarget.Login);
             if (relationshipResponse.IsSuccessStatusCode)
             {
                 HideButtons();

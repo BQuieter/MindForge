@@ -78,8 +78,8 @@ namespace MindForgeServer
 
             app.MapGet("/professions", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
-                List<ProfessionResponse> professions = await db.Professions.Select
-                (p => new ProfessionResponse{ 
+                List<ProfessionInformation> professions = await db.Professions.Select
+                (p => new ProfessionInformation{ 
                     Name = p.ProfessionName, 
                     Color = p.ProfessionColor
                 }).ToListAsync();
@@ -90,14 +90,14 @@ namespace MindForgeServer
             {
                 var professions = await db.UsersProfessions.Include(p => p.UserNavigation)
                     .Include(p => p.ProfessionNavigation).Where(p => p.UserNavigation.Login == user)
-                    .Select(p => new ProfessionResponse { 
+                    .Select(p => new ProfessionInformation { 
                         Name = p.ProfessionNavigation.ProfessionName, 
                         Color = p.ProfessionNavigation.ProfessionColor 
                     }).ToListAsync();
                 return Results.Ok(professions);
             });
 
-            app.MapPut("/professions/{user?}", [Authorize] async (string? user, MindForgeDbContext db, HttpContext context) =>
+            app.MapPut("/professions", [Authorize] async (string? user, MindForgeDbContext db, HttpContext context) =>
             {
                 if (user is not null && user != context.User.Identity!.Name!)
                     return Results.Unauthorized();
@@ -106,7 +106,7 @@ namespace MindForgeServer
 
                 var userDb = await db.Users.FirstOrDefaultAsync(u => u.Login == user);
                 int userId = userDb.UserId;
-                List<ProfessionResponse> userProfessions = await context.Request.ReadFromJsonAsync<List<ProfessionResponse>>();
+                List<ProfessionInformation> userProfessions = await context.Request.ReadFromJsonAsync<List<ProfessionInformation>>();
                 HashSet<string> professionsToKeep = new HashSet<string>(userProfessions.Select(p => p.Name));
 
                 db.UsersProfessions.RemoveRange(db.UsersProfessions.Where(p => p.UserNavigation.Login == user).ToList());
@@ -206,14 +206,48 @@ namespace MindForgeServer
                 string user = context.User.Identity!.Name!;
                 var relationshipFriends = db.Friendships.Where(f => (f.User1Navigation.Login == user || f.User2Navigation.Login == user) && f.Status == 1)
                      .Select(f => f.User1Navigation.Login == user ? f.User2Navigation.UserId : f.User1Navigation.UserId);
-                if (relationshipFriends.Count() == 0)
-                    return Results.NoContent();
                 var profiles = db.Profiles.Where(p => relationshipFriends
                     .Contains(p.UserNavigation.UserId))
                     .Select(p => new ProfileInformation { 
                         Login = p.UserNavigation.Login, 
                         Description = p.ProfileDescription, 
-                        ImageByte = p.ProfilePhoto});
+                        ImageByte = p.ProfilePhoto}).ToList();
+                if (profiles is null)
+                    profiles = new List<ProfileInformation>();
+                return Results.Ok(profiles);
+            });
+
+            app.MapGet("/requests/incoming", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
+            {
+                string user = context.User.Identity!.Name!;
+                var incomingRequests = db.Friendships.Where(f => f.User2Navigation.Login == user && f.Status == 2)
+                     .Select(f => f.User1Navigation.UserId);
+                var profiles = db.Profiles.Where(p => incomingRequests
+                    .Contains(p.UserNavigation.UserId))
+                    .Select(p => new ProfileInformation
+                    {
+                        Login = p.UserNavigation.Login,
+                        Description = p.ProfileDescription,
+                        ImageByte = p.ProfilePhoto}).ToList();
+                if (profiles is null)
+                    profiles = new List<ProfileInformation>();
+                return Results.Ok(profiles);
+            });
+
+            app.MapGet("/requests/outgoing", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
+            {
+                string user = context.User.Identity!.Name!;
+                var outgoingRequests = db.Friendships.Where(f => f.User1Navigation.Login == user && f.Status == 2)
+                     .Select(f => f.User2Navigation.UserId);
+                var profiles = db.Profiles.Where(p => outgoingRequests
+                    .Contains(p.UserNavigation.UserId))
+                    .Select(p => new ProfileInformation
+                    {
+                        Login = p.UserNavigation.Login,
+                        Description = p.ProfileDescription,
+                        ImageByte = p.ProfilePhoto}).ToList();
+                if (profiles is null)
+                    profiles = new List<ProfileInformation>();
                 return Results.Ok(profiles);
             });
 
