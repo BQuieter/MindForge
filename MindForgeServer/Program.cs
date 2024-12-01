@@ -73,7 +73,7 @@ namespace MindForgeServer
                     });
 
                 return Results.Ok(new ProfileInformation { 
-                    Login = user, 
+                    Login = profile.UserNavigation.Login, 
                     Description = profile.ProfileDescription!, 
                     ImageByte = profile.ProfilePhoto! });
             });

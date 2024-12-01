@@ -17,13 +17,14 @@
             <ColumnDefinition Width="140" MinWidth="45" MaxWidth="140"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="0" MaxWidth="350" x:Name="ProfileFrameColumn"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <GridSplitter Background="Transparent" Grid.Column="1" Grid.Row="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-        <Grid Grid.ColumnSpan="3" Grid.Row="0" Background="#171717">
+        <Grid Grid.ColumnSpan="4" Grid.Row="0" Background="#171717">
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                 <Button Content="X" Style="{StaticResource HeaderButton}" WindowChrome.IsHitTestVisibleInChrome="True" Click="CloseButton_Click" />
                 <Button Content="U" Style="{StaticResource HeaderButton}" WindowChrome.IsHitTestVisibleInChrome="True" Click="MaximizeButton_Click"/>
@@ -70,7 +71,6 @@
                 <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Logout.png" Panel.ZIndex="1" Margin="1 0 0 0"/>
                 <Label Style="{StaticResource MenuLabel}" Content="Выход"/>
             </Grid>
-            <!-- Сделай тут норм профиль, сначала базовая ава, а потом кастомная. (это пока заглушка) -->
             <local:MenuGrid x:Name="Profile" Style ="{StaticResource ProfileMenuGrid}" Grid.Row="2" MouseLeftButtonDown="MenuClick">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="45"/>
@@ -87,6 +87,10 @@
                 </Grid>
             </local:MenuGrid>
         </Grid>
+        <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Grid.Column="2">
+
+        </StackPanel>
         <Frame x:Name="MainFrame" Grid.Column="2" Grid.Row="2" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="ProfileFrame" Grid.Column="3" Grid.Row="2" NavigationUIVisibility="Hidden" Background="#222222" Visibility="Collapsed" IsVisibleChanged="ProfileFrame_IsVisibleChanged"/>
     </Grid>
 </Window>

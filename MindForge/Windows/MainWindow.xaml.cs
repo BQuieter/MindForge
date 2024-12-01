@@ -6,6 +6,7 @@ using MindForgeClient.Pages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.IO;
@@ -154,5 +155,30 @@ namespace MindForgeClient
 
         internal void SetProfileImage(BitmapImage image) =>
             ProfileImage.Source = image;
+
+        internal void OpenUserProfile(object sender, MouseButtonEventArgs e, ProfileInformation? profile = null)
+        {
+            ProfileInformation userProfile;
+            if (profile is null)
+            {
+                Grid grid = sender as Grid;
+                userProfile = grid.DataContext as ProfileInformation;
+            }
+            else
+                userProfile = profile;
+            if (ProfileFrame.Visibility == Visibility.Visible)
+            {
+                OtherUserProfilePage content = ProfileFrame.Content as OtherUserProfilePage;
+                if (content.Profile.Login == userProfile.Login)
+                    return;
+            }
+            ProfileFrame.Navigate(new OtherUserProfilePage(userProfile));
+            ProfileFrame.Visibility = Visibility.Visible;
+        }
+
+        private void ProfileFrame_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ProfileFrameColumn.Width = ProfileFrame.Visibility == Visibility.Visible ? new GridLength(0.4, GridUnitType.Star) : new GridLength(0);
+        }
     }
 }

@@ -13,21 +13,21 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Style="{StaticResource BasicTextBlock}" Text="Найти пользователя" FontSize="17" Height="30" />
                 <Grid Margin="10 0 10 0">
-                    <TextBox x:Name="LoginTextBox" Style="{StaticResource LoginTextBox}" VerticalAlignment="Center" Height="30" TextChanged="TextBox_TextChanged" FontSize="17"/>
+                    <TextBox x:Name="LoginTextBox" Style="{StaticResource LoginTextBox}" VerticalAlignment="Center" Height="30" TextChanged="TextBox_TextChanged" FontSize="17" Width="300"/>
                     <TextBlock Style="{StaticResource Watermark}" Text="Введите логин пользователя" Margin="3 0 0 0" FontSize="17" VerticalAlignment="Center" Height="30"/>
                 </Grid>
                 <Button Style="{StaticResource ButtonBase}" Content="Найти" VerticalAlignment="Center" Margin="0" Width="100" FontSize="17" Click="SearchUser"/>
             </StackPanel>
             <StackPanel x:Name="UserGrid" Orientation="Vertical" Background="#212121" Visibility="Collapsed">
-                <Grid>
+                <Grid Style="{StaticResource ProfileClickableGrid}" MouseLeftButtonDown="OpenProfile">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <StackPanel x:Name="Template" Margin="5" Orientation="Horizontal">
                             <Image x:Name="UserImage" Source="pack://application:,,,/Images/Profile.png" Width="48" Height="48" Margin="0 0 10 0"/>
-                            <TextBlock x:Name="UserLogin" Style="{StaticResource BasicTextBlock}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="UserLogin" Style="{StaticResource BasicTextBlock}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
                         </StackPanel>
                     </Grid>
                     <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Column="1" HorizontalAlignment="Right" >

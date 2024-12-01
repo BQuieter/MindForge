@@ -18,7 +18,6 @@ namespace MindForgeClient
     internal class ApplicationData
     {
         private HttpClient httpClient;
-        public HubConnection FriendConnection { get; private set; }
         public ProfileInformation UserProfile { get; set; }
         public ObservableCollection<ProfessionInformation> UserProfessions { get; set; }
         public ObservableCollection<ProfileInformation> UsersFriends { get; set; }
@@ -32,13 +31,6 @@ namespace MindForgeClient
         {
             httpClient = HttpClientSingleton.httpClient!;
             LoadInformation();
-            FriendConnection = new HubConnectionBuilder().WithUrl(App.HttpsStr + "/friendhub", options =>
-            options.Headers["Authorization"] = "Bearer " + httpClient.DefaultRequestHeaders.Authorization!.Parameter).WithAutomaticReconnect().Build();
-            FriendConnection.On<string, string>("Receive", (message, user) =>
-            {
-                var newMessage = $"от {user}: {message}";
-                MessageBox.Show(newMessage);
-            });
         }
         private async Task LoadInformation()
         {

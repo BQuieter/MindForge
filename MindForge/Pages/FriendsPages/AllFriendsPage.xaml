@@ -9,36 +9,38 @@
       Title="AllFriendsPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded"> 
 
     <Grid Margin="5 15 5 5">
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Style="{StaticResource BasicTextBlock}" Text="Найти друга" FontSize="17" Height="30" />
-                <Grid Margin="10 0 10 0">
-                    <TextBox x:Name="LoginTextBox" Style="{StaticResource LoginTextBox}" VerticalAlignment="Center" Height="30" FontSize="17" TextChanged="FilterFriends"/>
-                    <TextBlock Style="{StaticResource Watermark}" Text="Введите логин друга" Margin="3 0 0 0" FontSize="17" VerticalAlignment="Center" Height="30"/>
-                </Grid>
-            </StackPanel>
-            <ListBox x:Name="UsersListBox">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="100"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <StackPanel x:Name="Template" Margin="5" Orientation="Horizontal">
-                                    <Image Source="pack://application:,,,/Images/Profile.png" Width="48" Height="48" Margin="0 0 10 0" Loaded="Image_Loaded"/>
-                                    <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Login}" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Grid>
-                            <Button Style="{StaticResource ButtonBase }" ToolTip="Удалить из друзей" Grid.Column="1" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="DeleteFriend">
-                                <Image Source="pack://application:,,,/Images/MenuIcons/Friends/DeleteFriend.png" />
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <TextBlock x:Name="UserWarn" Style="{StaticResource WarnBlock}" Text="Пользователя с данным логином не существует" Margin="0 15 0 0" FontSize="17" TextAlignment="Center" Visibility="Collapsed"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <TextBlock Style="{StaticResource BasicTextBlock}" Text="Найти друга" FontSize="17" Height="30" />
+            <Grid Margin="10 0 10 0">
+                <TextBox x:Name="LoginTextBox" Style="{StaticResource LoginTextBox}" VerticalAlignment="Center" Height="30" FontSize="17" TextChanged="FilterFriends" Width="300"/>
+                <TextBlock Style="{StaticResource Watermark}" Text="Введите логин друга" Margin="3 0 0 0" FontSize="17" VerticalAlignment="Center" Height="30"/>
+            </Grid>
         </StackPanel>
+        <ListBox x:Name="UsersListBox" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Style="{StaticResource ProfileClickableGrid}" MouseLeftButtonDown="OpenProfile">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <StackPanel x:Name="Template" Margin="5" Orientation="Horizontal">
+                                <Image Source="pack://application:,,,/Images/Profile.png" Width="48" Height="48" Margin="0 0 10 0" Loaded="Image_Loaded"/>
+                                <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Login}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                        </Grid>
+                        <Button Style="{StaticResource ButtonBase }" ToolTip="Удалить из друзей" Grid.Column="1" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="DeleteFriend">
+                            <Image Source="pack://application:,,,/Images/MenuIcons/Friends/DeleteFriend.png" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock x:Name="UserWarn" Grid.Row="1" Style="{StaticResource WarnBlock}" Text="Пользователя с данным логином не существует" Margin="0 15 0 0" FontSize="17" TextAlignment="Center" Visibility="Collapsed"/>
     </Grid>
 </Page>

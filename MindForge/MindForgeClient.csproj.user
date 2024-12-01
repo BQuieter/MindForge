@@ -23,6 +23,9 @@
     <Compile Update="Pages\FriendsPages\RequestsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\OtherUserProfilePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ProfilePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -53,6 +56,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\FriendsPages\RequestsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\OtherUserProfilePage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\ProfilePage.xaml">

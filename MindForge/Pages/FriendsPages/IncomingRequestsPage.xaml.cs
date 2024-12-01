@@ -56,8 +56,8 @@ namespace MindForgeClient.Pages.FriendsPages
         {
             Dispatcher.Invoke(() =>
             {
-                UserWarn.Visibility = Visibility.Collapsed;
                 UsersListBox.Visibility = Visibility.Visible;
+                UserWarn.Visibility = Visibility.Collapsed;
             });
         }
         private void RequestDelete(object sender, ProfileInformation profile)
@@ -66,8 +66,9 @@ namespace MindForgeClient.Pages.FriendsPages
             {
                 if (applicationData.UsersIncomingRequests.Count == 0)
                 {
-                    UserWarn.Visibility = Visibility.Visible;
                     UsersListBox.Visibility = Visibility.Collapsed;
+                    UserWarn.Text = NoFriendsWarn;
+                    UserWarn.Visibility = Visibility.Visible;
                 }
             });
         }
@@ -142,5 +143,7 @@ namespace MindForgeClient.Pages.FriendsPages
             UserWarn.Text = warnText;
             UserWarn.Visibility = Visibility.Visible;
         }
+        private void OpenProfile(object sender, MouseButtonEventArgs e) =>
+            currentWindow.OpenUserProfile(sender, e);
     }
 }

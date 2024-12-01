@@ -39,7 +39,6 @@ namespace MindForgeClient
             });
 
             friendConnection.On<ProfileInformation>("FriendDeleted", profile => {
-                MessageBox.Show(profile.Login);
                 FriendDeleted?.Invoke(this, profile);
             });
 

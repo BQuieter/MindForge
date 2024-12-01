@@ -30,7 +30,7 @@ namespace MindForgeClient.Pages
         {
             InitializeComponent();
             httpClient = HttpClientSingleton.httpClient!;
-            LoginBox.Text = "qwerty";
+            LoginBox.Text = "Мустафа";
             PasswordBox.Password = "Qwerty12";
             //SignIn(new object(), new RoutedEventArgs());
         }

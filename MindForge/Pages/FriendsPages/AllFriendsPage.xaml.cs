@@ -27,7 +27,7 @@ namespace MindForgeClient.Pages.FriendsPages
     public partial class AllFriendsPage : Page
     {
         private HttpClient httpClient;
-        MainWindow currentWindow;
+        private MainWindow currentWindow;
         private readonly string NoFriendsWarn = "У тебя пока что нет ни одного друга :(";
         private readonly string NotFoundFilterWarn = "Нет друзей с таким логином";
         private ObservableCollection<ProfileInformation> usersFilterList = new ObservableCollection<ProfileInformation>();
@@ -68,6 +68,7 @@ namespace MindForgeClient.Pages.FriendsPages
                 if (applicationData.UsersFriends.Count == 0)
                 {
                     UserWarn.Visibility = Visibility.Visible;
+                    UserWarn.Text = NoFriendsWarn;
                     UsersListBox.Visibility = Visibility.Collapsed;
                 }
             });
@@ -129,5 +130,8 @@ namespace MindForgeClient.Pages.FriendsPages
             UserWarn.Text = warnText;
             UserWarn.Visibility = Visibility.Visible;
         }
+
+        private void OpenProfile(object sender, MouseButtonEventArgs e) =>
+            currentWindow.OpenUserProfile(sender,e);
     }
 }

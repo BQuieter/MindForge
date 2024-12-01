@@ -27,6 +27,7 @@ namespace MindForgeClient.Pages.FriendsPages
     public partial class AddFriendsPage : Page
     {
         private HttpClient httpClient;
+        private MainWindow currentWindow;
         private ProfileInformation currentTarget;
         private ApplicationData applicationData;
         public AddFriendsPage()
@@ -36,10 +37,79 @@ namespace MindForgeClient.Pages.FriendsPages
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            MainWindow currentWindow = Window.GetWindow(this) as MainWindow;
+            currentWindow = Window.GetWindow(this) as MainWindow;
             applicationData = currentWindow.applicationData;
+            currentWindow.friendNotificationService.FriendAdded += FriendAdd;
+            currentWindow.friendNotificationService.FriendDeleted += FriendDelete;
+            currentWindow.friendNotificationService.FriendRequestReceived += RequestAdd;
+            currentWindow.friendNotificationService.FriendRequestDeleted += RequestDelete;
+            currentWindow.friendNotificationService.FriendRequestRejected += RequestReject;
+        }
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            currentWindow.friendNotificationService.FriendAdded -= FriendAdd;
+            currentWindow.friendNotificationService.FriendDeleted -= FriendDelete;
+            currentWindow.friendNotificationService.FriendRequestReceived -= RequestAdd;
+            currentWindow.friendNotificationService.FriendRequestDeleted -= RequestDelete;
+            currentWindow.friendNotificationService.FriendRequestRejected -= RequestReject;
         }
 
+        private void FriendAdd(object sender, ProfileInformation profile)
+        {
+            if (profile.Login != currentTarget.Login)
+                return;
+            Dispatcher.Invoke(() =>
+            {
+                RecalculateVisibilityButtons(Relationship.Friends);
+                ActionTextBlock.Text = "Пользователь принял ваш запрос";
+                ActionTextBlock.Visibility = Visibility.Visible;
+            });
+        }
+        private void FriendDelete(object sender, ProfileInformation profile)
+        {
+            if (profile.Login != currentTarget.Login)
+                return;
+            Dispatcher.Invoke(() =>
+            {
+                RecalculateVisibilityButtons(Relationship.None);
+                ActionTextBlock.Text = "Пользователь удалил вас из друзей";
+                ActionTextBlock.Visibility = Visibility.Visible;
+            });
+        }
+        private void RequestAdd(object sender, ProfileInformation profile)
+        {
+            if (profile.Login != currentTarget.Login)
+                return;
+            Dispatcher.Invoke(() =>
+            {
+                RecalculateVisibilityButtons(Relationship.RequestSented);
+                ActionTextBlock.Text = "Пользователь отправил запрос";
+                ActionTextBlock.Visibility = Visibility.Visible;
+            });
+
+        }
+        private void RequestDelete(object sender, ProfileInformation profile)
+        {
+            if (profile.Login != currentTarget.Login)
+                return;
+            Dispatcher.Invoke(() =>
+            {
+                RecalculateVisibilityButtons(Relationship.None);
+                ActionTextBlock.Text = "Пользователь отозвал запрос";
+                ActionTextBlock.Visibility = Visibility.Visible;
+            });
+        }
+        private void RequestReject(object sender, ProfileInformation profile)
+        {
+            if (profile.Login != currentTarget.Login)
+                return;
+            Dispatcher.Invoke(() =>
+            {
+                RecalculateVisibilityButtons(Relationship.None);
+                ActionTextBlock.Text = "Пользователь отклонил ваш запрос";
+                ActionTextBlock.Visibility = Visibility.Visible;
+            });
+        }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e) 
         {
             App.WatermarkHelper(sender, e);
@@ -59,6 +129,7 @@ namespace MindForgeClient.Pages.FriendsPages
             }
             if (currentTarget is not null && currentTarget.Login == LoginTextBox.Text)
                 return;
+            ActionTextBlock.Visibility = Visibility.Collapsed;
             var profileResponse = await httpClient.GetAsync(App.HttpsStr + $"/profile/{LoginTextBox.Text}");
             var relationshipResponse = await httpClient.GetAsync(App.HttpsStr + $"/relationship/{LoginTextBox.Text}");
             if (profileResponse.IsSuccessStatusCode && relationshipResponse.IsSuccessStatusCode)
@@ -66,9 +137,8 @@ namespace MindForgeClient.Pages.FriendsPages
                 var userInform = await profileResponse.Content.ReadFromJsonAsync<ProfileInformation>();
                 currentTarget = userInform;
                 var relationshipInform = await relationshipResponse.Content.ReadFromJsonAsync<UserRelationshipResponse>();
-                UserLogin.Text = userInform!.Login;
+                UserLogin.Text = currentTarget!.Login;
                 UserImage.Source = App.GetImageFromByteArray(userInform.ImageByte);
-                HideButtons();
                 RecalculateVisibilityButtons(relationshipInform.Relationship, relationshipInform.IsYouInitiator);
                 UserWarn.Visibility = Visibility.Collapsed;
                 UserGrid.Visibility = Visibility.Visible;
@@ -81,8 +151,9 @@ namespace MindForgeClient.Pages.FriendsPages
                 UserWarn.Visibility = Visibility.Visible;
             }
         }
-        private void RecalculateVisibilityButtons(Relationship relationship, bool? isYouInitiator) 
+        private void RecalculateVisibilityButtons(Relationship relationship, bool? isYouInitiator = false) 
         {
+            HideButtons();
             switch (relationship)
             {
                 case Relationship.None:
@@ -149,7 +220,6 @@ namespace MindForgeClient.Pages.FriendsPages
             var relationshipResponse = await FriendsMenuPage.MakeRelationshipAction(action, currentTarget.Login);
             if (relationshipResponse.IsSuccessStatusCode)
             {
-                HideButtons();
                 RecalculateVisibilityButtons(relationship, true);
                 ActionTextBlock.Visibility = Visibility.Visible;
             }
@@ -162,6 +232,7 @@ namespace MindForgeClient.Pages.FriendsPages
                 ActionTextBlock.Visibility = Visibility.Collapsed;
             }
         }
-
+        private void OpenProfile(object sender, MouseButtonEventArgs e) =>
+            currentWindow.OpenUserProfile(sender, e, currentTarget);
     }
 }

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\BQuiet\source\repos\MindForge\MindForge\App.xaml
-15-517514097
+16180509902
 
-22-453483600
+23706680190
 221612893064
-Pages\FriendsPages\AddFriendsPage.xaml;Pages\FriendsPages\AllFriendsPage.xaml;Pages\FriendsPages\FriendsMenuPage.xaml;Pages\FriendsPages\IncomingRequestsPage.xaml;Pages\FriendsPages\OutgoingRequestsPage.xaml;Pages\FriendsPages\RequestsPage.xaml;Pages\ProfilePage.xaml;Pages\RegistrationPage.xaml;Pages\SignInPage.xaml;Styles\InitialDictionary.xaml;Styles\MenuDictionary.xaml;Styles\ProfileDictionary.xaml;Styles\WindowDictionary.xaml;Windows\InitialWindow.xaml;Windows\MainWindow.xaml;
+Pages\FriendsPages\AddFriendsPage.xaml;Pages\FriendsPages\AllFriendsPage.xaml;Pages\FriendsPages\FriendsMenuPage.xaml;Pages\FriendsPages\IncomingRequestsPage.xaml;Pages\FriendsPages\OutgoingRequestsPage.xaml;Pages\FriendsPages\RequestsPage.xaml;Pages\OtherUserProfilePage.xaml;Pages\ProfilePage.xaml;Pages\RegistrationPage.xaml;Pages\SignInPage.xaml;Styles\InitialDictionary.xaml;Styles\MenuDictionary.xaml;Styles\ProfileDictionary.xaml;Styles\WindowDictionary.xaml;Windows\InitialWindow.xaml;Windows\MainWindow.xaml;
 
 True
 

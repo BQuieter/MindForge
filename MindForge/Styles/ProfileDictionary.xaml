@@ -50,22 +50,22 @@
     </Style>
 
     <Style TargetType="{x:Type ListBox}">
-        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Focusable" Value="True" />
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
 
     <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Border Background="Transparent" BorderThickness="0">
-                        <ContentPresenter />
+                    <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ContentPresenter/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
     <Style x:Key="ProfessionComboBox" TargetType="{x:Type ComboBox}">

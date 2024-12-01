@@ -58,6 +58,7 @@ namespace MindForgeClient.Pages.FriendsPages
                 if (applicationData.UsersOutgoingRequests.Count == 0)
                 {
                     UserWarn.Visibility = Visibility.Visible;
+                    UserWarn.Text = NoFriendsWarn;
                     UsersListBox.Visibility = Visibility.Collapsed;
                 }
             });
@@ -118,5 +119,7 @@ namespace MindForgeClient.Pages.FriendsPages
             UserWarn.Text = warnText;
             UserWarn.Visibility = Visibility.Visible;
         }
+        private void OpenProfile(object sender, MouseButtonEventArgs e) =>
+            currentWindow.OpenUserProfile(sender, e);
     }
 }

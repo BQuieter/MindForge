@@ -76,3 +76,5 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\System
 C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\System.Threading.Channels.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\SimpleInjector.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\OtherUserProfilePage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\OtherUserProfilePage.baml
