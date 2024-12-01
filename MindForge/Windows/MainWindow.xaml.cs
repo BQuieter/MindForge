@@ -1,4 +1,6 @@
-﻿using MindForge;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.DependencyInjection;
+using MindForge;
 using MindForgeClasses;
 using MindForgeClient.Pages;
 using System;
@@ -18,8 +20,10 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 
 namespace MindForgeClient
 {
@@ -30,13 +34,56 @@ namespace MindForgeClient
     {
         internal ApplicationData applicationData;
         private static HttpClient httpClient;
-        public MainWindow()
+        internal readonly IFriendNotificationService friendNotificationService;
+        public MainWindow(IFriendNotificationService friendNotificationService)
         {
+            this.friendNotificationService = friendNotificationService;
             InitializeComponent();
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
             httpClient = HttpClientSingleton.httpClient!;
             applicationData = new();
+            friendNotificationService.FriendRequestReceived += FriendRequestReceive!;
+            friendNotificationService.FriendRequestRejected += FriendRequestReject!;
+            friendNotificationService.FriendDeleted += FriendDelete!;
+            friendNotificationService.FriendAdded += FriendAdd!;
+            friendNotificationService.FriendRequestDeleted += FriendRequestDeleted!;
+            friendNotificationService.StartAsync();
         }
+        //Методы обработки ивента прихода данных друзей
+        private void FriendRequestReceive(object sender, ProfileInformation profile)
+        {
+            Dispatcher.Invoke(() =>
+                applicationData.UsersIncomingRequests.Add(profile));
+        }
+        private void FriendRequestReject(object sender, ProfileInformation profile)
+        {
+            Dispatcher.Invoke(() =>
+                applicationData.UsersOutgoingRequests.Remove(applicationData.UsersOutgoingRequests.FirstOrDefault(u => u.Login == profile.Login))
+            );
+        }
+        private void FriendRequestDeleted(object sender, ProfileInformation profile)
+        {
+            Dispatcher.Invoke(() =>
+                applicationData.UsersIncomingRequests.Remove(applicationData.UsersIncomingRequests.FirstOrDefault(u => u.Login == profile.Login))
+            );
+        }
+        private void FriendDelete(object sender, ProfileInformation profile)
+        {
+            Dispatcher.Invoke(() => 
+                applicationData.UsersFriends.Remove(applicationData.UsersFriends.FirstOrDefault(u => u.Login == profile.Login))
+            );
+
+        }
+        private void FriendAdd(object sender, ProfileInformation profile)
+        {
+            Dispatcher.Invoke(() => {
+                applicationData.UsersFriends.Add(profile);
+                applicationData.UsersIncomingRequests.Remove(applicationData.UsersIncomingRequests.FirstOrDefault(u => u.Login == profile.Login));
+                applicationData.UsersOutgoingRequests.Remove(applicationData.UsersOutgoingRequests.FirstOrDefault(u => u.Login == profile.Login));
+            });
+
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SetProfileInformation();
@@ -93,13 +140,14 @@ namespace MindForgeClient
             var image = App.GetImageFromByteArray(applicationData.UserProfile.ImageByte);
             ProfileImage.Source = image;
             SetProfileImage(image);
+
         }
 
         private async void Logout(object sender, MouseButtonEventArgs e)
         {
             var response = await httpClient.PostAsync(App.HttpsStr + "/logout", null);
             httpClient.DefaultRequestHeaders.Authorization = null;
-            Window window = new InitialWindow();
+            var window = new InitialWindow();
             window.Show();
             this.Close();
         }

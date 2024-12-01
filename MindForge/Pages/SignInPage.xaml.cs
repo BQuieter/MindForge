@@ -32,7 +32,7 @@ namespace MindForgeClient.Pages
             httpClient = HttpClientSingleton.httpClient!;
             LoginBox.Text = "qwerty";
             PasswordBox.Password = "Qwerty12";
-            SignIn(new object(), new RoutedEventArgs());
+            //SignIn(new object(), new RoutedEventArgs());
         }
 
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
@@ -83,7 +83,7 @@ namespace MindForgeClient.Pages
             {
                 await InitialWindow.GetJwtToken(response);
                 InitialWindow window = (InitialWindow)Window.GetWindow(this);
-                InitialWindow.GoToMainWindow(window);
+                window.GoToMainWindow(window);
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 PasswordWarn.Text = "Неверный пароль";

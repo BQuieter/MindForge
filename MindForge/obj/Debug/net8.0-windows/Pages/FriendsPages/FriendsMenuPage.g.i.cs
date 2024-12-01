@@ -85,7 +85,7 @@ namespace MindForgeClient.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/MindForgeClient;V1.0.0.0;component/pages/friendspages/friendsmenupage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/MindForgeClient;component/pages/friendspages/friendsmenupage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Pages\FriendsPages\FriendsMenuPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

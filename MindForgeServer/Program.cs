@@ -8,6 +8,9 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using MindForgeDbClasses;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.SignalR;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace MindForgeServer
 {
@@ -16,6 +19,8 @@ namespace MindForgeServer
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddSignalR();
+            builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             builder.Services.AddDbContext<MindForgeDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -28,6 +33,20 @@ namespace MindForgeServer
                     ValidateLifetime = true,
                     IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                     ValidateIssuerSigningKey = true,
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Headers["Authorization"].FirstOrDefault();
+
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && accessToken.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                        {
+                            context.Token = accessToken.Substring("Bearer ".Length).Trim();
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
             builder.Services.AddAuthorization();
@@ -147,7 +166,7 @@ namespace MindForgeServer
                 });
             });
 
-            app.MapPost("/relationship/{target}", [Authorize] async (string target, MindForgeDbContext db, HttpContext context) =>
+            app.MapPost("/relationship/{target}", [Authorize] async (string target, MindForgeDbContext db, HttpContext context, IHubContext<FriendHub> hubContext) =>
             {
                 string user = context.User.Identity!.Name!;
                 var relationshipRequest = await context.Request.ReadFromJsonAsync<RelationshipRequest>();
@@ -168,6 +187,9 @@ namespace MindForgeServer
                             });
                 int targetId = targetInstance.UserId;
                 var relation = await db.Friendships.FirstOrDefaultAsync(p => (p.User1Navigation.Login == user || p.User1Navigation.Login == target) && (p.User2Navigation.Login == user || p.User2Navigation.Login == target));
+                var userProfile = await db.Profiles.FirstOrDefaultAsync(p => p.UserNavigation.Login == user);
+                ProfileInformation userInformation = new ProfileInformation{ Login = user, Description = userProfile.ProfileDescription, ImageByte = userProfile.ProfilePhoto };
+                string method = "";
                 switch (relationshipRequest.RelationshipAction)
                 {
                     case RelationshipAction.Request:
@@ -176,6 +198,7 @@ namespace MindForgeServer
                                 ErrorCode = 409, 
                                 Message = "Связь между пользователями уже есть" 
                             });
+                        method = "FriendRequestReceived";
                         db.Friendships.Add(new Friendship { User1 = userId, User2 = targetId, Status = 2});
                         break;
                     case RelationshipAction.Delete:
@@ -185,6 +208,12 @@ namespace MindForgeServer
                                 ErrorCode = 404,
                                 Message = "Связи между пользователями нет"
                             });
+                        if (relation.Status == 1)
+                            method = "FriendDeleted";
+                        else if (relation.Status == 2 && relation.User1Navigation.Login == user)
+                            method = "FriendRequestDeleted";
+                        else if(relation.Status == 2)
+                            method = "FriendRequestRejected";
                         db.Friendships.Remove(relation);
                         break;
                     case RelationshipAction.Apply:
@@ -194,9 +223,11 @@ namespace MindForgeServer
                                 ErrorCode = 404,
                                 Message = "Запроса на добавление нет"
                             });
+                        method = "FriendAdded";
                         relation.Status = 1; 
                         break;
                 }
+                await hubContext.Clients.User(target).SendAsync(method, userInformation);
                 await db.SaveChangesAsync();
                 return Results.Ok();
             });
@@ -250,6 +281,8 @@ namespace MindForgeServer
                     profiles = new List<ProfileInformation>();
                 return Results.Ok(profiles);
             });
+
+            app.MapHub<FriendHub>("/friendhub");
 
             app.Map("/", (HttpContext context) => Results.Ok());
 

@@ -27,6 +27,7 @@ namespace MindForgeClient.Pages.FriendsPages
     public partial class AllFriendsPage : Page
     {
         private HttpClient httpClient;
+        MainWindow currentWindow;
         private readonly string NoFriendsWarn = "У тебя пока что нет ни одного друга :(";
         private readonly string NotFoundFilterWarn = "Нет друзей с таким логином";
         private ObservableCollection<ProfileInformation> usersFilterList = new ObservableCollection<ProfileInformation>();
@@ -39,10 +40,37 @@ namespace MindForgeClient.Pages.FriendsPages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            MainWindow currentWindow = Window.GetWindow(this) as MainWindow;
+            currentWindow = Window.GetWindow(this) as MainWindow;
             applicationData = currentWindow.applicationData;
             UsersListBox.ItemsSource = applicationData.UsersFriends;
+            currentWindow.friendNotificationService.FriendAdded += FriendAdd;
+            currentWindow.friendNotificationService.FriendDeleted += FriendDelete;
             CheckSource();
+        }
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            currentWindow.friendNotificationService.FriendAdded -= FriendAdd;
+            currentWindow.friendNotificationService.FriendDeleted -= FriendDelete;
+        }
+
+        private void FriendAdd(object sender, ProfileInformation profile)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                UserWarn.Visibility = Visibility.Collapsed;
+                UsersListBox.Visibility = Visibility.Visible;
+            });
+        }
+        private void FriendDelete(object sender, ProfileInformation profile)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (applicationData.UsersFriends.Count == 0)
+                {
+                    UserWarn.Visibility = Visibility.Visible;
+                    UsersListBox.Visibility = Visibility.Collapsed;
+                }
+            });
         }
 
         private void Image_Loaded(object sender, RoutedEventArgs e) => 

@@ -1,5 +1,8 @@
-﻿using MindForgeClasses;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MindForgeClasses;
 using MindForgeClient;
+using SimpleInjector;
+using SimpleInjector.Lifestyles;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -8,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
 
 namespace MindForge
 {
@@ -18,22 +22,34 @@ namespace MindForge
     {
         private Mutex mutex;
         public static readonly string HttpsStr = "https://localhost:7236";
-        private void Application_Startup(object sender, StartupEventArgs e)
+        public readonly Container container;
+
+        public App()
+        {
+            HttpClientSingleton.Set();
+            container = new Container();
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            container.Register<IFriendNotificationService, FriendNotificationService>();
+            container.Verify();
+
+        }
+        protected override void OnStartup(StartupEventArgs e)
         {
             bool createdNew;
             string mutexName = "MindForge";
-            mutex = new Mutex(true, mutexName, out createdNew);
+            /*mutex = new Mutex(true, mutexName, out createdNew);
             if (!createdNew)
             {
                 WindowHelper.MaximizeWindow("MindForge");
                 this.Shutdown();
-            }
-            HttpClientSingleton.Set();
+            }*/
+            InitialWindow initialWindow = new();
+            initialWindow.Show();
         }
 
         private async void Application_Exit(object sender, ExitEventArgs e)
         {
-            mutex.ReleaseMutex();
+            //mutex.ReleaseMutex();
             var response = await HttpClientSingleton.httpClient.PostAsync(App.HttpsStr +"/logout", null);
         }
         public static void CloseWindow(Window window) =>

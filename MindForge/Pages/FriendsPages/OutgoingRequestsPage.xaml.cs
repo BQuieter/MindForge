@@ -27,6 +27,7 @@ namespace MindForgeClient.Pages.FriendsPages
     {
 
         private HttpClient httpClient;
+        MainWindow currentWindow;
         private readonly string NoFriendsWarn = "У тебя нет исходящих запросов";
         private readonly string NotFoundFilterWarn = "Нет пользователей с таким логином";
         private ObservableCollection<ProfileInformation> usersFilterList = new ObservableCollection<ProfileInformation>();
@@ -39,11 +40,29 @@ namespace MindForgeClient.Pages.FriendsPages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            MainWindow currentWindow = Window.GetWindow(this) as MainWindow;
+            currentWindow = Window.GetWindow(this) as MainWindow;
             applicationData = currentWindow.applicationData;
             UsersListBox.ItemsSource = applicationData.UsersOutgoingRequests;
+            currentWindow.friendNotificationService.FriendRequestRejected += RequestReject;
             CheckSource();
         }
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            currentWindow.friendNotificationService.FriendRequestRejected -= RequestReject;
+        }
+
+        private void RequestReject(object sender, ProfileInformation profile)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (applicationData.UsersOutgoingRequests.Count == 0)
+                {
+                    UserWarn.Visibility = Visibility.Visible;
+                    UsersListBox.Visibility = Visibility.Collapsed;
+                }
+            });
+        }
+        
         private void Image_Loaded(object sender, RoutedEventArgs e) =>
             FriendsMenuPage.Image_Loaded(sender, e);
 

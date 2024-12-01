@@ -7,6 +7,9 @@ using System.Net.Http.Json;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
+using Microsoft.AspNetCore.SignalR.Client;
 using MindForge;
 using MindForgeClasses;
 
@@ -15,6 +18,7 @@ namespace MindForgeClient
     internal class ApplicationData
     {
         private HttpClient httpClient;
+        public HubConnection FriendConnection { get; private set; }
         public ProfileInformation UserProfile { get; set; }
         public ObservableCollection<ProfessionInformation> UserProfessions { get; set; }
         public ObservableCollection<ProfileInformation> UsersFriends { get; set; }
@@ -23,11 +27,18 @@ namespace MindForgeClient
         public List<ProfessionInformation> AllProfessions { get; set; }
         private readonly TaskCompletionSource<bool> loadedTaskSource = new TaskCompletionSource<bool>();
         public Task<bool> LoadedTask => loadedTaskSource.Task; 
-
+    
         public ApplicationData() 
         {
             httpClient = HttpClientSingleton.httpClient!;
             LoadInformation();
+            FriendConnection = new HubConnectionBuilder().WithUrl(App.HttpsStr + "/friendhub", options =>
+            options.Headers["Authorization"] = "Bearer " + httpClient.DefaultRequestHeaders.Authorization!.Parameter).WithAutomaticReconnect().Build();
+            FriendConnection.On<string, string>("Receive", (message, user) =>
+            {
+                var newMessage = $"от {user}: {message}";
+                MessageBox.Show(newMessage);
+            });
         }
         private async Task LoadInformation()
         {

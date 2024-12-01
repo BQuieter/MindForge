@@ -130,7 +130,7 @@ namespace MindForgeClient.Pages
             {
                 await InitialWindow.GetJwtToken(response);
                 InitialWindow window = (InitialWindow)Window.GetWindow(this);
-                InitialWindow.GoToMainWindow(window);
+                window.GoToMainWindow(window);
             }
             else
                 await LoginExists(response);

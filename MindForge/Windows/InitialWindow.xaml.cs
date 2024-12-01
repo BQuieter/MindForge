@@ -24,6 +24,7 @@ using System.Net.Http.Headers;
 using System.Printing;
 using MindForgeClient.Pages;
 using System.Windows.Threading;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MindForge
 {
@@ -94,9 +95,9 @@ namespace MindForge
                 button.Visibility = Visibility.Visible;
             });
         }
-        public static void GoToMainWindow(Window window)
+        public void GoToMainWindow(Window window)
         {
-            MainWindow mainWindow = new();
+            MainWindow mainWindow = new MainWindow(((App)Application.Current).container.GetInstance<IFriendNotificationService>());
             mainWindow.Width = window.Width;
             mainWindow.Height = window.Height;
             mainWindow.Left = window.Left;
