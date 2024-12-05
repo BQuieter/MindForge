@@ -10,6 +10,8 @@ using MindForgeDbClasses;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.SignalR;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 
 
 namespace MindForgeServer
@@ -61,23 +63,23 @@ namespace MindForgeServer
             app.MapPost("/logout", Authorization.Logout);
             //Потом классы создай и фигани туда методы
 
-            app.MapGet("/profile/{user?}", [Authorize] (string? user,MindForgeDbContext db, HttpContext context) =>
+            app.MapGet("/profile/{user?}", [Authorize] (string? user, MindForgeDbContext db, HttpContext context) =>
             {
                 if (user is null)
                     user = context.User.Identity!.Name!;
                 var profile = db.Profiles.Include(p => p.UserNavigation).FirstOrDefault(p => p.UserNavigation.Login == user);
                 if (profile == null)
-                    return Results.NotFound(new ErrorResponse { 
-                        ErrorCode = 404, 
+                    return Results.NotFound(new ErrorResponse {
+                        ErrorCode = 404,
                         Message = "Профиль пользователя не найден"
                     });
 
-                return Results.Ok(new ProfileInformation { 
-                    Login = profile.UserNavigation.Login, 
-                    Description = profile.ProfileDescription!, 
+                return Results.Ok(new ProfileInformation {
+                    Login = profile.UserNavigation.Login,
+                    Description = profile.ProfileDescription!,
                     ImageByte = profile.ProfilePhoto! });
             });
-        
+
             app.MapPut("/profile", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
                 ProfileInformation profileInformation = await context.Request.ReadFromJsonAsync<ProfileInformation>();
@@ -98,20 +100,20 @@ namespace MindForgeServer
             app.MapGet("/professions", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
                 List<ProfessionInformation> professions = await db.Professions.Select
-                (p => new ProfessionInformation{ 
-                    Name = p.ProfessionName, 
+                (p => new ProfessionInformation {
+                    Name = p.ProfessionName,
                     Color = p.ProfessionColor
                 }).ToListAsync();
                 return Results.Ok(professions);
             });
 
-            app.MapGet("/professions/{user}", [Authorize] async (string user,MindForgeDbContext db, HttpContext context) =>
+            app.MapGet("/professions/{user}", [Authorize] async (string user, MindForgeDbContext db, HttpContext context) =>
             {
                 var professions = await db.UsersProfessions.Include(p => p.UserNavigation)
                     .Include(p => p.ProfessionNavigation).Where(p => p.UserNavigation.Login == user)
-                    .Select(p => new ProfessionInformation { 
-                        Name = p.ProfessionNavigation.ProfessionName, 
-                        Color = p.ProfessionNavigation.ProfessionColor 
+                    .Select(p => new ProfessionInformation {
+                        Name = p.ProfessionNavigation.ProfessionName,
+                        Color = p.ProfessionNavigation.ProfessionColor
                     }).ToListAsync();
                 return Results.Ok(professions);
             });
@@ -130,8 +132,8 @@ namespace MindForgeServer
 
                 db.UsersProfessions.RemoveRange(db.UsersProfessions.Where(p => p.UserNavigation.Login == user).ToList());
                 //Тут переделай много запросов щас делается
-                db.UsersProfessions.AddRange(userProfessions.Select(p => new UsersProfession { 
-                    User = userId, 
+                db.UsersProfessions.AddRange(userProfessions.Select(p => new UsersProfession {
+                    User = userId,
                     Profession = db.Professions.FirstOrDefault(prof => prof.ProfessionName == p.Name).ProfessionId
                 }).ToList());
                 await db.SaveChangesAsync();
@@ -143,9 +145,9 @@ namespace MindForgeServer
                 string user = context.User.Identity!.Name!;
                 var targetDb = await db.Users.FirstOrDefaultAsync(u => u.Login == user);
                 if (targetDb is null)
-                    return Results.NotFound(new ErrorResponse { 
-                        ErrorCode = 404, 
-                        Message = "Пользователя с данным логином не существует" 
+                    return Results.NotFound(new ErrorResponse {
+                        ErrorCode = 404,
+                        Message = "Пользователя с данным логином не существует"
                     });
                 int targetId = targetDb.UserId;
                 Console.WriteLine(target);
@@ -180,26 +182,26 @@ namespace MindForgeServer
                 int userId = (await db.Users.FirstOrDefaultAsync(p => p.Login == user))!.UserId;
                 var targetInstance = await db.Users.FirstOrDefaultAsync(p => p.Login == target);
                 if (targetInstance is null)
-                            return Results.NotFound(new ErrorResponse
-                            {
-                                ErrorCode = 404,
-                                Message = "Пользователь не найден"
-                            });
+                    return Results.NotFound(new ErrorResponse
+                    {
+                        ErrorCode = 404,
+                        Message = "Пользователь не найден"
+                    });
                 int targetId = targetInstance.UserId;
                 var relation = await db.Friendships.FirstOrDefaultAsync(p => (p.User1Navigation.Login == user || p.User1Navigation.Login == target) && (p.User2Navigation.Login == user || p.User2Navigation.Login == target));
                 var userProfile = await db.Profiles.FirstOrDefaultAsync(p => p.UserNavigation.Login == user);
-                ProfileInformation userInformation = new ProfileInformation{ Login = user, Description = userProfile.ProfileDescription, ImageByte = userProfile.ProfilePhoto };
+                ProfileInformation userInformation = new ProfileInformation { Login = user, Description = userProfile.ProfileDescription, ImageByte = userProfile.ProfilePhoto };
                 string method = "";
                 switch (relationshipRequest.RelationshipAction)
                 {
                     case RelationshipAction.Request:
                         if (relation is not null)
-                            return Results.Conflict(new ErrorResponse { 
-                                ErrorCode = 409, 
-                                Message = "Связь между пользователями уже есть" 
+                            return Results.Conflict(new ErrorResponse {
+                                ErrorCode = 409,
+                                Message = "Связь между пользователями уже есть"
                             });
                         method = "FriendRequestReceived";
-                        db.Friendships.Add(new Friendship { User1 = userId, User2 = targetId, Status = 2});
+                        db.Friendships.Add(new Friendship { User1 = userId, User2 = targetId, Status = 2 });
                         break;
                     case RelationshipAction.Delete:
                         if (relation is null)
@@ -212,7 +214,7 @@ namespace MindForgeServer
                             method = "FriendDeleted";
                         else if (relation.Status == 2 && relation.User1Navigation.Login == user)
                             method = "FriendRequestDeleted";
-                        else if(relation.Status == 2)
+                        else if (relation.Status == 2)
                             method = "FriendRequestRejected";
                         db.Friendships.Remove(relation);
                         break;
@@ -224,7 +226,7 @@ namespace MindForgeServer
                                 Message = "Запроса на добавление нет"
                             });
                         method = "FriendAdded";
-                        relation.Status = 1; 
+                        relation.Status = 1;
                         break;
                 }
                 await hubContext.Clients.User(target).SendAsync(method, userInformation);
@@ -239,10 +241,10 @@ namespace MindForgeServer
                      .Select(f => f.User1Navigation.Login == user ? f.User2Navigation.UserId : f.User1Navigation.UserId);
                 var profiles = db.Profiles.Where(p => relationshipFriends
                     .Contains(p.UserNavigation.UserId))
-                    .Select(p => new ProfileInformation { 
-                        Login = p.UserNavigation.Login, 
-                        Description = p.ProfileDescription, 
-                        ImageByte = p.ProfilePhoto}).ToList();
+                    .Select(p => new ProfileInformation {
+                        Login = p.UserNavigation.Login,
+                        Description = p.ProfileDescription,
+                        ImageByte = p.ProfilePhoto }).ToList();
                 if (profiles is null)
                     profiles = new List<ProfileInformation>();
                 return Results.Ok(profiles);
@@ -259,7 +261,7 @@ namespace MindForgeServer
                     {
                         Login = p.UserNavigation.Login,
                         Description = p.ProfileDescription,
-                        ImageByte = p.ProfilePhoto}).ToList();
+                        ImageByte = p.ProfilePhoto }).ToList();
                 if (profiles is null)
                     profiles = new List<ProfileInformation>();
                 return Results.Ok(profiles);
@@ -276,13 +278,100 @@ namespace MindForgeServer
                     {
                         Login = p.UserNavigation.Login,
                         Description = p.ProfileDescription,
-                        ImageByte = p.ProfilePhoto}).ToList();
+                        ImageByte = p.ProfilePhoto }).ToList();
                 if (profiles is null)
                     profiles = new List<ProfileInformation>();
                 return Results.Ok(profiles);
             });
 
+            app.MapGet("/personalchats", [Authorize] async (MindForgeDbContext db, HttpContext context) => {
+                string user = context.User.Identity!.Name!;
+               
+                var chats = await (from chat in db.Chats
+                   .Include(c => c.ChatTypeNavigation)
+                   .Include(c => c.User1)
+                   .Include(c => c.User2)
+                                   where chat.ChatTypeNavigation.TypeName == "Личный" && (chat.User1.Login == user || chat.User2.Login == user)
+                                   join profile in db.Profiles on (chat.User1.Login == user ? chat.User2.UserId : chat.User1.UserId) equals profile.UserNavigation.UserId into profiles
+                                   from profile in profiles.DefaultIfEmpty() 
+                                   select new PersonalChatInformation
+                                   {
+                                       Login = chat.User1.Login == user ? chat.User2.Login : chat.User1.Login,
+                                       ImageByte = profile.ProfilePhoto,
+                                       ChatId = chat.ChatId
+                                   }).ToListAsync();
+                if (chats is null)
+                    chats = new List<PersonalChatInformation>();
+                return Results.Ok(chats);
+            });
+
+            app.MapGet("/personalchats/{target}", [Authorize] async (string target, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
+                string user = context.User.Identity!.Name!;
+                var chat = db.Chats.FirstOrDefault(c => (c.User1.Login == user && c.User2.Login == target) || (c.User2.Login == user && c.User1.Login == target));
+                if (chat is null)
+                {
+                    chat = new Chat
+                    {
+                        ChatType = 1,
+                        User1Id = db.Users.FirstOrDefault(u => u.Login == user).UserId,
+                        User2Id = db.Users.FirstOrDefault(u => u.Login == target).UserId,
+                        ChatCreatedTime = DateTime.Now
+                    };
+                    db.Chats.Add(chat);
+                    var userProfile = await db.Profiles.FirstOrDefaultAsync(p => p.UserNavigation.Login == user);
+                    await db.SaveChangesAsync();
+                    var chatInform = new PersonalChatInformation { ChatId = chat.ChatId, ImageByte = userProfile.ProfilePhoto, Login = user };
+                    Console.WriteLine(chatInform.ChatId);
+                    await hubContext.Clients.User(target).SendAsync("ChatCreated", chatInform);
+                    Console.WriteLine(chat.ChatId.ToString());
+                }
+                return Results.Ok(chat.ChatId);
+            });
+
+            app.MapGet("/personalchats/messages/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context) =>
+            {
+                //сделай чтоб для групповых чатов тоже работало, более общий метод, мб базу данных измени
+                string user = context.User.Identity!.Name!;
+                var permission = await db.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId && (c.User1.Login == user || c.User2.Login == user));
+                if (permission is null)
+                    return Results.Unauthorized();
+                var messages = await db.Messages.Where(m => m.ChatId == chatId).OrderByDescending(m => m.TimeSent).Take(50).Select(m => new MessageInformation { Message = m.MessageText, SenderName = m.Sender.Login, DateTime = m.TimeSent.ToShortTimeString() }).ToListAsync();
+                return Results.Ok(messages);
+            });
+
+            app.MapPost("/chats/message/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) =>
+            {
+                //сделай чтоб для групповых чатов тоже работало, более общий метод, мб базу данных измени
+                string user = context.User.Identity!.Name!;
+                var chat = await db.Chats.Include(c => c.User1).Include(c => c.User2)
+                .FirstOrDefaultAsync(c => c.ChatId == chatId && (c.User1.Login == user || c.User2.Login == user));
+                if (chat is null)
+                    return Results.Unauthorized();
+                MessageInformation message = await context.Request.ReadFromJsonAsync<MessageInformation>();
+                int senderId = (await db.Users.FirstOrDefaultAsync(s => s.Login == message.SenderName)).UserId;
+                db.Messages.Add(new Message { ChatId = chatId, SenderId = senderId, MessageText = message.Message, TimeSent = DateTime.Now});
+                await db.SaveChangesAsync();
+                var login = chat.User1Id == senderId ? chat.User2.Login : chat.User1.Login;
+                Console.WriteLine(login);
+                await hubContext.Clients.User(login).SendAsync("MessageSent", message, chatId);
+                return Results.Ok();
+            });
+
+            app.MapGet("/groupchats", [Authorize] async (MindForgeDbContext db, HttpContext context) => {
+                string user = context.User.Identity!.Name!;
+
+                var chats = db.ChatUsers.Include(c => c.UserNavigation).Include(c => c.ChatNavigation)
+                    .Where(c => c.UserNavigation.Login == user)
+                    .Select(c => new GroupChatInformation { ChatId = c.Chat, Name = c.ChatNavigation.ChatName, ImageByte = c.ChatNavigation.ChatPhoto,  
+                    Members = from chat in db.ChatUsers.Include(c => c.UserNavigation)
+                    });
+                if (chats is null)
+                    chats = new List<PersonalChatInformation>();
+                return Results.Ok(chats);
+            });
+
             app.MapHub<FriendHub>("/friendhub");
+            app.MapHub<PersonalChatHub>("/personalchathub");
 
             app.Map("/", (HttpContext context) => Results.Ok());
 

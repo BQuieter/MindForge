@@ -34,9 +34,14 @@
                                 <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Login}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
                             </StackPanel>
                         </Grid>
-                        <Button Style="{StaticResource ButtonBase }" ToolTip="Удалить из друзей" Grid.Column="1" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="DeleteFriend">
-                            <Image Source="pack://application:,,,/Images/MenuIcons/Friends/DeleteFriend.png" />
-                        </Button>
+                        <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Grid.Column="1">
+                            <Button Style="{StaticResource ButtonBase }" ToolTip="Написать сообщение" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="GoToChat">
+                                <Image Source="pack://application:,,,/Images/MenuIcons/Chats/GoToChat.png" />
+                            </Button>
+                            <Button Style="{StaticResource ButtonBase }" ToolTip="Удалить из друзей" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="DeleteFriend">
+                                <Image Source="pack://application:,,,/Images/MenuIcons/Friends/DeleteFriend.png" />
+                            </Button>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

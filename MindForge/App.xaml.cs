@@ -30,6 +30,7 @@ namespace MindForge
             container = new Container();
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             container.Register<IFriendNotificationService, FriendNotificationService>();
+            container.Register<IPersonalChatNotificationService, PersonalChatNotificationService>();
             container.Verify();
 
         }
@@ -80,6 +81,9 @@ namespace MindForge
 
         public static BitmapImage GetImageFromByteArray(byte[] bytes)
         {
+            if (bytes is null )
+                return new BitmapImage(new Uri("pack://application:,,,/Images/Profile.png"));
+
             using (var ms = new MemoryStream(bytes))
             {
                 BitmapImage image = new BitmapImage();

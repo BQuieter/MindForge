@@ -23,7 +23,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <GridSplitter Background="Transparent" Grid.Column="1" Grid.Row="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter Background="#252525" Grid.Column="1" Grid.Row="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
         <Grid Grid.ColumnSpan="4" Grid.Row="0" Background="#171717">
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                 <Button Content="X" Style="{StaticResource HeaderButton}" WindowChrome.IsHitTestVisibleInChrome="True" Click="CloseButton_Click" />

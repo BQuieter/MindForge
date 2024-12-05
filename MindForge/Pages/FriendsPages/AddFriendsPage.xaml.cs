@@ -234,5 +234,7 @@ namespace MindForgeClient.Pages.FriendsPages
         }
         private void OpenProfile(object sender, MouseButtonEventArgs e) =>
             currentWindow.OpenUserProfile(sender, e, currentTarget);
+        private void GoToChat(object sender, RoutedEventArgs e) =>
+            currentWindow.GoToChat(sender,currentTarget);
     }
 }

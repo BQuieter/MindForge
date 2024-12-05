@@ -16,7 +16,18 @@ public partial class MindForgeDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Chat> Chats { get; set; }
+
+    public virtual DbSet<ChatType> ChatTypes { get; set; }
+
+    public virtual DbSet<Friendship> Friendships { get; set; }
+
+    public virtual DbSet<FriendshipStatus> FriendshipStatuses { get; set; }
+
+    public virtual DbSet<Message> Messages { get; set; }
+
     public virtual DbSet<OnlineStatus> OnlineStatuses { get; set; }
+    public virtual DbSet<UsersProfession> UsersProfessions { get; set; }
 
     public virtual DbSet<Profession> Professions { get; set; }
 
@@ -26,12 +37,94 @@ public partial class MindForgeDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UsersProfession> UsersProfessions { get; set; }
-    public virtual DbSet<FriendshipStatus> FriendshipStatuses { get; set; }
-    public virtual DbSet<Friendship> Friendships { get; set; }
+    public virtual DbSet<ChatUser> ChatUsers { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Chat>(entity =>
+        {
+            entity.HasKey(e => e.ChatId).HasName("PK__Chats__FD040B17A5880278");
+
+            entity.Property(e => e.ChatId).HasColumnName("chat_id");
+            entity.Property(e => e.ChatPhoto).HasColumnName("chat_photo");
+            entity.Property(e => e.ChatCreatedTime).HasColumnName("chat_created_time");
+            entity.Property(e => e.ChatName)
+                .HasMaxLength(50)
+                .HasColumnName("chat_name");
+            entity.Property(e => e.ChatType).HasColumnName("chat_type");
+            entity.Property(e => e.User1Id).HasColumnName("user1_id");
+            entity.Property(e => e.User2Id).HasColumnName("user2_id");
+
+            entity.HasOne(d => d.ChatTypeNavigation).WithMany(p => p.Chats)
+                .HasForeignKey(d => d.ChatType)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Chats__chat_type__17F790F9");
+
+            entity.HasOne(d => d.User1).WithMany(p => p.ChatUser1s)
+                .HasForeignKey(d => d.User1Id)
+                .HasConstraintName("FK__Chats__user1_id__18EBB532");
+
+            entity.HasOne(d => d.User2).WithMany(p => p.ChatUser2s)
+                .HasForeignKey(d => d.User2Id)
+                .HasConstraintName("FK__Chats__user2_id__19DFD96B");
+
+            entity.HasMany(d => d.Users).WithMany(p => p.Chats)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ChatUser",
+                    r => r.HasOne<User>().WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__ChatUsers__user___245D67DE"),
+                    l => l.HasOne<Chat>().WithMany()
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__ChatUsers__chat___236943A5"),
+                    j =>
+                    {
+                        j.HasKey("ChatId", "UserId").HasName("PK__ChatUser__169FE86788C228B1");
+                        j.ToTable("ChatUsers");
+                        j.IndexerProperty<int>("ChatId").HasColumnName("chat_id");
+                        j.IndexerProperty<int>("UserId").HasColumnName("user_id");
+                    });
+        });
+        modelBuilder.Entity<ChatType>(entity =>
+        {
+            entity.HasKey(e => e.TypeId).HasName("PK__ChatType__2C000598E6C5F2FD");
+
+            entity.Property(e => e.TypeId).HasColumnName("type_id");
+            entity.Property(e => e.TypeName)
+                .HasMaxLength(20)
+                .HasColumnName("type_name");
+        });
+        modelBuilder.Entity<Message>(entity =>
+        {
+            entity.HasKey(e => e.MessageId).HasName("PK__Messages__0BBF6EE6E79068C2");
+
+            entity.Property(e => e.MessageId).HasColumnName("message_id");
+            entity.Property(e => e.ChatId).HasColumnName("chat_id");
+            entity.Property(e => e.FileData).HasColumnName("file_data");
+            entity.Property(e => e.TimeSent).HasColumnName("time_sent");
+            entity.Property(e => e.FileName)
+                .HasMaxLength(255)
+                .HasColumnName("file_name");
+            entity.Property(e => e.FileType)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("file_type");
+            entity.Property(e => e.MessageText).HasColumnName("messageText");
+            entity.Property(e => e.SenderId).HasColumnName("sender_id");
+
+            entity.HasOne(d => d.Chat).WithMany(p => p.Messages)
+                .HasForeignKey(d => d.ChatId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Messages__chat_i__1CBC4616");
+
+            entity.HasOne(d => d.Sender).WithMany(p => p.Messages)
+                .HasForeignKey(d => d.SenderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Messages__sender__1DB06A4F");
+        });
         modelBuilder.Entity<OnlineStatus>(entity =>
         {
             entity.HasKey(e => e.StatusId).HasName("PK__OnlineSt__3683B531DE4634E5");
@@ -109,7 +202,7 @@ public partial class MindForgeDbContext : DbContext
 
         modelBuilder.Entity<UsersProfession>(entity =>
         {
-            entity.ToTable("Users_professions");
+            entity.ToTable("UsersProfessions");
             entity.HasKey(e => e.User).HasName("PK_Users_professions");
             entity.HasKey(e => e.Profession).HasName("PK_Users_professions");
 
@@ -125,6 +218,26 @@ public partial class MindForgeDbContext : DbContext
                 .HasForeignKey(d => d.User)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Users_prof__user__4D94879B");
+        });
+
+        modelBuilder.Entity<ChatUser>(entity =>
+        {
+            entity.ToTable("UsersProfessions");
+            entity.HasKey(e => e.User).HasName("PK__ChatUser__169FE86788C228B1");
+            entity.HasKey(e => e.Chat).HasName("PK__ChatUser__169FE86788C228B1");
+
+            entity.Property(e => e.User).HasColumnName("user_id");
+            entity.Property(e => e.Chat).HasColumnName("chat_id");
+
+            entity.HasOne(d => d.ChatNavigation).WithMany(p => p.ChatUsers)
+                .HasForeignKey(d => d.Chat)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ChatUsers__chat___236943A5");
+
+            entity.HasOne(d => d.UserNavigation).WithMany(p => p.ChatUsers)
+                .HasForeignKey(d => d.User)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ChatUsers__user___245D67DE");
         });
 
         modelBuilder.Entity<FriendshipStatus>(entity =>

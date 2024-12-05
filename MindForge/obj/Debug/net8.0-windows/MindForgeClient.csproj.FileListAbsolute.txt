@@ -36,8 +36,6 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\refint
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForgeClient.pdb
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\MindForgeClient.genruntimeconfig.cache
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\ref\MindForgeClient.dll
-C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\ProfilePage.g.cs
-C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\ProfilePage.baml
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Styles\ProfileDictionary.baml
 C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\SixLabors.ImageSharp.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\FriendsPages\AllFriendsPage.g.cs
@@ -76,5 +74,14 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\System
 C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\System.Threading.Channels.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForge\bin\Debug\net8.0-windows\SimpleInjector.dll
-C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\OtherUserProfilePage.g.cs
-C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\OtherUserProfilePage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\PersonalChatsListPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\ProfilesPages\OtherUserProfilePage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\ProfilesPages\ProfilePage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\PersonalChatsListPage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\ProfilesPages\OtherUserProfilePage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\ProfilesPages\ProfilePage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Styles\ChatDictionary.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\ChatPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\ChatPage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\GroupChatsPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\GroupChatsPage.baml

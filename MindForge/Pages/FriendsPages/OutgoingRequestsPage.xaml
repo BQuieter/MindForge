@@ -26,7 +26,8 @@
                     <Grid Style="{StaticResource ProfileClickableGrid}" MouseLeftButtonDown="OpenProfile">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <StackPanel x:Name="Template" Margin="5" Orientation="Horizontal">
@@ -34,7 +35,11 @@
                                 <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Login}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Grid>
-                        <Button x:Name="ApplyRequestButton" Style="{StaticResource ButtonBase }" Grid.Column="1" ToolTip="Удалить запрос" Width="40" Height="40" VerticalAlignment="Center" Margin="0" Click="DeleteRequest">
+                        <Button Style="{StaticResource ButtonBase }" Grid.Column="1" ToolTip="Написать сообщение" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="GoToChat">
+                            <Image Source="pack://application:,,,/Images/MenuIcons/Chats/GoToChat.png" />
+                        </Button>
+                        
+                        <Button x:Name="ApplyRequestButton" Style="{StaticResource ButtonBase }" Grid.Column="2" ToolTip="Удалить запрос" Width="40" Height="40" VerticalAlignment="Center" Margin="0" Click="DeleteRequest">
                             <Image Source="pack://application:,,,/Images/MenuIcons/Friends/DeleteRequest.png"/>
                         </Button>
                     </Grid>

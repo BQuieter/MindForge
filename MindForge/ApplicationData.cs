@@ -24,7 +24,9 @@ namespace MindForgeClient
         public ObservableCollection<ProfileInformation> UsersIncomingRequests { get; set; }
         public ObservableCollection<ProfileInformation> UsersOutgoingRequests { get; set; }
         public List<ProfessionInformation> AllProfessions { get; set; }
-        private readonly TaskCompletionSource<bool> loadedTaskSource = new TaskCompletionSource<bool>();
+        public ObservableCollection<PersonalChatInformation> PersonalChatsInformation { get; set; }
+        public Dictionary<int, ObservableCollection<MessageGroup>> PersonalChats { get; set; } = new();
+        private readonly TaskCompletionSource<bool> loadedTaskSource = new();
         public Task<bool> LoadedTask => loadedTaskSource.Task; 
     
         public ApplicationData() 
@@ -42,6 +44,7 @@ namespace MindForgeClient
                 await GetUserFriends();
                 await GetUserIncomingRequests();
                 await GetUserOutgoingRequests();
+                await GetPersonalChats();
                 loadedTaskSource.SetResult(true);
             }
             catch (Exception ex)
@@ -92,6 +95,17 @@ namespace MindForgeClient
             if (!response.IsSuccessStatusCode)
                 return;
             UsersOutgoingRequests = new ObservableCollection<ProfileInformation>(await response.Content.ReadFromJsonAsync<List<ProfileInformation>>());
+        }
+        private async Task GetPersonalChats()
+        {
+            var response = await httpClient.GetAsync(App.HttpsStr + "/personalchats");
+            if (!response.IsSuccessStatusCode)
+                return;
+            PersonalChatsInformation = new ObservableCollection<PersonalChatInformation>(await response.Content.ReadFromJsonAsync<List<PersonalChatInformation>>());
+            foreach(var a in PersonalChatsInformation)
+            {
+                PersonalChats.Add(a.ChatId,new());
+            }
         }
     }
 }

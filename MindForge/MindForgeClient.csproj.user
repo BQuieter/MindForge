@@ -5,6 +5,15 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Update="Pages\Chats\ChatPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Chats\GroupChatsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Chats\PersonalChatsListPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\FriendsPages\FriendsMenuPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -23,10 +32,10 @@
     <Compile Update="Pages\FriendsPages\RequestsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\OtherUserProfilePage.xaml.cs">
+    <Compile Update="Pages\ProfilesPages\OtherUserProfilePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\ProfilePage.xaml.cs">
+    <Compile Update="Pages\ProfilesPages\ProfilePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\MainWindow.xaml.cs">
@@ -40,6 +49,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\Chats\ChatPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Chats\GroupChatsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Chats\PersonalChatsListPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\FriendsPages\FriendsMenuPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -58,10 +76,13 @@
     <Page Update="Pages\FriendsPages\RequestsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\OtherUserProfilePage.xaml">
+    <Page Update="Pages\ProfilesPages\OtherUserProfilePage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\ProfilePage.xaml">
+    <Page Update="Pages\ProfilesPages\ProfilePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ChatDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\ProfileDictionary.xaml">

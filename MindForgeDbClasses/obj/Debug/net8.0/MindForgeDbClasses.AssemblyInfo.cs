@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MindForgeDbClasses")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da55d2b67d055c33181fdb7c0fd9a3ffde716f4e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dcfb878d2825e30266f2006ebb41b4162f1b4e4f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MindForgeDbClasses")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MindForgeDbClasses")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

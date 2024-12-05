@@ -31,7 +31,9 @@
     <None Remove="Images\MenuIcons\AddFriend.png" />
     <None Remove="Images\MenuIcons\AllFriends.png" />
     <None Remove="Images\MenuIcons\Chats.png" />
+    <None Remove="Images\MenuIcons\Chats\GoToChat.png" />
     <None Remove="Images\MenuIcons\Communities.png" />
+    <None Remove="Images\MenuIcons\FilterSearch.png" />
     <None Remove="Images\MenuIcons\Friends.png" />
     <None Remove="Images\MenuIcons\Friends\AddFriend.png" />
     <None Remove="Images\MenuIcons\Friends\AllFriends.png" />
@@ -44,6 +46,7 @@
     <None Remove="Images\MenuIcons\Groups.png" />
     <None Remove="Images\MenuIcons\Logout.png" />
     <None Remove="Images\MenuIcons\RequestFriend.png" />
+    <None Remove="Images\MenuIcons\Send.png" />
     <None Remove="Images\MenuIcons\Settings.png" />
     <None Remove="Images\MiniLogo.png" />
     <None Remove="Images\Profile.png" />
@@ -69,7 +72,9 @@
     <Resource Include="Images\Logo.png" />
     <Resource Include="Images\Logo1.jpg" />
     <Resource Include="Images\MenuIcons\Chats.png" />
+    <Resource Include="Images\MenuIcons\Chats\GoToChat.png" />
     <Resource Include="Images\MenuIcons\Communities.png" />
+    <Resource Include="Images\MenuIcons\FilterSearch.png" />
     <Resource Include="Images\MenuIcons\Friends.png" />
     <Resource Include="Images\MenuIcons\Friends\AddFriend.png" />
     <Resource Include="Images\MenuIcons\Friends\AllFriends.png" />
@@ -81,6 +86,7 @@
     <Resource Include="Images\MenuIcons\Friends\RequestFriend.png" />
     <Resource Include="Images\MenuIcons\Groups.png" />
     <Resource Include="Images\MenuIcons\Logout.png" />
+    <Resource Include="Images\MenuIcons\Send.png" />
     <Resource Include="Images\MenuIcons\Settings.png" />
     <Resource Include="Images\MiniLogo.png" />
     <Resource Include="Images\Profile.png" />

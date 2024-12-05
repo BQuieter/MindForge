@@ -40,7 +40,7 @@ namespace MindForge
 
             httpClient = HttpClientSingleton.httpClient!;
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
-            //InitialFrame.Navigate(new SignInPage());
+            InitialFrame.Navigate(new SignInPage());
             Dispatcher.InvokeAsync(async () =>
             {
                 await Check();
@@ -97,7 +97,8 @@ namespace MindForge
         }
         public void GoToMainWindow(Window window)
         {
-            MainWindow mainWindow = new MainWindow(((App)Application.Current).container.GetInstance<IFriendNotificationService>());
+            App app = Application.Current as App;
+            MainWindow mainWindow = new MainWindow(app.container.GetInstance<IFriendNotificationService>(), app.container.GetInstance<IPersonalChatNotificationService>());
             mainWindow.Width = window.Width;
             mainWindow.Height = window.Height;
             mainWindow.Left = window.Left;

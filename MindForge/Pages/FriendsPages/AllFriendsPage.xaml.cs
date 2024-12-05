@@ -80,8 +80,8 @@ namespace MindForgeClient.Pages.FriendsPages
 
         private async void DeleteFriend(object sender, RoutedEventArgs e)
         {
-            var image = (Button)sender;
-            var profile = image.DataContext as ProfileInformation;
+            var button = (Button)sender;
+            var profile = button.DataContext as ProfileInformation;
             var response = await FriendsMenuPage.MakeRelationshipAction(RelationshipAction.Delete, profile.Login);
             if (response.IsSuccessStatusCode)
             {
@@ -91,6 +91,9 @@ namespace MindForgeClient.Pages.FriendsPages
                 CheckFilter();
             }
         }
+
+        private void GoToChat(object sender, RoutedEventArgs e) =>
+            currentWindow.GoToChat(sender);
 
         private void FilterFriends(object sender, TextChangedEventArgs e)
         {
