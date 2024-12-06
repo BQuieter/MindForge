@@ -1,6 +1,7 @@
 ﻿
 FC:\Users\BQuiet\source\repos\MindForge\MindForge\App.xaml;;
 FC:\Users\BQuiet\source\repos\MindForge\MindForge\Pages\Chats\ChatPage.xaml;;
+FC:\Users\BQuiet\source\repos\MindForge\MindForge\Pages\Chats\GroupChatsPage.xaml;;
 FC:\Users\BQuiet\source\repos\MindForge\MindForge\Pages\Chats\PersonalChatsListPage.xaml;;
 FC:\Users\BQuiet\source\repos\MindForge\MindForge\Pages\FriendsPages\AddFriendsPage.xaml;;
 FC:\Users\BQuiet\source\repos\MindForge\MindForge\Pages\FriendsPages\AllFriendsPage.xaml;;
@@ -15,5 +16,4 @@ FC:\Users\BQuiet\source\repos\MindForge\MindForge\Pages\SignInPage.xaml;;
 FC:\Users\BQuiet\source\repos\MindForge\MindForge\Styles\MenuDictionary.xaml;;
 FC:\Users\BQuiet\source\repos\MindForge\MindForge\Windows\InitialWindow.xaml;;
 FC:\Users\BQuiet\source\repos\MindForge\MindForge\Windows\MainWindow.xaml;;
-FC:\Users\BQuiet\source\repos\MindForge\MindForge\Pages\Chats\GroupChatsPage.xaml;;
 

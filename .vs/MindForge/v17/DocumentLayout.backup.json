@@ -3,48 +3,76 @@
   "WorkspaceRootPath": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgeserver\\mindforgedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|solutionrelative:mindforgeserver\\mindforgedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgeserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|solutionrelative:mindforgeserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6DB7F777-89D8-4F52-A793-3A7AF499E677}|MindForgeClasses\\MindForgeClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgeclasses\\groupchatinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6DB7F777-89D8-4F52-A793-3A7AF499E677}|MindForgeClasses\\MindForgeClasses.csproj|solutionrelative:mindforgeclasses\\groupchatinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6DB7F777-89D8-4F52-A793-3A7AF499E677}|MindForgeClasses\\MindForgeClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgeclasses\\personalchatinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6DB7F777-89D8-4F52-A793-3A7AF499E677}|MindForgeClasses\\MindForgeClasses.csproj|solutionrelative:mindforgeclasses\\personalchatinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\windows\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\windows\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\chats\\groupchatspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\chats\\groupchatspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgedbclasses\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|solutionrelative:mindforgedbclasses\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\applicationdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\applicationdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\chats\\personalchatslistpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\chats\\personalchatslistpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgedbclasses\\chatuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|solutionrelative:mindforgedbclasses\\chatuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgedbclasses\\profession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|solutionrelative:mindforgedbclasses\\profession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgedbclasses\\usersprofession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|solutionrelative:mindforgedbclasses\\usersprofession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\chats\\groupchatspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\chats\\groupchatspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\profilespages\\otheruserprofilepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\profilespages\\otheruserprofilepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DB7F777-89D8-4F52-A793-3A7AF499E677}|MindForgeClasses\\MindForgeClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgeclasses\\groupchatinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DB7F777-89D8-4F52-A793-3A7AF499E677}|MindForgeClasses\\MindForgeClasses.csproj|solutionrelative:mindforgeclasses\\groupchatinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\chats\\personalchatslistpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\chats\\personalchatslistpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\chats\\personalchatslistpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\chats\\personalchatslistpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\chats\\chatpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\chats\\chatpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgedbclasses\\chattype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|solutionrelative:mindforgedbclasses\\chattype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DB7F777-89D8-4F52-A793-3A7AF499E677}|MindForgeClasses\\MindForgeClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgeclasses\\personalchatinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DB7F777-89D8-4F52-A793-3A7AF499E677}|MindForgeClasses\\MindForgeClasses.csproj|solutionrelative:mindforgeclasses\\personalchatinformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgeserver\\authorization.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|solutionrelative:mindforgeserver\\authorization.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\windows\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\windows\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\signinpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\signinpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\applicationdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\applicationdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\friendspages\\allfriendspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\friendspages\\allfriendspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\chats\\chatpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -61,18 +89,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgeserver\\friendhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|solutionrelative:mindforgeserver\\friendhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\chats\\chatpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\chats\\chatpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\windows\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\friendspages\\allfriendspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\friendspages\\allfriendspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\styles\\profiledictionary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -99,24 +115,12 @@
       "RelativeMoniker": "D:0:0:{E5E3C88A-E767-45C9-B4F1-C2578E1F6929}|MindForgeServer\\MindForgeServer.csproj|solutionrelative:mindforgeserver\\personalchatshub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgedbclasses\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|solutionrelative:mindforgedbclasses\\message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\styles\\initialdictionary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\styles\\initialdictionary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\profilespages\\otheruserprofilepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\profilespages\\otheruserprofilepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\pages\\profilespages\\otheruserprofilepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|solutionrelative:mindforge\\pages\\profilespages\\otheruserprofilepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforgedbclasses\\chattype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A395714A-82C9-47DB-B380-31686BECDD44}|MindForgeDbClasses\\MindForgeDbClasses.csproj|solutionrelative:mindforgedbclasses\\chattype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8F2E2F20-867B-45D2-91F4-E8E976A10841}|MindForge\\MindForgeClient.csproj|c:\\users\\bquiet\\source\\repos\\mindforge\\mindforge\\windows\\initialwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -130,11 +134,61 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 25,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Profession.cs",
+              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\Profession.cs",
+              "RelativeDocumentMoniker": "MindForgeDbClasses\\Profession.cs",
+              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\Profession.cs",
+              "RelativeToolTip": "MindForgeDbClasses\\Profession.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:14:53.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Authorization.cs",
+              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeServer\\Authorization.cs",
+              "RelativeDocumentMoniker": "MindForgeServer\\Authorization.cs",
+              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeServer\\Authorization.cs",
+              "RelativeToolTip": "MindForgeServer\\Authorization.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T22:03:11.95Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MindForgeDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeServer\\MindForgeDbContext.cs",
+              "RelativeDocumentMoniker": "MindForgeServer\\MindForgeDbContext.cs",
+              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeServer\\MindForgeDbContext.cs",
+              "RelativeToolTip": "MindForgeServer\\MindForgeDbContext.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAAAFcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T21:39:27.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "SignInPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\SignInPage.xaml.cs",
+              "RelativeDocumentMoniker": "MindForge\\Pages\\SignInPage.xaml.cs",
+              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\SignInPage.xaml.cs",
+              "RelativeToolTip": "MindForge\\Pages\\SignInPage.xaml.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAwGAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T21:38:20.19Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "PersonalChatInformation.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeClasses\\PersonalChatInformation.cs",
               "RelativeDocumentMoniker": "MindForgeClasses\\PersonalChatInformation.cs",
@@ -142,12 +196,11 @@
               "RelativeToolTip": "MindForgeClasses\\PersonalChatInformation.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T20:49:19.703Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-05T20:49:19.703Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "GroupChatInformation.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeClasses\\GroupChatInformation.cs",
               "RelativeDocumentMoniker": "MindForgeClasses\\GroupChatInformation.cs",
@@ -155,38 +208,24 @@
               "RelativeToolTip": "MindForgeClasses\\GroupChatInformation.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T20:48:45.043Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-05T20:48:45.043Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ChatUser.cs",
-              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\ChatUser.cs",
-              "RelativeDocumentMoniker": "MindForgeDbClasses\\ChatUser.cs",
-              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\ChatUser.cs",
-              "RelativeToolTip": "MindForgeDbClasses\\ChatUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T20:33:53.098Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 3,
               "Title": "UsersProfession.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\UsersProfession.cs",
               "RelativeDocumentMoniker": "MindForgeDbClasses\\UsersProfession.cs",
               "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\UsersProfession.cs",
               "RelativeToolTip": "MindForgeDbClasses\\UsersProfession.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T20:33:22.469Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\App.xaml.cs",
               "RelativeDocumentMoniker": "MindForge\\App.xaml.cs",
@@ -198,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 22,
               "Title": "ProfileDictionary.xaml",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Styles\\ProfileDictionary.xaml",
               "RelativeDocumentMoniker": "MindForge\\Styles\\ProfileDictionary.xaml",
@@ -210,19 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Message.cs",
-              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\Message.cs",
-              "RelativeDocumentMoniker": "MindForgeDbClasses\\Message.cs",
-              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\Message.cs",
-              "RelativeToolTip": "MindForgeDbClasses\\Message.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T19:52:22.253Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "OtherUserProfilePage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\ProfilesPages\\OtherUserProfilePage.xaml.cs",
               "RelativeDocumentMoniker": "MindForge\\Pages\\ProfilesPages\\OtherUserProfilePage.xaml.cs",
@@ -234,7 +261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 5,
               "Title": "OtherUserProfilePage.xaml",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\ProfilesPages\\OtherUserProfilePage.xaml",
               "RelativeDocumentMoniker": "MindForge\\Pages\\ProfilesPages\\OtherUserProfilePage.xaml",
@@ -245,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 23,
               "Title": "MessageGroup.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeClasses\\MessageGroup.cs",
               "RelativeDocumentMoniker": "MindForgeClasses\\MessageGroup.cs",
@@ -257,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 24,
               "Title": "MessageInformation.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeClasses\\MessageInformation.cs",
               "RelativeDocumentMoniker": "MindForgeClasses\\MessageInformation.cs",
@@ -269,7 +296,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "InitialWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Windows\\InitialWindow.xaml.cs",
               "RelativeDocumentMoniker": "MindForge\\Windows\\InitialWindow.xaml.cs",
@@ -281,7 +308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 20,
               "Title": "PersonalChatNotificationService.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\HubHelper\\PersonalChatNotificationService.cs",
               "RelativeDocumentMoniker": "MindForge\\HubHelper\\PersonalChatNotificationService.cs",
@@ -289,12 +316,11 @@
               "RelativeToolTip": "MindForge\\HubHelper\\PersonalChatNotificationService.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAlwCAAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-03T20:36:29.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T20:36:29.947Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "PersonalChatsHub.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeServer\\PersonalChatsHub.cs",
               "RelativeDocumentMoniker": "MindForgeServer\\PersonalChatsHub.cs",
@@ -306,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "ChatDictionary.xaml",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Styles\\ChatDictionary.xaml",
               "RelativeDocumentMoniker": "MindForge\\Styles\\ChatDictionary.xaml",
@@ -318,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 21,
               "Title": "FriendHub.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeServer\\FriendHub.cs",
               "RelativeDocumentMoniker": "MindForgeServer\\FriendHub.cs",
@@ -326,12 +352,11 @@
               "RelativeToolTip": "MindForgeServer\\FriendHub.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-03T20:29:11.132Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T20:29:11.132Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 19,
               "Title": "ChatHelper.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\ChatHelper.cs",
               "RelativeDocumentMoniker": "MindForge\\ChatHelper.cs",
@@ -339,12 +364,11 @@
               "RelativeToolTip": "MindForge\\ChatHelper.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAA0wBEAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T21:48:02.606Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-04T21:48:02.606Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 18,
               "Title": "ChatPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\Chats\\ChatPage.xaml.cs",
               "RelativeDocumentMoniker": "MindForge\\Pages\\Chats\\ChatPage.xaml.cs",
@@ -352,24 +376,22 @@
               "RelativeToolTip": "MindForge\\Pages\\Chats\\ChatPage.xaml.cs",
               "ViewState": "AgIAAFcAAAAAAAAAAAAowBsAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-03T16:29:09.065Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T16:29:09.065Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 9,
               "Title": "ChatPage.xaml",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\Chats\\ChatPage.xaml",
               "RelativeDocumentMoniker": "MindForge\\Pages\\Chats\\ChatPage.xaml",
               "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\Chats\\ChatPage.xaml",
               "RelativeToolTip": "MindForge\\Pages\\Chats\\ChatPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-03T15:04:21.884Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T15:04:21.884Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "InitialDictionary.xaml",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Styles\\InitialDictionary.xaml",
               "RelativeDocumentMoniker": "MindForge\\Styles\\InitialDictionary.xaml",
@@ -393,16 +415,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 16,
               "Title": "ApplicationData.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\ApplicationData.cs",
               "RelativeDocumentMoniker": "MindForge\\ApplicationData.cs",
               "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\ApplicationData.cs",
               "RelativeToolTip": "MindForge\\ApplicationData.cs",
-              "ViewState": "AgIAAF0AAAAAAAAAAAAgwGQAAABTAAAAAAAAAA==",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAswHcAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T18:36:37.282Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T18:36:37.282Z"
             },
             {
               "$type": "Document",
@@ -414,20 +435,18 @@
               "RelativeToolTip": "MindForge\\Pages\\Chats\\PersonalChatsListPage.xaml.cs",
               "ViewState": "AgIAAGEAAAAAAAAAAAAawHMAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T18:35:45.699Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T18:35:45.699Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 8,
               "Title": "PersonalChatsListPage.xaml",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\Chats\\PersonalChatsListPage.xaml",
               "RelativeDocumentMoniker": "MindForge\\Pages\\Chats\\PersonalChatsListPage.xaml",
               "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Pages\\Chats\\PersonalChatsListPage.xaml",
               "RelativeToolTip": "MindForge\\Pages\\Chats\\PersonalChatsListPage.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-02T18:13:21.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T18:13:21.184Z"
             },
             {
               "$type": "Document",
@@ -443,20 +462,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeServer\\Program.cs",
               "RelativeDocumentMoniker": "MindForgeServer\\Program.cs",
               "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeServer\\Program.cs",
               "RelativeToolTip": "MindForgeServer\\Program.cs",
-              "ViewState": "AgIAAEEBAAAAAAAAAAArwG0BAABWAAAAAAAAAA==",
+              "ViewState": "AgIAAD4BAAAAAAAAAAD4v1ABAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-02T16:35:10.484Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 10,
               "Title": "ChatType.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\ChatType.cs",
               "RelativeDocumentMoniker": "MindForgeDbClasses\\ChatType.cs",
@@ -468,20 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\User.cs",
-              "RelativeDocumentMoniker": "MindForgeDbClasses\\User.cs",
-              "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForgeDbClasses\\User.cs",
-              "RelativeToolTip": "MindForgeDbClasses\\User.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAA3wBcAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T16:29:48.267Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 14,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Windows\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MindForge\\Windows\\MainWindow.xaml",
@@ -492,16 +498,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 13,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Windows\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MindForge\\Windows\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\BQuiet\\source\\repos\\MindForge\\MindForge\\Windows\\MainWindow.xaml.cs",
               "RelativeToolTip": "MindForge\\Windows\\MainWindow.xaml.cs",
-              "ViewState": "AgIAANsAAAAAAAAAAAAnwOgAAABfAAAAAAAAAA==",
+              "ViewState": "AgIAAJUAAAAAAAAAAIAwwKMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T15:24:52.889Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T15:24:52.889Z"
             }
           ]
         },

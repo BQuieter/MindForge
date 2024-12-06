@@ -25,7 +25,9 @@ namespace MindForgeClient
         public ObservableCollection<ProfileInformation> UsersOutgoingRequests { get; set; }
         public List<ProfessionInformation> AllProfessions { get; set; }
         public ObservableCollection<PersonalChatInformation> PersonalChatsInformation { get; set; }
+        public ObservableCollection<GroupChatInformation> GroupChatInformation { get; set; }
         public Dictionary<int, ObservableCollection<MessageGroup>> PersonalChats { get; set; } = new();
+        public Dictionary<int, ObservableCollection<MessageGroup>> GroupChats { get; set; } = new();
         private readonly TaskCompletionSource<bool> loadedTaskSource = new();
         public Task<bool> LoadedTask => loadedTaskSource.Task; 
     
@@ -105,6 +107,17 @@ namespace MindForgeClient
             foreach(var a in PersonalChatsInformation)
             {
                 PersonalChats.Add(a.ChatId,new());
+            }
+        }
+        private async Task GetGroupChats()
+        {
+            var response = await httpClient.GetAsync(App.HttpsStr + "/groupchats");
+            if (!response.IsSuccessStatusCode)
+                return;
+            GroupChatInformation = new ObservableCollection<GroupChatInformation>(await response.Content.ReadFromJsonAsync<List<GroupChatInformation>>());
+            foreach (var a in GroupChatInformation)
+            {
+                GroupChats.Add(a.ChatId, new());
             }
         }
     }

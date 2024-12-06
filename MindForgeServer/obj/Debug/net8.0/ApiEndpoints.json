@@ -38,6 +38,22 @@
     ]
   },
   {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_16",
+    "RelativePath": "groupchats",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "MindForgeServer.Authorization",
     "Method": "Login",
     "RelativePath": "login",

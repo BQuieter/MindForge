@@ -15,9 +15,10 @@ public partial class Chat
     public int? User2Id { get; set; }
 
     public string? ChatName { get; set; }
-    public byte[] ChatPhoto { get; set; }    
 
     public DateTime? ChatCreatedTime { get; set; }
+
+    public byte[]? ChatPhoto { get; set; }
 
     public virtual ChatType ChatTypeNavigation { get; set; } = null!;
 
@@ -28,5 +29,4 @@ public partial class Chat
     public virtual User? User2 { get; set; }
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
-    public virtual ICollection<ChatUser> ChatUsers { get; set; } = new List<ChatUser>();
 }

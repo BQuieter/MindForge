@@ -159,6 +159,8 @@ namespace MindForgeClient
                 else
                     MainFrame.Navigate(new PersonalChatsListPage(ChatInform));
             }
+            if (grid.Name == "Groups" && typeOfGridContent != typeof(GroupChatsPage))
+                    MainFrame.Navigate(new GroupChatsPage());
             if (grid.Name == "Profile" && typeOfGridContent != typeof(ProfilePage))
             {
                 ProfileFrame.Visibility = Visibility.Collapsed;

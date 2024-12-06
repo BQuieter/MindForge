@@ -27,7 +27,7 @@ public partial class MindForgeDbContext : DbContext
     public virtual DbSet<Message> Messages { get; set; }
 
     public virtual DbSet<OnlineStatus> OnlineStatuses { get; set; }
-    public virtual DbSet<UsersProfession> UsersProfessions { get; set; }
+    //public virtual DbSet<UsersProfession> UsersProfessions { get; set; }
 
     public virtual DbSet<Profession> Professions { get; set; }
 
@@ -37,7 +37,6 @@ public partial class MindForgeDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<ChatUser> ChatUsers { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,11 +46,11 @@ public partial class MindForgeDbContext : DbContext
             entity.HasKey(e => e.ChatId).HasName("PK__Chats__FD040B17A5880278");
 
             entity.Property(e => e.ChatId).HasColumnName("chat_id");
-            entity.Property(e => e.ChatPhoto).HasColumnName("chat_photo");
             entity.Property(e => e.ChatCreatedTime).HasColumnName("chat_created_time");
             entity.Property(e => e.ChatName)
                 .HasMaxLength(50)
                 .HasColumnName("chat_name");
+            entity.Property(e => e.ChatPhoto).HasColumnName("chat_photo");
             entity.Property(e => e.ChatType).HasColumnName("chat_type");
             entity.Property(e => e.User1Id).HasColumnName("user1_id");
             entity.Property(e => e.User2Id).HasColumnName("user2_id");
@@ -198,47 +197,27 @@ public partial class MindForgeDbContext : DbContext
                 .HasForeignKey(d => d.Role)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Users_Roles");
+
+            entity.HasMany(d => d.Professions).WithMany(p => p.Users)
+                .UsingEntity<Dictionary<string, object>>(
+                    "UsersProfession",
+                    r => r.HasOne<Profession>().WithMany()
+                        .HasForeignKey("Profession")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Users_pro__profe__4E88ABD4"),
+                    l => l.HasOne<User>().WithMany()
+                        .HasForeignKey("User")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Users_prof__user__4D94879B"),
+                    j =>
+                    {
+                        j.HasKey("User", "Profession").HasName("PK_Users_professions");
+                        j.ToTable("UsersProfessions");
+                        j.IndexerProperty<int>("User").HasColumnName("user");
+                        j.IndexerProperty<int>("Profession").HasColumnName("profession");
+                    });
         });
 
-        modelBuilder.Entity<UsersProfession>(entity =>
-        {
-            entity.ToTable("UsersProfessions");
-            entity.HasKey(e => e.User).HasName("PK_Users_professions");
-            entity.HasKey(e => e.Profession).HasName("PK_Users_professions");
-
-            entity.Property(e => e.Profession).HasColumnName("profession");
-            entity.Property(e => e.User).HasColumnName("user");
-
-            entity.HasOne(d => d.ProfessionNavigation).WithMany(p => p.UsersProfessions)
-                .HasForeignKey(d => d.Profession)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Users_pro__profe__4E88ABD4");
-
-            entity.HasOne(d => d.UserNavigation).WithMany(p => p.UsersProfessions)
-                .HasForeignKey(d => d.User)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Users_prof__user__4D94879B");
-        });
-
-        modelBuilder.Entity<ChatUser>(entity =>
-        {
-            entity.ToTable("UsersProfessions");
-            entity.HasKey(e => e.User).HasName("PK__ChatUser__169FE86788C228B1");
-            entity.HasKey(e => e.Chat).HasName("PK__ChatUser__169FE86788C228B1");
-
-            entity.Property(e => e.User).HasColumnName("user_id");
-            entity.Property(e => e.Chat).HasColumnName("chat_id");
-
-            entity.HasOne(d => d.ChatNavigation).WithMany(p => p.ChatUsers)
-                .HasForeignKey(d => d.Chat)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChatUsers__chat___236943A5");
-
-            entity.HasOne(d => d.UserNavigation).WithMany(p => p.ChatUsers)
-                .HasForeignKey(d => d.User)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ChatUsers__user___245D67DE");
-        });
 
         modelBuilder.Entity<FriendshipStatus>(entity =>
         {
@@ -260,12 +239,12 @@ public partial class MindForgeDbContext : DbContext
             entity.Property(e => e.User2).HasColumnName("user_2");
             entity.Property(e => e.Status).HasColumnName("status");
 
-            entity.HasOne(d => d.User1Navigation).WithMany(p => p.Friendships1)
+            entity.HasOne(d => d.User1Navigation).WithMany(p => p.FriendshipUser1Navigations)
                 .HasForeignKey(d => d.User1)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Friendshi__user___03F0984C");
 
-            entity.HasOne(d => d.User2Navigation).WithMany(p => p.Friendships2)
+            entity.HasOne(d => d.User2Navigation).WithMany(p => p.FriendshipUser2Navigations)
                 .HasForeignKey(d => d.User2)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Friendshi__user___04E4BC85");
