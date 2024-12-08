@@ -52,7 +52,9 @@ namespace MindForgeClient
             friendNotificationService.FriendAdded += FriendAdd!;
             friendNotificationService.FriendRequestDeleted += FriendRequestDeleted!;
             personalChatNotificationService.PersonalChatCreated += PersonalChatCreate!;
+            personalChatNotificationService.GroupChatCreated += GroupChatCreate!;
             personalChatNotificationService.MessageSent += MessageSent!;
+
             friendNotificationService.StartAsync();
             personalChatNotificationService.StartAsync();
         }
@@ -97,16 +99,25 @@ namespace MindForgeClient
                 applicationData.PersonalChats.Add(chat.ChatId, new());
             });
         }
+        private void GroupChatCreate(object sender, GroupChatInformation chat)
+        {
+            Dispatcher.Invoke(() => {
+                applicationData.GroupChatsInformation.Add(chat);
+                applicationData.GroupChats.Add(chat.ChatId, new());
+            });
+        }
+
         private void MessageSent(object sender, MessageSentEventArgs args)
         {
-            Dispatcher.Invoke(() => 
-                ChatHelper.AddMessage(applicationData,args.Message, args.Index));
+            Dispatcher.Invoke(() =>
+            {
+                if(args.IsGroup)
+                    ChatHelper.AddMessage(applicationData.GroupChats, args.Message, args.Index);
+                else
+                    ChatHelper.AddMessage(applicationData.PersonalChats, args.Message, args.Index);
+            });
         }
-        /// <summary>
-        /// /
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SetProfileInformation();

@@ -10,11 +10,13 @@ namespace MindForgeClasses
     {
         public MessageInformation Message { get; set; }
         public int Index { get; set; }
+        public bool IsGroup = false;
 
-        public MessageSentEventArgs(MessageInformation message, int index)
+        public MessageSentEventArgs(MessageInformation message, int index, bool isGroup = false)
         {
             Message = message;
             Index = index;
+            IsGroup = isGroup;
         }
     }
 }

@@ -200,14 +200,14 @@ public partial class MindForgeDbContext : DbContext
 
             entity.HasMany(d => d.Professions).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(
-                    "UsersProfession",
+                    "UsersProfessions",
                     r => r.HasOne<Profession>().WithMany()
                         .HasForeignKey("Profession")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK__Users_pro__profe__4E88ABD4"),
                     l => l.HasOne<User>().WithMany()
                         .HasForeignKey("User")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK__Users_prof__user__4D94879B"),
                     j =>
                     {

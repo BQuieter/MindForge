@@ -4,5 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace MindForgeServer
 {
     [Authorize]
-    public class PersonalChatHub : Hub {}
+    public class PersonalChatHub : Hub 
+    {
+    }
 }

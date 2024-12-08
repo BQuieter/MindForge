@@ -17,6 +17,7 @@ namespace MindForgeClient
     {
         private HubConnection connection;
         public event EventHandler<PersonalChatInformation> PersonalChatCreated;
+        public event EventHandler<GroupChatInformation> GroupChatCreated;
         public event EventHandler<MessageSentEventArgs> MessageSent;
 
 
@@ -28,15 +29,17 @@ namespace MindForgeClient
                 options.Headers["Authorization"] = $"Bearer {token}";
             }).WithAutomaticReconnect().Build();
 
-            connection.On<PersonalChatInformation>("ChatCreated", profile => {
-                PersonalChatCreated?.Invoke(this, profile);
-                Console.WriteLine(profile.ChatId);
+            connection.On<PersonalChatInformation>("PersonalChatCreated", chat => {
+                PersonalChatCreated?.Invoke(this, chat);
             });
 
-            connection.On<MessageInformation, int>("MessageSent", (message, chatId) => {
-                MessageSent?.Invoke(this, new MessageSentEventArgs(message,chatId));
+            connection.On<GroupChatInformation>("GroupChatCreated", chat => {
+                GroupChatCreated?.Invoke(this, chat);
             });
 
+            connection.On<MessageInformation, int, bool>("MessageSent", (message, chatId, isGroup) => {
+                MessageSent?.Invoke(this, new MessageSentEventArgs(message,chatId, isGroup));
+            });
             try
             {
                 await connection.StartAsync();
@@ -59,6 +62,7 @@ namespace MindForgeClient
     public interface IPersonalChatNotificationService
     {
         event EventHandler<PersonalChatInformation> PersonalChatCreated;
+        event EventHandler<GroupChatInformation> GroupChatCreated;
         event EventHandler<MessageSentEventArgs> MessageSent;
         Task StartAsync();
         Task StopAsync();

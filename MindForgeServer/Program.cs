@@ -13,6 +13,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using Microsoft.VisualBasic;
 
 
 namespace MindForgeServer
@@ -110,36 +111,35 @@ namespace MindForgeServer
 
             app.MapGet("/professions/{user}", [Authorize] async (string user, MindForgeDbContext db, HttpContext context) =>
             {
-                /*var professions = await db.UsersProfessions.Include(p => p.UserNavigation)
-                    .Include(p => p.ProfessionNavigation).Where(p => p.UserNavigation.Login == user)
-                    .Select(p => new ProfessionInformation {
-                        Name = p.ProfessionNavigation.ProfessionName,
-                        Color = p.ProfessionNavigation.ProfessionColor
-                    }).ToListAsync();*/
-                return Results.Ok(new List<ProfessionInformation>(){ new ProfessionInformation { Name = "a", Color = "#202020" } });
+                var professions = await db.Professions.Include(a => a.Users).Where(a => a.Users.FirstOrDefault(u => u.Login == user) != null)
+                    .Select(p => new ProfessionInformation
+                    {
+                        Name = p.ProfessionName,
+                        Color = p.ProfessionColor
+                    }).ToListAsync();
+                return Results.Ok(professions);
 
             });
 
-            app.MapPut("/professions", [Authorize] async (string? user, MindForgeDbContext db, HttpContext context) =>
+            app.MapPut("/professions", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
-                /*if (user is not null && user != context.User.Identity!.Name!)
-                    return Results.Unauthorized();
-                else
-                    user = context.User.Identity!.Name!;
+                string userLogin = context.User.Identity!.Name!;
+                var userDb = await db.Users.Include(u => u.Professions).FirstOrDefaultAsync(u => u.Login == userLogin);
 
-                var userDb = await db.Users.FirstOrDefaultAsync(u => u.Login == user);
-                int userId = userDb.UserId;
+                if (userDb == null)
+                    return Results.NotFound();
+
                 List<ProfessionInformation> userProfessions = await context.Request.ReadFromJsonAsync<List<ProfessionInformation>>();
-                HashSet<string> professionsToKeep = new HashSet<string>(userProfessions.Select(p => p.Name));
+                var professionNames = new HashSet<string>(userProfessions.Select(up => up.Name));
+                var professionsToAdd = await db.Professions
+                    .Where(p => professionNames.Contains(p.ProfessionName))
+                    .ToListAsync();
 
-                db.UsersProfessions.RemoveRange(db.UsersProfessions.Where(p => p.UserNavigation.Login == user).ToList());
-                //Тут переделай много запросов щас делается
-                db.UsersProfessions.AddRange(userProfessions.Select(p => new UsersProfession {
-                    User = userId,
-                    Profession = db.Professions.FirstOrDefault(prof => prof.ProfessionName == p.Name).ProfessionId
-                }).ToList());
+                userDb.Professions.Clear(); 
+                userDb.Professions.AddRange(professionsToAdd);
                 await db.SaveChangesAsync();
-                return Results.Ok();*/
+                return Results.Ok();
+
             });
 
             app.MapGet("/relationship/{target}", [Authorize] async (string target, MindForgeDbContext db, HttpContext context) =>
@@ -288,7 +288,6 @@ namespace MindForgeServer
 
             app.MapGet("/personalchats", [Authorize] async (MindForgeDbContext db, HttpContext context) => {
                 string user = context.User.Identity!.Name!;
-               
                 var chats = await (from chat in db.Chats
                    .Include(c => c.ChatTypeNavigation)
                    .Include(c => c.User1)
@@ -324,67 +323,93 @@ namespace MindForgeServer
                     await db.SaveChangesAsync();
                     var chatInform = new PersonalChatInformation { ChatId = chat.ChatId, ImageByte = userProfile.ProfilePhoto, Login = user };
                     Console.WriteLine(chatInform.ChatId);
-                    await hubContext.Clients.User(target).SendAsync("ChatCreated", chatInform);
+                    await hubContext.Clients.User(target).SendAsync("PersonalChatCreated", chatInform);
                     Console.WriteLine(chat.ChatId.ToString());
                 }
                 return Results.Ok(chat.ChatId);
             });
 
-            app.MapGet("/personalchats/messages/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context) =>
+            app.MapGet("/messages/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context) =>
             {
-                //сделай чтоб для групповых чатов тоже работало, более общий метод, мб базу данных измени
                 string user = context.User.Identity!.Name!;
-                var permission = await db.Chats.Include(c => c.User1).Include(c => c.User2).FirstOrDefaultAsync(c => c.ChatId == chatId && (c.User1.Login == user || c.User2.Login == user));
-                if (permission is null)
+                var chat = db.Chats.Include(c => c.Users).Include(c => c.Messages).Include(c => c.User1).Include(c => c.User2).FirstOrDefault(c => c.ChatId == chatId);
+                bool permission = chat.Users.FirstOrDefault(c => c.Login == user) is not null || (chat.User1 != null && chat.User1.Login == user) || (chat.User2 != null && chat.User2.Login == user);
+                if (!permission)
                     return Results.Unauthorized();
-                var messages = await db.Messages.Where(m => m.ChatId == chatId).OrderByDescending(m => m.TimeSent).Take(50).Select(m => new MessageInformation { Message = m.MessageText, SenderName = m.Sender.Login, DateTime = m.TimeSent.ToShortTimeString() }).ToListAsync();
+                var messages = chat.Messages.OrderByDescending(m => m.TimeSent).Take(50).Select(m => new MessageInformation { Message = m.MessageText, SenderName = m.Sender.Login, DateTime = m.TimeSent.ToShortTimeString() }).ToList();
                 return Results.Ok(messages);
             });
 
             app.MapPost("/chats/message/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) =>
             {
-                //сделай чтоб для групповых чатов тоже работало, более общий метод, мб базу данных измени
                 string user = context.User.Identity!.Name!;
-                var chat = await db.Chats.Include(c => c.User1).Include(c => c.User2)
-                .FirstOrDefaultAsync(c => c.ChatId == chatId && (c.User1.Login == user || c.User2.Login == user));
-                if (chat is null)
+                var chat = db.Chats.Include(c => c.Users).Include(c => c.User1).Include(c => c.User2).FirstOrDefault(c => c.ChatId == chatId);
+                bool permission = chat.Users.FirstOrDefault(c => c.Login == user) is not null || (chat.User1 != null && chat.User1.Login == user) || (chat.User2 != null && chat.User2.Login == user);
+
+                if (!permission)
                     return Results.Unauthorized();
-                MessageInformation message = await context.Request.ReadFromJsonAsync<MessageInformation>();
-                int senderId = (await db.Users.FirstOrDefaultAsync(s => s.Login == message.SenderName)).UserId;
-                db.Messages.Add(new Message { ChatId = chatId, SenderId = senderId, MessageText = message.Message, TimeSent = DateTime.Now});
+                MessageInformation messageInformation = await context.Request.ReadFromJsonAsync<MessageInformation>();
+                int senderId = (await db.Users.FirstOrDefaultAsync(s => s.Login == messageInformation.SenderName)).UserId;
+                var message = new Message { ChatId = chatId, SenderId = senderId, MessageText = messageInformation.Message, TimeSent = DateTime.Now };
+                db.Messages.Add(message);
                 await db.SaveChangesAsync();
-                var login = chat.User1Id == senderId ? chat.User2.Login : chat.User1.Login;
-                Console.WriteLine(login);
-                await hubContext.Clients.User(login).SendAsync("MessageSent", message, chatId);
+                if (chat.User1 is not null && chat.User2 is not null)
+                {
+                    var login = chat.User1Id == senderId ? chat.User2.Login : chat.User1.Login;
+                    await hubContext.Clients.User(login).SendAsync("MessageSent", messageInformation, chatId, false);
+                }
+                else
+                {
+                    var members = message.Chat.Users.Where(m => m.Login != user).Select(m => m.Login);
+                    await hubContext.Clients.Users(members).SendAsync("MessageSent", messageInformation, chatId, true);
+                }
                 return Results.Ok();
             });
 
             app.MapGet("/groupchats", [Authorize] async (MindForgeDbContext db, HttpContext context) => {
                 string user = context.User.Identity!.Name!;
-
-                /*var chats = await db.Chats
-                    .Include(c => c.UserNavigation)
-                    .Include(c => c.ChatNavigation)
-                    .Where(c => c.UserNavigation.Login == user)
+                User userDb = db.Users.FirstOrDefault(u => u.Login == user);
+                var chats = await db.Chats
+                    .Include(c => c.Users)
+                    .Where(c => c.Users.Contains(userDb))
                     .Select(c => new GroupChatInformation
                     {
-                        ChatId = c.Chat,
-                        Name = c.ChatNavigation.ChatName,
-                        ImageByte = c.ChatNavigation.ChatPhoto,
-                        Members = (from chat in db.ChatUser.Include(chat => chat.UserNavigation)
-                                  .Where(id => id.Chat == c.Chat)
-                                  join profile in db.Profiles on chat.UserNavigation.UserId equals profile.UserNavigation.UserId into profiles
-                                  from profile in profiles.DefaultIfEmpty()
-                                  select new ProfileInformation
+                        ChatId = c.ChatId,
+                        Name = c.ChatName,
+                        ImageByte = c.ChatPhoto,
+                        Members = db.Profiles.Include(p => p.UserNavigation).Where(p => c.Users.Contains(p.UserNavigation)).Select(p =>
+                                  new ProfileInformation
                                   {
-                                      Login = profile.UserNavigation.Login,
-                                      Description = profile.ProfileDescription,
-                                      ImageByte = profile.ProfilePhoto
+                                      Login = p.UserNavigation.Login,
+                                      Description = p.ProfileDescription,
+                                      ImageByte = p.ProfilePhoto
                                   }).ToList()
                     }).ToListAsync();
                 if (chats is null)
                     chats = new List<GroupChatInformation>();
-                return Results.Ok(chats);*/
+                return Results.Ok(chats);
+            });
+
+            app.MapPost("/groupchats/create", [Authorize] async (MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
+                string user = context.User.Identity!.Name!;
+                GroupChatInformation information = await context.Request.ReadFromJsonAsync<GroupChatInformation>();
+                List<string> users = information.Members.Select(m => m.Login).ToList();
+                var chat = new Chat
+                {
+                    ChatType = 2,
+                    User1Id = db.Users.FirstOrDefault(u => u.Login == user).UserId,
+                    ChatName = information.Name,
+                    ChatPhoto = information.ImageByte,
+                    Users = db.Users.Where(u => users.Contains(u.Login)).ToList(),
+                    ChatCreatedTime = DateTime.Now
+                };
+                db.Chats.Add(chat);
+                await db.SaveChangesAsync();
+                information.ChatId = chat.ChatId;
+                var members = information.Members.Where(m => m.Login != user).Select(m => m.Login);
+                await hubContext.Clients.Users(members).SendAsync("GroupChatCreated", information);
+                await hubContext.Clients.Users(members).SendAsync("AddToGroup", chat.ChatName);
+                return Results.Ok(information.ChatId);
             });
 
             app.MapHub<FriendHub>("/friendhub");

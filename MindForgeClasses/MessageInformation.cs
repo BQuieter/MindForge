@@ -11,5 +11,6 @@ namespace MindForgeClasses
         public string SenderName { get; set; }
         public string Message { get; set; }
         public string DateTime { get; set; }
+        public string GroupName { get; set; }
     }
 }

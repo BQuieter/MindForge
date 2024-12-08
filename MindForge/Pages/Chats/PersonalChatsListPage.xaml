@@ -39,7 +39,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Source="pack://application:,,,/Images/MenuIcons/FilterSearch.png" Width="32" Height="32" />
-                        <TextBlock Style="{StaticResource Watermark}" Grid.Column="1" Text="Искать" FontSize="14" Margin=" 3 0 0 0" VerticalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource Watermark}" Grid.Column="1" Text="Поиск" FontSize="14" Margin=" 3 0 0 0" VerticalAlignment="Center"/>
                         <TextBox Style="{StaticResource LoginTextBox}" Grid.Column="1" HorizontalAlignment="Stretch" Width="auto" Height="20" VerticalAlignment="Center" Margin="0" FontSize="14" TextChanged="FilterChats"/>
                     </Grid>
                     <ListBox x:Name="ChatsListBox" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden">

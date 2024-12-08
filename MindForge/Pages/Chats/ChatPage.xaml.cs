@@ -27,17 +27,30 @@ namespace MindForgeClient.Pages.Chats
     /// </summary>
     public partial class ChatPage : Page
     {
+        private static double? verticalOffset = null;
         private MainWindow currentWindow;
         private HttpClient httpClient;
         private ApplicationData applicationData;
         private BitmapImage chatPartnerBitmapImage;
         private BitmapImage userBitmapImage;
-        private PersonalChatInformation chatInformation;
+        private int chatId;
+        private PersonalChatInformation personalChatInformation;
+        private GroupChatInformation groupChatInformation;
+
         private Dictionary<string, BitmapImage> avatars = new();
         public ChatPage(PersonalChatInformation chatInformation)
         {
             InitializeComponent();
-            this.chatInformation = chatInformation;
+            this.personalChatInformation = chatInformation;
+            chatId = personalChatInformation.ChatId;
+            httpClient = HttpClientSingleton.httpClient;
+        }
+
+        public ChatPage(GroupChatInformation chatInformation)
+        {
+            InitializeComponent();
+            this.groupChatInformation = chatInformation;
+            chatId = groupChatInformation.ChatId;
             httpClient = HttpClientSingleton.httpClient;
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -46,10 +59,21 @@ namespace MindForgeClient.Pages.Chats
             applicationData = currentWindow.applicationData;
             GroupMessages();
             //
-            avatars.Add(chatInformation.Login, App.GetImageFromByteArray(chatInformation.ImageByte));
-            avatars.Add(applicationData.UserProfile.Login, App.GetImageFromByteArray(applicationData.UserProfile.ImageByte));
-            ChatPartnerImage.Source = avatars[chatInformation.Login];
-            ChatPartnerLogin.Text = chatInformation.Login;
+            if (personalChatInformation is not null)
+            {
+                avatars.Add(personalChatInformation.Login, App.GetImageFromByteArray(personalChatInformation.ImageByte));
+                avatars.Add(applicationData.UserProfile.Login, App.GetImageFromByteArray(applicationData.UserProfile.ImageByte));
+                ChatPartnerImage.Source = avatars[personalChatInformation.Login];
+                ChatPartnerLogin.Text = personalChatInformation.Login;
+            }
+            else
+            {
+                foreach (var profile in groupChatInformation.Members)
+                    avatars.Add(profile.Login, App.GetImageFromByteArray(profile.ImageByte));
+                ChatPartnerImage.Source = App.GetImageFromByteArray(groupChatInformation.ImageByte);
+                ChatPartnerLogin.Text = groupChatInformation.Name;
+
+            }
             currentWindow.personalChatNotificationService.MessageSent += MessageSent!;
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -67,16 +91,28 @@ namespace MindForgeClient.Pages.Chats
         }
         private async void GroupMessages()
         {
-            var response = await httpClient.GetAsync(App.HttpsStr + $"/personalchats/messages/{chatInformation.ChatId}");
+            var response = await httpClient.GetAsync(App.HttpsStr + $"/messages/{chatId}");
             if (!response.IsSuccessStatusCode)
                 return;
             var messages = await response.Content.ReadFromJsonAsync<List<MessageInformation>>();
+            if (verticalOffset is null)
+                ScrollViewer.ScrollToBottom();
+            else
+                ScrollViewer.ScrollToVerticalOffset((double)verticalOffset);
             if (messages is null || messages.Count == 0)
             {
-                MessageList.ItemsSource = applicationData.PersonalChats[chatInformation.ChatId];
+                if (personalChatInformation is not null)
+                    MessageList.ItemsSource = applicationData.PersonalChats[chatId];
+                else
+                    MessageList.ItemsSource = applicationData.GroupChats[chatId];
                 return;
             }
-            ObservableCollection<MessageGroup> groups = applicationData.PersonalChats[chatInformation.ChatId];
+            ObservableCollection<MessageGroup> groups;
+            if (personalChatInformation is not null)
+                 groups = applicationData.PersonalChats[chatId];
+            else
+                groups = applicationData.GroupChats[chatId];
+
             if (groups.Count < 1)
             {
                 MessageGroup currentGroup = new(messages[0].SenderName, messages[0]);
@@ -95,10 +131,16 @@ namespace MindForgeClient.Pages.Chats
                 }
                 groups.Add(currentGroup);
                 ScrollViewer.ScrollToBottom();
+                if (personalChatInformation is not null)
+                    applicationData.PersonalChats[chatId] = new ObservableCollection<MessageGroup>(applicationData.PersonalChats[chatId].Reverse());
+                else
+                    applicationData.GroupChats[chatId] = new ObservableCollection<MessageGroup>(applicationData.GroupChats[chatId].Reverse());
 
-                applicationData.PersonalChats[chatInformation.ChatId] = new ObservableCollection<MessageGroup>(applicationData.PersonalChats[chatInformation.ChatId].Reverse());
             }
-            MessageList.ItemsSource = applicationData.PersonalChats[chatInformation.ChatId];
+            if (personalChatInformation is not null)
+                MessageList.ItemsSource = applicationData.PersonalChats[chatId];
+            else
+                MessageList.ItemsSource = applicationData.GroupChats[chatId];
         }
         private void MessageTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -128,13 +170,20 @@ namespace MindForgeClient.Pages.Chats
             if (MessageTextBox.Text == String.Empty)
                 return;
             MessageInformation message = new MessageInformation() {Message = MessageTextBox.Text, SenderName = applicationData.UserProfile.Login, DateTime = DateTime.Now.ToShortTimeString() };
-            ChatHelper.AddMessage(applicationData, message, chatInformation.ChatId);
+            if (personalChatInformation is not null)
+                ChatHelper.AddMessage(applicationData.PersonalChats, message, chatId);
+            else
+            {
+                ChatHelper.AddMessage(applicationData.GroupChats, message, chatId);
+                message.GroupName = groupChatInformation.Name;
+            }
             MessageTextBox.Text = String.Empty;
-            if (MessageList.ItemsSource is null && applicationData.PersonalChats.TryGetValue(chatInformation.ChatId, out ObservableCollection<MessageGroup> chat))
-                MessageList.ItemsSource = chat;
+            if (MessageList.ItemsSource is null && (applicationData.PersonalChats.TryGetValue(chatId, out ObservableCollection<MessageGroup> personalChat) | applicationData.GroupChats.TryGetValue(chatId, out ObservableCollection<MessageGroup> groupChat)))
+                MessageList.ItemsSource = personalChat is null ? groupChat : personalChat;
+
             if (ScrollViewer.VerticalOffset + ScrollViewer.ViewportHeight >= ScrollViewer.ExtentHeight)
                 ScrollViewer.ScrollToBottom();
-            await httpClient.PostAsJsonAsync<MessageInformation>(App.HttpsStr + $"/chats/message/{chatInformation.ChatId}",message);
+            await httpClient.PostAsJsonAsync<MessageInformation>(App.HttpsStr + $"/chats/message/{chatId}",message);
         }
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
@@ -152,6 +201,7 @@ namespace MindForgeClient.Pages.Chats
             newVerticalOffset = Math.Max(0, newVerticalOffset);
             newVerticalOffset = Math.Min(scrollViewer.ScrollableHeight, newVerticalOffset);
             scrollViewer.ScrollToVerticalOffset(newVerticalOffset);
+            verticalOffset = newVerticalOffset;
             e.Handled = true;
         }
     }

@@ -12,11 +12,11 @@ namespace MindForgeClient
 {
     internal class ChatHelper
     {
-        public static void AddMessage(ApplicationData applicationData, MessageInformation messageInformation, int chatId)
+        public static void AddMessage(Dictionary<int, ObservableCollection<MessageGroup>> chats, MessageInformation messageInformation, int chatId)
         {
-            if (applicationData.PersonalChats.ContainsKey(chatId))
+            if (chats.ContainsKey(chatId))
             {
-                applicationData.PersonalChats.TryGetValue(chatId, out ObservableCollection<MessageGroup> chat);
+                chats.TryGetValue(chatId, out ObservableCollection<MessageGroup> chat);
                 MessageGroup group = null;
                 if (chat.Count- 1 >= 0)
                     group = chat[chat.Count - 1];
@@ -35,7 +35,7 @@ namespace MindForgeClient
             else
             {
                 ObservableCollection<MessageGroup> chat = new ObservableCollection<MessageGroup>() { new MessageGroup(messageInformation.SenderName, messageInformation) };
-                applicationData.PersonalChats.Add(chatId, chat);
+                chats.Add(chatId, chat);
             }
         }
     }

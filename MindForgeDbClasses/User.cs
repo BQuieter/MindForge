@@ -13,21 +13,21 @@ public partial class User
 
     public int Role { get; set; }
 
-    public virtual ICollection<Chat> ChatUser1s { get; set; } = new List<Chat>();
+    public virtual List<Chat> ChatUser1s { get; set; } = new List<Chat>();
 
-    public virtual ICollection<Chat> ChatUser2s { get; set; } = new List<Chat>();
+    public virtual List<Chat> ChatUser2s { get; set; } = new List<Chat>();
 
-    public virtual ICollection<Friendship> FriendshipUser1Navigations { get; set; } = new List<Friendship>();
+    public virtual List<Friendship> FriendshipUser1Navigations { get; set; } = new List<Friendship>();
 
-    public virtual ICollection<Friendship> FriendshipUser2Navigations { get; set; } = new List<Friendship>();
+    public virtual List<Friendship> FriendshipUser2Navigations { get; set; } = new List<Friendship>();
 
-    public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+    public virtual List<Message> Messages { get; set; } = new List<Message>();
 
-    public virtual ICollection<Profile> Profiles { get; set; } = new List<Profile>();
+    public virtual List<Profile> Profiles { get; set; } = new List<Profile>();
 
     public virtual Role RoleNavigation { get; set; } = null!;
 
-    public virtual ICollection<Chat> Chats { get; set; } = new List<Chat>();
+    public virtual List<Chat> Chats { get; set; } = new List<Chat>();
 
-    public virtual ICollection<Profession> Professions { get; set; } = new List<Profession>();
+    public virtual List<Profession> Professions { get; set; } = new List<Profession>();
 }

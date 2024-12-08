@@ -23,7 +23,7 @@
             <Image x:Name="ChatPartnerImage" Grid.Column="0" Width="48" Height="48" HorizontalAlignment="Left" Margin="5 0 0 0"/>
             <TextBlock x:Name="ChatPartnerLogin" Grid.Column="1" Style="{StaticResource BasicTextBlock}" TextAlignment="Left" VerticalAlignment="Center"/>
         </Grid>
-        <TextBlock  Visibility="Collapsed" x:Name="WarnTextBlock" Grid.Row="1" Style="{StaticResource BasicTextBlock}" Text="У вас нет ни одного сообщения" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+        <TextBlock Visibility="Collapsed" x:Name="WarnTextBlock" Grid.Row="1" Style="{StaticResource BasicTextBlock}" Text="У вас нет ни одного сообщения" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
         <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" VerticalScrollBarVisibility ="Auto" HorizontalScrollBarVisibility="Disabled" PreviewMouseWheel="ScrollViewer_MouseWheel" IsTabStop="False">
             <ListBox x:Name="MessageList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.CacheLength="30" VirtualizingStackPanel.CacheLengthUnit="Item" IsTabStop="False">
                 <ListBox.ItemTemplate>

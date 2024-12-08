@@ -54,6 +54,22 @@
     ]
   },
   {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_17",
+    "RelativePath": "groupchats/create",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "MindForgeServer.Authorization",
     "Method": "Login",
     "RelativePath": "login",
@@ -85,6 +101,28 @@
         "MediaTypes": [
           "application/json"
         ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_14",
+    "RelativePath": "messages/{chatId}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "chatId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
         "StatusCode": 200
       }
     ]
@@ -129,28 +167,6 @@
   },
   {
     "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
-    "Method": "\u003CMain\u003Eb__0_14",
-    "RelativePath": "personalchats/messages/{chatId}",
-    "HttpMethod": "GET",
-    "IsController": false,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "chatId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
     "Method": "\u003CMain\u003Eb__0_4",
     "RelativePath": "professions",
     "HttpMethod": "GET",
@@ -172,13 +188,7 @@
     "HttpMethod": "PUT",
     "IsController": false,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "user",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "System.Void",

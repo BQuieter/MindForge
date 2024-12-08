@@ -108,9 +108,7 @@ namespace MindForgeClient.Pages.Chats
             App.WatermarkHelper(sender, e);
             TextBox textBox = (TextBox)sender;
             if (textBox.Text.Length == 0)
-            {
                 ChatsListBox.ItemsSource = applicationData.PersonalChatsInformation;
-            }
             else
             {
                 var filteredCollection = applicationData.PersonalChatsInformation.Where(u => Regex.IsMatch(u.Login.ToLower(), $"^.*{textBox.Text.ToLower()}.*$"));

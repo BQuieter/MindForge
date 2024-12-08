@@ -83,5 +83,7 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Styles\ChatDictionary.baml
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\ChatPage.g.cs
 C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\ChatPage.baml
-C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\GroupChatsPage.g.cs
-C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\GroupChatsPage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\Group\CreateGroupPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\Group\GroupChatsPage.g.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\Group\CreateGroupPage.baml
+C:\Users\BQuiet\source\repos\MindForge\MindForge\obj\Debug\net8.0-windows\Pages\Chats\Group\GroupChatsPage.baml

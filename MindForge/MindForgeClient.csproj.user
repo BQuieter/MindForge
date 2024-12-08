@@ -8,7 +8,10 @@
     <Compile Update="Pages\Chats\ChatPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\Chats\GroupChatsPage.xaml.cs">
+    <Compile Update="Pages\Chats\Group\CreateGroupPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Chats\Group\GroupChatsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\Chats\PersonalChatsListPage.xaml.cs">
@@ -52,7 +55,10 @@
     <Page Update="Pages\Chats\ChatPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\Chats\GroupChatsPage.xaml">
+    <Page Update="Pages\Chats\Group\CreateGroupPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Chats\Group\GroupChatsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Chats\PersonalChatsListPage.xaml">
