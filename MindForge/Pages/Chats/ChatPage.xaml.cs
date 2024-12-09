@@ -28,6 +28,7 @@ namespace MindForgeClient.Pages.Chats
     public partial class ChatPage : Page
     {
         private static double? verticalOffset = null;
+        public static int? CallChatId = null;
         private MainWindow currentWindow;
         private HttpClient httpClient;
         private ApplicationData applicationData;
@@ -72,14 +73,13 @@ namespace MindForgeClient.Pages.Chats
                     avatars.Add(profile.Login, App.GetImageFromByteArray(profile.ImageByte));
                 ChatPartnerImage.Source = App.GetImageFromByteArray(groupChatInformation.ImageByte);
                 ChatPartnerLogin.Text = groupChatInformation.Name;
-
             }
             currentWindow.personalChatNotificationService.MessageSent += MessageSent!;
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             currentWindow.personalChatNotificationService.MessageSent -= MessageSent!;
-
+            currentWindow.CloseProfileFrame();
         }
 
         private void MessageSent(object sender, MessageSentEventArgs args)
@@ -115,6 +115,7 @@ namespace MindForgeClient.Pages.Chats
 
             if (groups.Count < 1)
             {
+                messages.Reverse();
                 MessageGroup currentGroup = new(messages[0].SenderName, messages[0]);
                 for (int i = 1; i < messages.Count; i++)
                 {
@@ -124,7 +125,7 @@ namespace MindForgeClient.Pages.Chats
                     }
                     else
                     {
-                        currentGroup.Messages = new ObservableCollection<MessageInformation>(currentGroup.Messages.Reverse());
+                        currentGroup.Messages = new ObservableCollection<MessageInformation>(currentGroup.Messages);
                         groups.Add(currentGroup);
                         currentGroup = new(messages[i].SenderName, messages[i]);
                     }
@@ -132,9 +133,9 @@ namespace MindForgeClient.Pages.Chats
                 groups.Add(currentGroup);
                 ScrollViewer.ScrollToBottom();
                 if (personalChatInformation is not null)
-                    applicationData.PersonalChats[chatId] = new ObservableCollection<MessageGroup>(applicationData.PersonalChats[chatId].Reverse());
+                    applicationData.PersonalChats[chatId] = new ObservableCollection<MessageGroup>(applicationData.PersonalChats[chatId]);
                 else
-                    applicationData.GroupChats[chatId] = new ObservableCollection<MessageGroup>(applicationData.GroupChats[chatId].Reverse());
+                    applicationData.GroupChats[chatId] = new ObservableCollection<MessageGroup>(applicationData.GroupChats[chatId]);
 
             }
             if (personalChatInformation is not null)
@@ -186,10 +187,18 @@ namespace MindForgeClient.Pages.Chats
             await httpClient.PostAsJsonAsync<MessageInformation>(App.HttpsStr + $"/chats/message/{chatId}",message);
         }
 
-        private void Image_Loaded(object sender, RoutedEventArgs e)
+        private async void Image_Loaded(object sender, RoutedEventArgs e)
         {
             Image image = sender as Image;
-            var context = image.DataContext as MessageGroup;
+            MessageGroup context = image.DataContext as MessageGroup;
+            if (context is not null && !avatars.ContainsKey(context!.SenderName))
+            {
+                var response = await httpClient.GetAsync(App.HttpsStr + $"/profile/{context.SenderName}");
+                if (!response.IsSuccessStatusCode)
+                    return;
+                var profile = await response.Content.ReadFromJsonAsync<ProfileInformation>();
+                avatars.Add(context.SenderName, App.GetImageFromByteArray(profile.ImageByte));
+            }
             image.Source = avatars[context.SenderName];
         }
 
@@ -203,6 +212,18 @@ namespace MindForgeClient.Pages.Chats
             scrollViewer.ScrollToVerticalOffset(newVerticalOffset);
             verticalOffset = newVerticalOffset;
             e.Handled = true;
+        }
+
+        private void OpenInformation(object sender, MouseButtonEventArgs e)
+        {
+            if (personalChatInformation is not null)
+                currentWindow.OpenProfileFrame(personalChatInformation);
+            else
+            {
+                currentWindow.CloseProfileFrame();
+                currentWindow.OpenProfileFrame(groupChatInformation);
+            }
+
         }
     }
 }

@@ -26,10 +26,20 @@ namespace MindForgeClient.Pages
     /// </summary>
     public partial class FriendsMenuPage : Page
     {
+        private MainWindow currentWindow;
         public FriendsMenuPage()
         {
             InitializeComponent();
             MainFrame.Navigate(new AllFriendsPage());
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            currentWindow = Window.GetWindow(this) as MainWindow;
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            currentWindow.CloseProfileFrame();
         }
 
         private void MenuClick(object sender, MouseButtonEventArgs e)

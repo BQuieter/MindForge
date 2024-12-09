@@ -12,19 +12,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height ="60"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto" MinHeight="30" MaxHeight="200"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#252525">
+        <local:MenuGrid Style="{StaticResource InformClickGridInChat}" Grid.Row="0" Margin="0" MouseLeftButtonDown="OpenInformation">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="65"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Image x:Name="ChatPartnerImage" Grid.Column="0" Width="48" Height="48" HorizontalAlignment="Left" Margin="5 0 0 0"/>
             <TextBlock x:Name="ChatPartnerLogin" Grid.Column="1" Style="{StaticResource BasicTextBlock}" TextAlignment="Left" VerticalAlignment="Center"/>
-        </Grid>
-        <TextBlock Visibility="Collapsed" x:Name="WarnTextBlock" Grid.Row="1" Style="{StaticResource BasicTextBlock}" Text="У вас нет ни одного сообщения" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
-        <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" VerticalScrollBarVisibility ="Auto" HorizontalScrollBarVisibility="Disabled" PreviewMouseWheel="ScrollViewer_MouseWheel" IsTabStop="False">
+            <Button Style="{StaticResource ButtonBase}" Grid.Column="2" Width="40" Height="40" VerticalAlignment="Center" ToolTip="Позвонить" Margin="0 0 10 0">
+                <Image Source="pack://application:,,,/Images/MenuIcons/Call/Call.png" Width="30" Height="30"/>
+            </Button>
+        </local:MenuGrid>
+        <TextBlock Visibility="Collapsed" x:Name="WarnTextBlock" Grid.Row="2" Style="{StaticResource BasicTextBlock}" Text="У вас нет ни одного сообщения" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+        <ScrollViewer x:Name="ScrollViewer" Grid.Row="2" VerticalScrollBarVisibility ="Auto" HorizontalScrollBarVisibility="Disabled" PreviewMouseWheel="ScrollViewer_MouseWheel" IsTabStop="False">
             <ListBox x:Name="MessageList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.CacheLength="30" VirtualizingStackPanel.CacheLengthUnit="Item" IsTabStop="False">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type classes:MessageGroup}">
@@ -52,7 +57,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </ScrollViewer>
-        <Grid Grid.Row="2" Background="#232323">
+        <Grid Grid.Row="3" Background="#232323">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="60"/>

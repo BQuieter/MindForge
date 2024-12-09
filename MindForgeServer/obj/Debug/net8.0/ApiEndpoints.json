@@ -55,12 +55,56 @@
   },
   {
     "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_19",
+    "RelativePath": "groupchats/add/{chatId}",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "chatId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
     "Method": "\u003CMain\u003Eb__0_17",
     "RelativePath": "groupchats/create",
     "HttpMethod": "POST",
     "IsController": false,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_18",
+    "RelativePath": "groupchats/delete/{name}",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Void",

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\BQuiet\source\repos\MindForge\MindForge\App.xaml
-21-1723220631
+22-1091459816
 
-27-583821185
-221612893064
-Pages\Chats\ChatPage.xaml;Pages\Chats\Group\CreateGroupPage.xaml;Pages\Chats\Group\GroupChatsPage.xaml;Pages\Chats\PersonalChatsListPage.xaml;Pages\FriendsPages\AddFriendsPage.xaml;Pages\FriendsPages\AllFriendsPage.xaml;Pages\FriendsPages\FriendsMenuPage.xaml;Pages\FriendsPages\IncomingRequestsPage.xaml;Pages\FriendsPages\OutgoingRequestsPage.xaml;Pages\FriendsPages\RequestsPage.xaml;Pages\ProfilesPages\OtherUserProfilePage.xaml;Pages\ProfilesPages\ProfilePage.xaml;Pages\RegistrationPage.xaml;Pages\SignInPage.xaml;Styles\ChatDictionary.xaml;Styles\InitialDictionary.xaml;Styles\MenuDictionary.xaml;Styles\ProfileDictionary.xaml;Styles\WindowDictionary.xaml;Windows\InitialWindow.xaml;Windows\MainWindow.xaml;
+28-705180335
+2361414368925
+Pages\Chats\ChatPage.xaml;Pages\Chats\Group\CreateGroupPage.xaml;Pages\Chats\Group\GroupChatInformPage.xaml;Pages\Chats\Group\GroupChatsPage.xaml;Pages\Chats\PersonalChatsListPage.xaml;Pages\FriendsPages\AddFriendsPage.xaml;Pages\FriendsPages\AllFriendsPage.xaml;Pages\FriendsPages\FriendsMenuPage.xaml;Pages\FriendsPages\IncomingRequestsPage.xaml;Pages\FriendsPages\OutgoingRequestsPage.xaml;Pages\FriendsPages\RequestsPage.xaml;Pages\ProfilesPages\OtherUserProfilePage.xaml;Pages\ProfilesPages\ProfilePage.xaml;Pages\RegistrationPage.xaml;Pages\SignInPage.xaml;Styles\ChatDictionary.xaml;Styles\InitialDictionary.xaml;Styles\MenuDictionary.xaml;Styles\ProfileDictionary.xaml;Styles\WindowDictionary.xaml;Windows\InitialWindow.xaml;Windows\MainWindow.xaml;
 
 False
 

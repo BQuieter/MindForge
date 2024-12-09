@@ -34,6 +34,10 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="InformClickGridInChat" TargetType="{x:Type local:MenuGrid}" BasedOn="{StaticResource ProfileMenuGrid}">
+        <Setter Property="Background" Value="#252525"/>
+    </Style>
+
     <Style x:Key="MenuIcon" TargetType="Image">
         <Setter Property="Height" Value="32"/>
         <Setter Property="Width" Value="32"/>

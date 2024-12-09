@@ -14,6 +14,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using Microsoft.VisualBasic;
+using System.Collections.ObjectModel;
 
 
 namespace MindForgeServer
@@ -336,7 +337,7 @@ namespace MindForgeServer
                 bool permission = chat.Users.FirstOrDefault(c => c.Login == user) is not null || (chat.User1 != null && chat.User1.Login == user) || (chat.User2 != null && chat.User2.Login == user);
                 if (!permission)
                     return Results.Unauthorized();
-                var messages = chat.Messages.OrderByDescending(m => m.TimeSent).Take(50).Select(m => new MessageInformation { Message = m.MessageText, SenderName = m.Sender.Login, DateTime = m.TimeSent.ToShortTimeString() }).ToList();
+                var messages = chat.Messages.OrderByDescending(m => m.TimeSent).Take(50).Select(m => new MessageInformation { Message = m.MessageText, SenderName = m.Sender is not null ? m.Sender.Login : db.Users.FirstOrDefault(u => u.UserId == m.SenderId).Login, DateTime = m.TimeSent.ToShortTimeString() }).ToList();
                 return Results.Ok(messages);
             });
 
@@ -370,20 +371,22 @@ namespace MindForgeServer
                 string user = context.User.Identity!.Name!;
                 User userDb = db.Users.FirstOrDefault(u => u.Login == user);
                 var chats = await db.Chats
+                    .Include(c => c.User1)
                     .Include(c => c.Users)
                     .Where(c => c.Users.Contains(userDb))
                     .Select(c => new GroupChatInformation
                     {
                         ChatId = c.ChatId,
+                        Creator = c.User1.Login,
                         Name = c.ChatName,
                         ImageByte = c.ChatPhoto,
-                        Members = db.Profiles.Include(p => p.UserNavigation).Where(p => c.Users.Contains(p.UserNavigation)).Select(p =>
+                        Members = new ObservableCollection<ProfileInformation>(db.Profiles.Include(p => p.UserNavigation).Where(p => c.Users.Contains(p.UserNavigation)).Select(p =>
                                   new ProfileInformation
                                   {
                                       Login = p.UserNavigation.Login,
                                       Description = p.ProfileDescription,
                                       ImageByte = p.ProfilePhoto
-                                  }).ToList()
+                                  }).ToList())
                     }).ToListAsync();
                 if (chats is null)
                     chats = new List<GroupChatInformation>();
@@ -408,8 +411,57 @@ namespace MindForgeServer
                 information.ChatId = chat.ChatId;
                 var members = information.Members.Where(m => m.Login != user).Select(m => m.Login);
                 await hubContext.Clients.Users(members).SendAsync("GroupChatCreated", information);
-                await hubContext.Clients.Users(members).SendAsync("AddToGroup", chat.ChatName);
                 return Results.Ok(information.ChatId);
+            });
+
+            app.MapPost("/groupchats/delete/{name}", [Authorize] async (string name, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
+                string user = context.User.Identity!.Name!;
+                GroupChatInformation information = await context.Request.ReadFromJsonAsync<GroupChatInformation>();
+                var profileUser = information.Members.FirstOrDefault(m => m.Login == name);
+                var chat = db.Chats.Include(c => c.User1).Include(c => c.Users).FirstOrDefault(c => c.ChatId == information.ChatId);
+                if (chat.User1.Login == user || user == name)
+                    chat.Users.Remove(db.Users.FirstOrDefault(u => u.Login == name));
+                else
+                    return Results.Unauthorized();
+                await db.SaveChangesAsync();
+                List<string> members = chat.Users.Where(m => m.Login != user).Select(m => m.Login).ToList();
+                Console.WriteLine(members.Count);
+                await hubContext.Clients.Users(members).SendAsync("DeleteMember", profileUser, chat.ChatId);
+                if (user != name)
+                    await hubContext.Clients.User(name).SendAsync("YouDeleted", chat.ChatId);
+                return Results.Ok();
+            });
+
+            app.MapPost("/groupchats/add/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
+                string user = context.User.Identity!.Name!;
+                List<ProfileInformation> profiles = await context.Request.ReadFromJsonAsync<List<ProfileInformation>>();
+                List<string> usersNames = profiles.Select(p => p.Login).ToList();
+                var usersToAdd = db.Users.Where(u => usersNames.Contains(u.Login));
+                var chat = db.Chats.Include(c => c.User1).Include(c => c.Users).FirstOrDefault(c => c.ChatId == chatId);
+
+                if (chat.Users.Contains(db.Users.FirstOrDefault(u => u.Login == user)))
+                    chat.Users.AddRange(usersToAdd);
+                else
+                    return Results.Unauthorized();
+                await db.SaveChangesAsync();
+                var members = chat.Users.Where(m => m.Login != user && !usersNames.Contains(m.Login)).Select(m => m.Login);
+                await hubContext.Clients.Users(members).SendAsync("AddMember", profiles, chatId);
+                var chatInform = new GroupChatInformation() 
+                { 
+                    ChatId = chatId, 
+                    Creator = chat.User1.Login, 
+                    ImageByte = chat.ChatPhoto, 
+                    Name = chat.ChatName, 
+                    Members = new ObservableCollection<ProfileInformation>(db.Profiles.Include(p => p.UserNavigation).Where(p => chat.Users.Contains(p.UserNavigation)).Select(p =>
+                        new ProfileInformation
+                        {
+                            Login = p.UserNavigation.Login,
+                            Description = p.ProfileDescription,
+                            ImageByte = p.ProfilePhoto
+                        }).ToList())
+                };
+                await hubContext.Clients.Users(usersNames).SendAsync("GroupChatCreated", chatInform);
+                return Results.Ok();
             });
 
             app.MapHub<FriendHub>("/friendhub");

@@ -11,6 +11,9 @@
     <Compile Update="Pages\Chats\Group\CreateGroupPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\Chats\Group\GroupChatInformPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\Chats\Group\GroupChatsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -56,6 +59,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Chats\Group\CreateGroupPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Chats\Group\GroupChatInformPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Chats\Group\GroupChatsPage.xaml">

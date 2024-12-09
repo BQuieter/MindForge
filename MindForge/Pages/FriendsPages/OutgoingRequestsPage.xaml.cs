@@ -120,7 +120,7 @@ namespace MindForgeClient.Pages.FriendsPages
             UserWarn.Visibility = Visibility.Visible;
         }
         private void OpenProfile(object sender, MouseButtonEventArgs e) =>
-            currentWindow.OpenUserProfile(sender, e);
+            currentWindow.OpenProfileFrame(sender);
         private void GoToChat(object sender, RoutedEventArgs e) =>
             currentWindow.GoToChat(sender);
     }

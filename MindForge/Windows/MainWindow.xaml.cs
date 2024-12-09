@@ -4,6 +4,7 @@ using MindForge;
 using MindForgeClasses;
 using MindForgeClient.Pages;
 using MindForgeClient.Pages.Chats;
+using MindForgeClient.Pages.Chats.Group;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -54,7 +55,9 @@ namespace MindForgeClient
             personalChatNotificationService.PersonalChatCreated += PersonalChatCreate!;
             personalChatNotificationService.GroupChatCreated += GroupChatCreate!;
             personalChatNotificationService.MessageSent += MessageSent!;
-
+            personalChatNotificationService.MemberAdded += MemberAdd!;
+            personalChatNotificationService.MemberDeleted += MemberDelete!;
+            personalChatNotificationService.YouDeleted += YouDelete!;
             friendNotificationService.StartAsync();
             personalChatNotificationService.StartAsync();
         }
@@ -117,7 +120,41 @@ namespace MindForgeClient
                     ChatHelper.AddMessage(applicationData.PersonalChats, args.Message, args.Index);
             });
         }
+        private void MemberAdd(object sender, MemberAddEventArgs args)
+        {
+            Dispatcher.Invoke(() => {
+                var chat = applicationData.GroupChatsInformation.FirstOrDefault(c => c.ChatId == args.ChatId);
+                if (chat is null)
+                    return;
+                foreach (var member in args.Users)
+                    chat.Members.Add(member);
+            });
+        }
 
+        private void MemberDelete(object sender, MemberDeleteEventArgs args)
+        {
+            Dispatcher.Invoke(() => {
+                var chat = applicationData.GroupChatsInformation.FirstOrDefault(c => c.ChatId == args.ChatId);
+                if (chat is null)
+                    return;
+                foreach (var member in chat.Members.ToList())
+                    if (member.Login == args.User.Login)
+                        chat.Members.Remove(member);
+            });
+        }
+
+        private void YouDelete(object sender, int chatId)
+        {
+            Dispatcher.Invoke(() => {
+                applicationData.GroupChatsInformation.Remove(applicationData.GroupChatsInformation.FirstOrDefault(c => c.ChatId == chatId));
+                applicationData.GroupChats.Remove(chatId);
+                if (MainFrame.Content is  GroupChatsPage page)
+                {
+                    if (page.CurrentChatId == chatId)
+                        page.CloseChat();
+                }
+            });
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SetProfileInformation();
@@ -203,7 +240,7 @@ namespace MindForgeClient
         internal void SetProfileImage(BitmapImage image) =>
             ProfileImage.Source = image;
 
-        internal void OpenUserProfile(object sender, MouseButtonEventArgs e, ProfileInformation? profile = null)
+        internal void OpenProfileFrame(object sender, ProfileInformation? profile = null)
         {
             ProfileInformation userProfile;
             if (profile is null)
@@ -221,6 +258,41 @@ namespace MindForgeClient
             }
             ProfileFrame.Navigate(new OtherUserProfilePage(userProfile));
             ProfileFrame.Visibility = Visibility.Visible;
+        }
+
+        internal async void OpenProfileFrame(PersonalChatInformation chat)
+        {
+            var response = await httpClient.GetAsync(App.HttpsStr + $"/profile/{chat.Login}");
+            if (response is null || !response.IsSuccessStatusCode)
+                return;
+            ProfileInformation userProfile = await response.Content.ReadFromJsonAsync<ProfileInformation>();
+          
+            if (ProfileFrame.Visibility == Visibility.Visible)
+            {
+                OtherUserProfilePage content = ProfileFrame.Content as OtherUserProfilePage;
+                if (content.Profile.Login == userProfile.Login)
+                    return;
+            }
+            ProfileFrame.Navigate(new OtherUserProfilePage(userProfile));
+            ProfileFrame.Visibility = Visibility.Visible;
+        }
+
+        internal async void OpenProfileFrame(GroupChatInformation chat)
+        {
+            if (ProfileFrame.Visibility == Visibility.Visible)
+            {
+                GroupChatInformPage content = ProfileFrame.Content as GroupChatInformPage;
+                if (content.GroupName == chat.Name)
+                    return;
+            }
+            ProfileFrame.Navigate(new GroupChatInformPage(chat));
+            ProfileFrame.Visibility = Visibility.Visible;
+        }
+
+        internal void CloseProfileFrame()
+        {
+            ProfileFrame.Navigate(null);
+            ProfileFrame.Visibility = Visibility.Collapsed;
         }
 
         private void ProfileFrame_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

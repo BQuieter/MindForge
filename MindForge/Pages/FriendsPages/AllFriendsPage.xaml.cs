@@ -135,6 +135,6 @@ namespace MindForgeClient.Pages.FriendsPages
         }
 
         private void OpenProfile(object sender, MouseButtonEventArgs e) =>
-            currentWindow.OpenUserProfile(sender,e);
+            currentWindow.OpenProfileFrame(sender);
     }
 }

@@ -36,10 +36,10 @@ namespace MindForgeClient.Pages
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoginTextBlock.Text = Profile.Login;
-            Description.Text = Profile.Description;
+            Description.Text = Profile.Description.Length > 0 ? Profile.Description : "Пользователь ничего не указал о себе";
             ProfileImage.Source = App.GetImageFromByteArray(Profile.ImageByte);
             var response = await httpClient.GetAsync(App.HttpsStr + $"/professions/{Profile.Login}");
-            if (!response.IsSuccessStatusCode) // ошибку обработай как нить
+            if (!response.IsSuccessStatusCode) 
                 return;
             ProfessionListBox.ItemsSource = await response.Content.ReadFromJsonAsync<List<ProfessionInformation>>();
 

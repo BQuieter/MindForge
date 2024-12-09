@@ -19,4 +19,28 @@ namespace MindForgeClasses
             IsGroup = isGroup;
         }
     }
+
+    public class MemberAddEventArgs : EventArgs
+    {
+        public List<ProfileInformation> Users { get; set; }
+        public int ChatId { get; set; }
+
+        public MemberAddEventArgs(List<ProfileInformation> users, int chatID)
+        {
+            Users = users;
+            ChatId = chatID;
+        }
+    }
+
+    public class MemberDeleteEventArgs : EventArgs
+    {
+        public ProfileInformation User { get; set; }
+        public int ChatId { get; set; }
+
+        public MemberDeleteEventArgs(ProfileInformation user, int chatID)
+        {
+            User = user;
+            ChatId = chatID;
+        }
+    }
 }

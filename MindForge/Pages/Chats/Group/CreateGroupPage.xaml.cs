@@ -131,7 +131,7 @@ namespace MindForgeClient.Pages.Chats.Group
 
         private async void Create_Click(object sender, RoutedEventArgs e)
         {
-            GroupChatInformation information = new() { ImageByte = currentImage, Name = GroupNameBox.Text.Length > 0 ? GroupNameBox.Text : applicationData.UserProfile.Login, Members = selectedFriends };
+            GroupChatInformation information = new() { ImageByte = currentImage, Name = GroupNameBox.Text.Length > 0 ? GroupNameBox.Text : applicationData.UserProfile.Login, Members = new ObservableCollection<ProfileInformation>(selectedFriends) };
             information.Members.Add(applicationData.UserProfile);
             var response = await httpClient.PostAsJsonAsync<GroupChatInformation>(App.HttpsStr + "/groupchats/create", information);
             if (!response.IsSuccessStatusCode)

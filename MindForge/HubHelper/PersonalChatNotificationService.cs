@@ -19,7 +19,9 @@ namespace MindForgeClient
         public event EventHandler<PersonalChatInformation> PersonalChatCreated;
         public event EventHandler<GroupChatInformation> GroupChatCreated;
         public event EventHandler<MessageSentEventArgs> MessageSent;
-
+        public event EventHandler<MemberAddEventArgs> MemberAdded;
+        public event EventHandler<MemberDeleteEventArgs> MemberDeleted;
+        public event EventHandler<int> YouDeleted;
 
         public async Task StartAsync()
         {
@@ -40,6 +42,19 @@ namespace MindForgeClient
             connection.On<MessageInformation, int, bool>("MessageSent", (message, chatId, isGroup) => {
                 MessageSent?.Invoke(this, new MessageSentEventArgs(message,chatId, isGroup));
             });
+
+            connection.On<List<ProfileInformation>, int>("AddMember", (List, chatId) => {
+                MemberAdded?.Invoke(this,new MemberAddEventArgs(List,chatId));
+            });
+
+            connection.On<ProfileInformation, int>("DeleteMember", (person, chatId) => {
+                MemberDeleted?.Invoke(this, new MemberDeleteEventArgs(person, chatId));
+            });
+
+            connection.On<int>("YouDeleted", (chatId) => {
+                YouDeleted?.Invoke(this, chatId);
+            });
+
             try
             {
                 await connection.StartAsync();
@@ -50,6 +65,10 @@ namespace MindForgeClient
                 await connection.StartAsync();
             }
         }
+        public void FireYouDeletedEvent(object sender, int chatId)
+        {
+            YouDeleted?.Invoke(this, chatId);
+        }
         public async Task StopAsync()
         {
             if (connection != null && connection.State == HubConnectionState.Connected)
@@ -57,13 +76,16 @@ namespace MindForgeClient
                 await connection.StopAsync();
             }
         }
-
     }
     public interface IPersonalChatNotificationService
     {
         event EventHandler<PersonalChatInformation> PersonalChatCreated;
         event EventHandler<GroupChatInformation> GroupChatCreated;
         event EventHandler<MessageSentEventArgs> MessageSent;
+        event EventHandler<MemberAddEventArgs> MemberAdded;
+        event EventHandler<MemberDeleteEventArgs> MemberDeleted;
+        event EventHandler<int> YouDeleted;
+        void FireYouDeletedEvent(object sender, int chatId);
         Task StartAsync();
         Task StopAsync();
     }

@@ -30,6 +30,7 @@
     <None Remove="Images\Logo1.jpg" />
     <None Remove="Images\MenuIcons\AddFriend.png" />
     <None Remove="Images\MenuIcons\AllFriends.png" />
+    <None Remove="Images\MenuIcons\Call\Call.png" />
     <None Remove="Images\MenuIcons\Chats.png" />
     <None Remove="Images\MenuIcons\Chats\BaseGroupImage.png" />
     <None Remove="Images\MenuIcons\Chats\BaseGroupImageBig.png" />
@@ -52,6 +53,7 @@
     <None Remove="Images\MenuIcons\Settings.png" />
     <None Remove="Images\MiniLogo.png" />
     <None Remove="Images\Profile.png" />
+    <None Remove="Images\Star.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +66,7 @@
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.0" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="SimpleInjector" Version="5.5.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
@@ -73,6 +76,7 @@
     <Resource Include="Images\FullLogo.jpg" />
     <Resource Include="Images\Logo.png" />
     <Resource Include="Images\Logo1.jpg" />
+    <Resource Include="Images\MenuIcons\Call\Call.png" />
     <Resource Include="Images\MenuIcons\Chats.png" />
     <Resource Include="Images\MenuIcons\Chats\BaseGroupImage.png" />
     <Resource Include="Images\MenuIcons\Chats\BaseGroupImageBig.png" />
@@ -94,6 +98,7 @@
     <Resource Include="Images\MenuIcons\Settings.png" />
     <Resource Include="Images\MiniLogo.png" />
     <Resource Include="Images\Profile.png" />
+    <Resource Include="Images\Star.png" />
   </ItemGroup>
 
   <ItemGroup>

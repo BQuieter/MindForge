@@ -31,6 +31,7 @@ namespace MindForgeClient.Pages.Chats
         private event EventHandler CreateEvent;
         private Dictionary<string, MenuGrid> grids = new();
         private string lastSelected = null;
+        internal int CurrentChatId = -1;
         public GroupChatsPage()
         {
             InitializeComponent();
@@ -65,7 +66,11 @@ namespace MindForgeClient.Pages.Chats
         {
             if (MainFrame.Content?.GetType() != typeof(CreateGroupPage))
                 MainFrame.Navigate(new CreateGroupPage(CancelEvent, CreateEvent));
-
+            if (lastSelected is not null)
+            {
+                grids[lastSelected].IsSelected = false;
+                lastSelected = null;
+            }
         }
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
@@ -90,7 +95,7 @@ namespace MindForgeClient.Pages.Chats
             App.WatermarkHelper(sender, e);
             TextBox textBox = (TextBox)sender;
             if (textBox.Text.Length == 0)
-                ChatsListBox.ItemsSource = applicationData.PersonalChatsInformation;
+                ChatsListBox.ItemsSource = applicationData.GroupChatsInformation;
             else
             {
                 var filteredCollection = applicationData.GroupChatsInformation.Where(u => Regex.IsMatch(u.Name.ToLower(), $"^.*{textBox.Text.ToLower()}.*$"));
@@ -105,6 +110,7 @@ namespace MindForgeClient.Pages.Chats
             if (lastSelected is not null && grids.ContainsKey(lastSelected))
                 grids[lastSelected].IsSelected = false;
             grid.IsSelected = true;
+            CurrentChatId = context.ChatId;
             OpenChat(context);
             lastSelected = context.Name;
         }
@@ -114,6 +120,10 @@ namespace MindForgeClient.Pages.Chats
             if (lastSelected == profileInformation.Name)
                 return;
             MainFrame.Navigate(new ChatPage(profileInformation));
+        }
+        internal void CloseChat()
+        {
+            MainFrame.Navigate(null);
         }
 
         private void Chat_Loaded(object sender, RoutedEventArgs e)
