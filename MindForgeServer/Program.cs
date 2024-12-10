@@ -480,6 +480,18 @@ namespace MindForgeServer
                 chat.Call = new Call { ChatId = chatId, StartTime = DateTime.Now };
                 chat.Call.CallParticipants.Add(new CallParticipant() { CallId = chat.Call.CallId, UserId = userDb.UserId, JoinTime = DateTime.Now });
                 await db.SaveChangesAsync();
+                var profileDb = db.Profiles.Include(p => p.UserNavigation).FirstOrDefault(p => p.UserNavigation.Login == user);
+                var profile = new ProfileInformation
+                {
+                    Login = profileDb.UserNavigation.Login,
+                    Description = profileDb.ProfileDescription!,
+                    ImageByte = profileDb.ProfilePhoto!
+                };
+                var sendTo = chat.Users.Select(u => u.Login).ToList();
+                if (chat.User1 is not null && chat.User2 is not null)
+                    sendTo.Add(chat.User1.Login == user ? chat.User2.Login : chat.User1.Login);
+
+                await hubContext.Clients.Users(sendTo).SendAsync("UserJoin", profile, chatId);
                 return Results.Ok();
             });
 
@@ -511,7 +523,11 @@ namespace MindForgeServer
                     Description = profileDb.ProfileDescription!,
                     ImageByte = profileDb.ProfilePhoto!
                 };
-                await hubContext.Clients.Group(chatId.ToString()).SendAsync("UserLeave",profile,chatId);
+                var sendTo = chat.Users.Select(u => u.Login).ToList();
+                if (chat.User1 is not null && chat.User2 is not null)
+                    sendTo.Add(chat.User1.Login == user ? chat.User2.Login : chat.User1.Login);
+
+                await hubContext.Clients.Users(sendTo).SendAsync("UserLeave",profile,chatId);
                 return Results.Ok();
             });
 
@@ -541,7 +557,10 @@ namespace MindForgeServer
                     Description = profileDb.ProfileDescription!,
                     ImageByte = profileDb.ProfilePhoto!
                 };
-                await hubContext.Clients.Group(chatId.ToString()).SendAsync("UserJoin", profile, chatId);
+                var sendTo = chat.Users.Select(u => u.Login).ToList();
+                if (chat.User1 is not null && chat.User2 is not null)
+                    sendTo.Add(chat.User1.Login == user ? chat.User2.Login : chat.User1.Login);
+                await hubContext.Clients.Users(sendTo).SendAsync("UserJoin", profile, chatId);
 
                 return Results.Ok();
             });

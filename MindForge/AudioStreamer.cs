@@ -29,7 +29,7 @@ namespace MindForgeClient
             var devices = WaveIn.DeviceCount;
             if (devices == 0)
             {
-                Console.WriteLine("No microphone devices found.");
+                Console.WriteLine("Микрофон не найден");
                 return;
             }
 
@@ -64,6 +64,8 @@ namespace MindForgeClient
 
         private async void OnDataAvailable(object sender, WaveInEventArgs e)
         {
+            if (CallHelper.isMuted)
+                return;
             try
             {
                 byte[] buffer = e.Buffer.ToArray();

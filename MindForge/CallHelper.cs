@@ -16,6 +16,7 @@ namespace MindForgeClient
     internal class CallHelper
     {
         internal static int ChatId;
+        public static bool isMuted = false;
         internal static bool InCall = false;
         internal static ObservableCollection<ProfileInformation> Participants;
 
@@ -26,11 +27,10 @@ namespace MindForgeClient
 
         internal async static void LeaveCall()
         {
-            Dispatcher.CurrentDispatcher.InvokeAsync(async () =>
+            if (InCall)
             {
-                if (InCall)
-                    await HttpClientSingleton.httpClient.GetAsync(App.HttpsStr + $"/call/leave/{ChatId}");
-            });
+                var response = await HttpClientSingleton.httpClient.GetAsync(App.HttpsStr + $"/call/leave/{ChatId}");
+            }
         }
 
 

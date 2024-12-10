@@ -28,6 +28,7 @@ namespace MindForgeClient
         public ObservableCollection<GroupChatInformation> GroupChatsInformation { get; set; }
         public Dictionary<int, ObservableCollection<MessageGroup>> PersonalChats { get; set; } = new();
         public Dictionary<int, ObservableCollection<MessageGroup>> GroupChats { get; set; } = new();
+        public Dictionary<int, ObservableCollection<ProfileInformation>> CallsParticipants { get; set; } = new();
         private readonly TaskCompletionSource<bool> loadedTaskSource = new();
         public Task<bool> LoadedTask => loadedTaskSource.Task; 
     
@@ -108,6 +109,7 @@ namespace MindForgeClient
             foreach(var a in PersonalChatsInformation)
             {
                 PersonalChats.Add(a.ChatId,new());
+                CallsParticipants.Add(a.ChatId,new());
             }
         }
         private async Task GetGroupChats()
@@ -119,6 +121,7 @@ namespace MindForgeClient
             foreach (var a in GroupChatsInformation)
             {
                 GroupChats.Add(a.ChatId, new());
+                CallsParticipants.Add(a.ChatId, new());
             }
         }
     }

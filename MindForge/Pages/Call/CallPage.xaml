@@ -35,8 +35,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="MuteButton" Grid.Column="0" Style="{StaticResource ButtonBase}" Width="40" Height="40" Margin="0 0 20 0" HorizontalAlignment="Right" ToolTip="Выключить микрофон">
-                <Image Source="pack://application:,,,/Images/MenuIcons/Call/MuteMicrophone.png" Width="30" Height="30"/>
+            <Button x:Name="MuteButton" Grid.Column="0" Style="{StaticResource ButtonBase}" Width="40" Height="40" Margin="0 0 20 0" HorizontalAlignment="Right" ToolTip="Выключить микрофон" Click="Mute_Unmute_Click">
+                <Image x:Name="MuteImage" Source="pack://application:,,,/Images/MenuIcons/Call/MuteMicrophone.png" Width="30" Height="30"/>
             </Button>
             <Button Grid.Column="1" Style="{StaticResource ButtonBase}" Width="40" Height="40" Margin="20 0 0 0" HorizontalAlignment="Left" ToolTip="Выйти из звонка" Click="Leave_Click">
                 <Image Source="pack://application:,,,/Images/MenuIcons/Call/LeaveCall.png" Width="30" Height="30"/>

@@ -164,16 +164,14 @@ namespace MindForgeClient
         private void UserJoin(object sender, MemberEventArgs args)
         {
             Dispatcher.Invoke(() => {
-                if (CallHelper.InCall && args.ChatId == CallHelper.ChatId)
-                    CallHelper.Participants.Add(args.User);
+                applicationData.CallsParticipants[args.ChatId].Add(args.User);
             });
         }
 
         private void UserLeave(object sender, MemberEventArgs args)
         {
             Dispatcher.Invoke(() => {
-                if (CallHelper.InCall && args.ChatId == CallHelper.ChatId)
-                    CallHelper.Participants.Remove(args.User);
+                applicationData.CallsParticipants[args.ChatId].Remove(applicationData.CallsParticipants[args.ChatId].FirstOrDefault(p => p.Login == args.User.Login));
             });
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -252,6 +250,7 @@ namespace MindForgeClient
         private async void Logout(object sender, MouseButtonEventArgs e)
         {
             var response = await httpClient.PostAsync(App.HttpsStr + "/logout", null);
+            CallHelper.LeaveCall();
             httpClient.DefaultRequestHeaders.Authorization = null;
             var window = new InitialWindow();
             window.Show();
