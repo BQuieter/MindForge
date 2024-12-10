@@ -1,0 +1,14 @@
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\bin\Release\net8.0\MindForgeDbClasses.deps.json
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\bin\Release\net8.0\MindForgeDbClasses.runtimeconfig.json
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\bin\Release\net8.0\MindForgeDbClasses.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\bin\Release\net8.0\MindForgeDbClasses.pdb
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\MindForgeDbClasses.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\MindForgeDbClasses.AssemblyInfoInputs.cache
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\MindForgeDbClasses.AssemblyInfo.cs
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\MindForgeDbClasses.csproj.CoreCompileInputs.cache
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\MindForgeDbClasses.sourcelink.json
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\MindForgeDbClasses.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\refint\MindForgeDbClasses.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\MindForgeDbClasses.pdb
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\MindForgeDbClasses.genruntimeconfig.cache
+C:\Users\BQuiet\source\repos\MindForge\MindForgeDbClasses\obj\Release\net8.0\ref\MindForgeDbClasses.dll

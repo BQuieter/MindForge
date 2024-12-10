@@ -1,0 +1,131 @@
+[33mcommit b2d53cd7dfdb3a92150a6fcc8e23c7565ae2f287[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Tue Dec 10 19:00:09 2024 +0300
+
+    Calls is done
+
+[33mcommit b4c99bb9e2a971e46c0984bf0a469203988f6003[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Tue Dec 10 05:30:41 2024 +0300
+
+    calls works +-
+
+[33mcommit 937a6d21210c8015b559f945a7c3c01db8615510[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Mon Dec 9 18:12:38 2024 +0300
+
+    Group chats is done. Making calls
+
+[33mcommit 8f129134b04faac058d851e374146a5714dbfc16[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Sun Dec 8 05:50:19 2024 +0300
+
+    Can text in group chats
+
+[33mcommit e2d6542c77e1a1901ba3787e5c8be4b463a8a6f7[m[33m ([m[1;32mFixed[m[33m)[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Fri Dec 6 03:07:02 2024 +0300
+
+    Fixed
+
+[33mcommit 3a54a50cbc21b6b1ce3ab1256cf41d5ad68b1be6[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Fri Dec 6 00:16:17 2024 +0300
+
+    Personal chats is complete
+
+[33mcommit dcfb878d2825e30266f2006ebb41b4162f1b4e4f[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Mon Dec 2 00:24:11 2024 +0300
+
+    Users can check users profiles
+
+[33mcommit da55d2b67d055c33181fdb7c0fd9a3ffde716f4e[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Sun Dec 1 03:51:29 2024 +0300
+
+    SignalR friends menu is working
+
+[33mcommit 5d5636c150047dbcdcbce4aacd8256e01655d9f7[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Sat Nov 30 14:16:28 2024 +0300
+
+    Menu Friends http is done, making signalR
+
+[33mcommit 093cfc0b947d5ba596480401ee7c3d4efdbd1fdc[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Fri Nov 29 18:25:10 2024 +0300
+
+    Profile, Add Friend, All friends is done, making requests page
+
+[33mcommit ef52268205095f10698d43c375fb45b7adcaaae5[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Thu Nov 21 23:30:43 2024 +0300
+
+    Main menu is developing
+
+[33mcommit e6a77af69d08cbde7040c85fab99a119dbe697ce[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Sat Nov 9 10:38:14 2024 +0300
+
+    server + jwt is getting on client
+
+[33mcommit dd3234caf8ebe9ddc010d4e3f15022055d71f566[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Sun Oct 13 19:23:24 2024 +0300
+
+    Warn for Registration
+
+[33mcommit bbcc45f51c9c9f97b75fa99ad4e087e92774a874[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Sat Oct 12 19:31:49 2024 +0300
+
+    Test
+
+[33mcommit 7f4399a7b86d583cf135428f4d120b29f110bc45[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Thu Oct 3 11:51:34 2024 +0300
+
+    03.10.24
+
+[33mcommit 43b444399580b70c0606c91d45d0c18951eff99c[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Wed Oct 2 21:33:38 2024 +0300
+
+    try to change
+
+[33mcommit eab806ce05c7be8bb27e8fc6c43a0d1ed9942f34[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Tue Oct 1 22:42:37 2024 +0300
+
+    Better Grids
+
+[33mcommit c38133675bc9f5ef05f3e5aa70855b8b3f8ddf3c[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Tue Oct 1 00:20:22 2024 +0300
+
+    Authorization is complete
+
+[33mcommit e55d4bca3947f2fffc722cee01fb31c4d8dabeb1[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Sun Sep 29 22:56:01 2024 +0300
+
+    Authorization in process
+
+[33mcommit a12eaad969aa399f5ad7671ccf57e4b962ff832e[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Sun Sep 29 12:39:14 2024 +0300
+
+    Maximazed works
+
+[33mcommit 67bb3cb50f20f6e9e5441427992eafa1dc33f9e6[m
+Author: Dima Boryaev <dimaboryaev1@gmail.com>
+Date:   Fri Sep 27 14:33:36 2024 +0300
+
+    First Version
+
+[33mcommit 4cba350b5188fdb131ab4b2f3e063235185a9326[m
+Author: BQuiet <159141254+BQuieter@users.noreply.github.com>
+Date:   Tue Sep 24 15:47:44 2024 +0300
+
+    Initial commit
