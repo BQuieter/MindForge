@@ -16,5 +16,5 @@ C:\Users\BQuiet\source\repos\MindForge\MindForge\App.xaml
 2361414368925
 Pages\Call\CallPage.xaml;Pages\Chats\ChatPage.xaml;Pages\Chats\Group\CreateGroupPage.xaml;Pages\Chats\Group\GroupChatInformPage.xaml;Pages\Chats\Group\GroupChatsPage.xaml;Pages\Chats\PersonalChatsListPage.xaml;Pages\FriendsPages\AddFriendsPage.xaml;Pages\FriendsPages\AllFriendsPage.xaml;Pages\FriendsPages\FriendsMenuPage.xaml;Pages\FriendsPages\IncomingRequestsPage.xaml;Pages\FriendsPages\OutgoingRequestsPage.xaml;Pages\FriendsPages\RequestsPage.xaml;Pages\ProfilesPages\OtherUserProfilePage.xaml;Pages\ProfilesPages\ProfilePage.xaml;Pages\RegistrationPage.xaml;Pages\SignInPage.xaml;Styles\ChatDictionary.xaml;Styles\InitialDictionary.xaml;Styles\MenuDictionary.xaml;Styles\ProfileDictionary.xaml;Styles\WindowDictionary.xaml;Windows\InitialWindow.xaml;Windows\MainWindow.xaml;
 
-True
+False
 

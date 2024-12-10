@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MindForgeServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2d53cd7dfdb3a92150a6fcc8e23c7565ae2f287")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+093cfc0b947d5ba596480401ee7c3d4efdbd1fdc")]
 [assembly: System.Reflection.AssemblyProductAttribute("MindForgeServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MindForgeServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

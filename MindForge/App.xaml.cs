@@ -21,7 +21,7 @@ namespace MindForge
     public partial class App : Application
     {
         private Mutex mutex;
-        public static readonly string HttpsStr = "https://bquiet-001-site1.mtempurl.com";
+        public static readonly string HttpsStr = "https://localhost:7236";
         public readonly Container container;
 
         public App()
