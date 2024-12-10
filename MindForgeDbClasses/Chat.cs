@@ -16,13 +16,18 @@ public partial class Chat
 
     public string? ChatName { get; set; }
 
+    public int? CallId { get; set; }
+    public virtual Call? Call { get; set; }
+
+    public virtual List<Call> Calls { get; set; } = new List<Call>();
+
     public DateTime? ChatCreatedTime { get; set; }
 
     public byte[]? ChatPhoto { get; set; }
 
     public virtual ChatType ChatTypeNavigation { get; set; } = null!;
 
-    public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+    public virtual List<Message> Messages { get; set; } = new List<Message>();
 
     public virtual User? User1 { get; set; }
 

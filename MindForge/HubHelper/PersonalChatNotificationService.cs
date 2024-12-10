@@ -20,7 +20,7 @@ namespace MindForgeClient
         public event EventHandler<GroupChatInformation> GroupChatCreated;
         public event EventHandler<MessageSentEventArgs> MessageSent;
         public event EventHandler<MemberAddEventArgs> MemberAdded;
-        public event EventHandler<MemberDeleteEventArgs> MemberDeleted;
+        public event EventHandler<MemberEventArgs> MemberDeleted;
         public event EventHandler<int> YouDeleted;
 
         public async Task StartAsync()
@@ -48,7 +48,7 @@ namespace MindForgeClient
             });
 
             connection.On<ProfileInformation, int>("DeleteMember", (person, chatId) => {
-                MemberDeleted?.Invoke(this, new MemberDeleteEventArgs(person, chatId));
+                MemberDeleted?.Invoke(this, new MemberEventArgs(person, chatId));
             });
 
             connection.On<int>("YouDeleted", (chatId) => {
@@ -83,7 +83,7 @@ namespace MindForgeClient
         event EventHandler<GroupChatInformation> GroupChatCreated;
         event EventHandler<MessageSentEventArgs> MessageSent;
         event EventHandler<MemberAddEventArgs> MemberAdded;
-        event EventHandler<MemberDeleteEventArgs> MemberDeleted;
+        event EventHandler<MemberEventArgs> MemberDeleted;
         event EventHandler<int> YouDeleted;
         void FireYouDeletedEvent(object sender, int chatId);
         Task StartAsync();

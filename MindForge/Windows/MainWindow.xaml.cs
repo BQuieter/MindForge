@@ -39,10 +39,12 @@ namespace MindForgeClient
         private static HttpClient httpClient;
         internal readonly IFriendNotificationService friendNotificationService;
         internal readonly IPersonalChatNotificationService personalChatNotificationService;
-        public MainWindow(IFriendNotificationService friendNotificationService, IPersonalChatNotificationService personalChatNotificationService)
+        internal readonly ICallsService callsService;
+        public MainWindow(IFriendNotificationService friendNotificationService, IPersonalChatNotificationService personalChatNotificationService, ICallsService callsService)
         {
             this.friendNotificationService = friendNotificationService;
             this.personalChatNotificationService = personalChatNotificationService;
+            this.callsService = callsService;
             InitializeComponent();
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
             httpClient = HttpClientSingleton.httpClient!;
@@ -58,8 +60,11 @@ namespace MindForgeClient
             personalChatNotificationService.MemberAdded += MemberAdd!;
             personalChatNotificationService.MemberDeleted += MemberDelete!;
             personalChatNotificationService.YouDeleted += YouDelete!;
+            callsService.UserJoined += UserJoin!;
+            callsService.UserLeaved += UserLeave!;
             friendNotificationService.StartAsync();
             personalChatNotificationService.StartAsync();
+            callsService.StartAsync();
         }
 
 
@@ -131,7 +136,7 @@ namespace MindForgeClient
             });
         }
 
-        private void MemberDelete(object sender, MemberDeleteEventArgs args)
+        private void MemberDelete(object sender, MemberEventArgs args)
         {
             Dispatcher.Invoke(() => {
                 var chat = applicationData.GroupChatsInformation.FirstOrDefault(c => c.ChatId == args.ChatId);
@@ -153,6 +158,22 @@ namespace MindForgeClient
                     if (page.CurrentChatId == chatId)
                         page.CloseChat();
                 }
+            });
+        }
+        //calls
+        private void UserJoin(object sender, MemberEventArgs args)
+        {
+            Dispatcher.Invoke(() => {
+                if (CallHelper.InCall && args.ChatId == CallHelper.ChatId)
+                    CallHelper.Participants.Add(args.User);
+            });
+        }
+
+        private void UserLeave(object sender, MemberEventArgs args)
+        {
+            Dispatcher.Invoke(() => {
+                if (CallHelper.InCall && args.ChatId == CallHelper.ChatId)
+                    CallHelper.Participants.Remove(args.User);
             });
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -270,7 +291,7 @@ namespace MindForgeClient
             if (ProfileFrame.Visibility == Visibility.Visible)
             {
                 OtherUserProfilePage content = ProfileFrame.Content as OtherUserProfilePage;
-                if (content.Profile.Login == userProfile.Login)
+                    if (content.Profile.Login == userProfile.Login)
                     return;
             }
             ProfileFrame.Navigate(new OtherUserProfilePage(userProfile));
@@ -321,6 +342,11 @@ namespace MindForgeClient
                 applicationData.PersonalChatsInformation.Add(chat);
             if (!applicationData.PersonalChats.ContainsKey(chatId))
                 applicationData.PersonalChats.Add(chatId, new());
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            CallHelper.LeaveCall();
         }
     }
 }

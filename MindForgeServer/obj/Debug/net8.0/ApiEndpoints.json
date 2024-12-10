@@ -1,6 +1,94 @@
 [
   {
     "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_20",
+    "RelativePath": "call/create/{chatId}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "chatId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_23",
+    "RelativePath": "call/get/{chatId}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "chatId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_22",
+    "RelativePath": "call/join/{chatId}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "chatId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
+    "Method": "\u003CMain\u003Eb__0_21",
+    "RelativePath": "call/leave/{chatId}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "chatId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MindForgeServer.Program\u002B\u003C\u003Ec",
     "Method": "\u003CMain\u003Eb__0_15",
     "RelativePath": "chats/message/{chatId}",
     "HttpMethod": "POST",

@@ -1,5 +1,6 @@
 ﻿using MindForge;
 using MindForgeClasses;
+using MindForgeClient.Pages.Call;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,6 +30,7 @@ namespace MindForgeClient.Pages.Chats
     {
         private static double? verticalOffset = null;
         public static int? CallChatId = null;
+        private bool isCall = false;
         private MainWindow currentWindow;
         private HttpClient httpClient;
         private ApplicationData applicationData;
@@ -37,7 +39,7 @@ namespace MindForgeClient.Pages.Chats
         private int chatId;
         private PersonalChatInformation personalChatInformation;
         private GroupChatInformation groupChatInformation;
-
+        private event EventHandler<int> CallLeaveEvent;
         private Dictionary<string, BitmapImage> avatars = new();
         public ChatPage(PersonalChatInformation chatInformation)
         {
@@ -54,10 +56,11 @@ namespace MindForgeClient.Pages.Chats
             chatId = groupChatInformation.ChatId;
             httpClient = HttpClientSingleton.httpClient;
         }
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             currentWindow = Window.GetWindow(this) as MainWindow;
             applicationData = currentWindow.applicationData;
+            CallLeaveEvent += CallLeave;
             GroupMessages();
             //
             if (personalChatInformation is not null)
@@ -75,11 +78,36 @@ namespace MindForgeClient.Pages.Chats
                 ChatPartnerLogin.Text = groupChatInformation.Name;
             }
             currentWindow.personalChatNotificationService.MessageSent += MessageSent!;
+            var response = await httpClient.GetAsync(App.HttpsStr + $"/call/get/{chatId}");
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                isCall = false;
+                return;
+            }
+            else
+            {
+                isCall = true;
+                MainFrame.Visibility = Visibility.Visible;
+                ObservableCollection<ProfileInformation> participants = await response.Content.ReadFromJsonAsync<ObservableCollection<ProfileInformation>>();
+                bool joined = CallHelper.InCall && CallHelper.ChatId == chatId ? true : false;
+                MainFrame.Navigate(new CallPage(participants,joined,chatId, CallLeaveEvent));
+            }
+            
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             currentWindow.personalChatNotificationService.MessageSent -= MessageSent!;
             currentWindow.CloseProfileFrame();
+            CallLeaveEvent -= CallLeave;
+        }
+
+        private void CallLeave(object sender, int count)
+        {
+            if (count < 1)
+            {
+                MainFrame.Navigate(null);
+                MainFrame.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void MessageSent(object sender, MessageSentEventArgs args)
@@ -224,6 +252,17 @@ namespace MindForgeClient.Pages.Chats
                 currentWindow.OpenProfileFrame(groupChatInformation);
             }
 
+        }
+
+        private void Call_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.Content is not null)
+                return;
+            MainFrame.Visibility = Visibility.Visible;
+            var reponse = httpClient.GetAsync(App.HttpsStr + $"/call/create/{chatId}");
+            var profiles = new ObservableCollection<ProfileInformation> { applicationData.UserProfile };
+            CallHelper.Participants = profiles;
+            MainFrame.Navigate(new CallPage(profiles, true, chatId, CallLeaveEvent));
         }
     }
 }

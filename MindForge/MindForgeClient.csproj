@@ -31,6 +31,11 @@
     <None Remove="Images\MenuIcons\AddFriend.png" />
     <None Remove="Images\MenuIcons\AllFriends.png" />
     <None Remove="Images\MenuIcons\Call\Call.png" />
+    <None Remove="Images\MenuIcons\Call\JoinCall.png" />
+    <None Remove="Images\MenuIcons\Call\LeaveCall.png" />
+    <None Remove="Images\MenuIcons\Call\MuteMicrophone.png" />
+    <None Remove="Images\MenuIcons\Call\RejectCall.png" />
+    <None Remove="Images\MenuIcons\Call\UnmuteMicrophone.png" />
     <None Remove="Images\MenuIcons\Chats.png" />
     <None Remove="Images\MenuIcons\Chats\BaseGroupImage.png" />
     <None Remove="Images\MenuIcons\Chats\BaseGroupImageBig.png" />
@@ -77,6 +82,11 @@
     <Resource Include="Images\Logo.png" />
     <Resource Include="Images\Logo1.jpg" />
     <Resource Include="Images\MenuIcons\Call\Call.png" />
+    <Resource Include="Images\MenuIcons\Call\JoinCall.png" />
+    <Resource Include="Images\MenuIcons\Call\LeaveCall.png" />
+    <Resource Include="Images\MenuIcons\Call\MuteMicrophone.png" />
+    <Resource Include="Images\MenuIcons\Call\RejectCall.png" />
+    <Resource Include="Images\MenuIcons\Call\UnmuteMicrophone.png" />
     <Resource Include="Images\MenuIcons\Chats.png" />
     <Resource Include="Images\MenuIcons\Chats\BaseGroupImage.png" />
     <Resource Include="Images\MenuIcons\Chats\BaseGroupImageBig.png" />

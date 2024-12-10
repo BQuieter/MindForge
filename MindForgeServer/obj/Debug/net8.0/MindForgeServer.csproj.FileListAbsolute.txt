@@ -168,3 +168,9 @@ C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\zh-Hant\
 C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\MindForgeDbClasses.dll
 C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\MindForgeDbClasses.pdb
+C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\NAudio.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\NAudio.Asio.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\NAudio.Core.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\NAudio.Midi.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\NAudio.Wasapi.dll
+C:\Users\BQuiet\source\repos\MindForge\MindForgeServer\bin\Debug\net8.0\NAudio.WinMM.dll

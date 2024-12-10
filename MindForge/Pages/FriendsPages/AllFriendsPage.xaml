@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:MindForgeClient.Pages.FriendsPages"
+      xmlns:local="clr-namespace:MindForgeClient"
       mc:Ignorable="d" 
       d:DesignHeight="413" d:DesignWidth="800"
       Title="AllFriendsPage" Loaded="Page_Loaded" Unloaded="Page_Unloaded"> 
@@ -23,18 +23,15 @@
         <ListBox x:Name="UsersListBox" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Style="{StaticResource ProfileClickableGrid}" MouseLeftButtonDown="OpenProfile">
+                    <Grid Style="{StaticResource ProfileClickableGrid}" MouseLeftButtonDown="OpenProfile" ToolTip="Открыть профиль">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <StackPanel x:Name="Template" Margin="5" Orientation="Horizontal">
-                                <Image Source="pack://application:,,,/Images/Profile.png" Width="48" Height="48" Margin="0 0 10 0" Loaded="Image_Loaded"/>
-                                <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Login}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
-                            </StackPanel>
-                        </Grid>
-                        <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Grid.Column="1">
+                        <Image Grid.Column="0" Source="pack://application:,,,/Images/Profile.png" Width="48" Height="48" Margin="0 0 10 0" Loaded="Image_Loaded"/>
+                        <TextBlock Grid.Column="1" Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Login}" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
+                        <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Grid.Column="2">
                             <Button Style="{StaticResource ButtonBase }" ToolTip="Написать сообщение" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="GoToChat">
                                 <Image Source="pack://application:,,,/Images/MenuIcons/Chats/GoToChat.png" />
                             </Button>

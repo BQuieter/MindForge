@@ -31,6 +31,7 @@ namespace MindForge
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             container.Register<IFriendNotificationService, FriendNotificationService>();
             container.Register<IPersonalChatNotificationService, PersonalChatNotificationService>();
+            container.Register<ICallsService, CallsService>();
             container.Verify();
 
         }
@@ -52,6 +53,7 @@ namespace MindForge
         {
             //mutex.ReleaseMutex();
             var response = await HttpClientSingleton.httpClient.PostAsync(App.HttpsStr +"/logout", null);
+            CallHelper.LeaveCall();
         }
         public static void CloseWindow(Window window) =>
             window.Close();

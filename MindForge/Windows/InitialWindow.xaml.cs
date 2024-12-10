@@ -98,7 +98,7 @@ namespace MindForge
         public void GoToMainWindow(Window window)
         {
             App app = Application.Current as App;
-            MainWindow mainWindow = new MainWindow(app.container.GetInstance<IFriendNotificationService>(), app.container.GetInstance<IPersonalChatNotificationService>());
+            MainWindow mainWindow = new MainWindow(app.container.GetInstance<IFriendNotificationService>(), app.container.GetInstance<IPersonalChatNotificationService>(), app.container.GetInstance<ICallsService>());
             mainWindow.Width = window.Width;
             mainWindow.Height = window.Height;
             mainWindow.Left = window.Left;

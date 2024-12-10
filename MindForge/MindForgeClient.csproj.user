@@ -5,6 +5,9 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Update="Pages\Call\CallPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\Chats\ChatPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -55,6 +58,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\Call\CallPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\Chats\ChatPage.xaml">
       <SubType>Designer</SubType>
     </Page>

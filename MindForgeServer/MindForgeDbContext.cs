@@ -15,6 +15,8 @@ public partial class MindForgeDbContext : DbContext
         : base(options)
     {
     }
+    public virtual DbSet<Call> Calls { get; set; }
+    public virtual DbSet<CallParticipant> CallParticipants { get; set; }
 
     public virtual DbSet<Chat> Chats { get; set; }
 
@@ -27,7 +29,6 @@ public partial class MindForgeDbContext : DbContext
     public virtual DbSet<Message> Messages { get; set; }
 
     public virtual DbSet<OnlineStatus> OnlineStatuses { get; set; }
-    //public virtual DbSet<UsersProfession> UsersProfessions { get; set; }
 
     public virtual DbSet<Profession> Professions { get; set; }
 
@@ -54,6 +55,13 @@ public partial class MindForgeDbContext : DbContext
             entity.Property(e => e.ChatType).HasColumnName("chat_type");
             entity.Property(e => e.User1Id).HasColumnName("user1_id");
             entity.Property(e => e.User2Id).HasColumnName("user2_id");
+            entity.Property(e => e.CallId).HasColumnName("call_id");
+
+            entity.HasOne(d => d.Call).WithMany(p => p.Chats)
+               .HasForeignKey(d => d.CallId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK__Chats__call_id__2BFE89A6");
+
 
             entity.HasOne(d => d.ChatTypeNavigation).WithMany(p => p.Chats)
                 .HasForeignKey(d => d.ChatType)
@@ -253,6 +261,42 @@ public partial class MindForgeDbContext : DbContext
                 .HasForeignKey(d => d.User2)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Friendshi__statu__05D8E0BE");
+        });
+
+        modelBuilder.Entity<Call>(entity =>
+        {
+            entity.HasKey(e => e.CallId).HasName("PK__Calls__427DCE6830D5EC51");
+
+            entity.Property(e => e.CallId).HasColumnName("call_id");
+            entity.Property(e => e.ChatId).HasColumnName("chat_id");
+            entity.Property(e => e.EndTime).HasColumnName("end_time");
+            entity.Property(e => e.StartTime).HasColumnName("start_time");
+
+            entity.HasOne(d => d.Chat).WithMany(p => p.Calls)
+                .HasForeignKey(d => d.ChatId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Calls__chat_id__2739D489");
+        });
+
+        modelBuilder.Entity<CallParticipant>(entity =>
+        {
+            entity.HasKey(e => e.ParticipantId).HasName("PK__CallPart__4E03780653FDEF58");
+
+            entity.Property(e => e.ParticipantId).HasColumnName("participant_id");
+            entity.Property(e => e.CallId).HasColumnName("call_id");
+            entity.Property(e => e.JoinTime).HasColumnName("join_time");
+            entity.Property(e => e.LeftTime).HasColumnName("left_time");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Call).WithMany(p => p.CallParticipants)
+                .HasForeignKey(d => d.CallId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK__CallParti__call___2A164134");
+
+            entity.HasOne(d => d.User).WithMany(p => p.CallParticipants)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CallParti__user___2B0A656D");
         });
 
         OnModelCreatingPartial(modelBuilder);

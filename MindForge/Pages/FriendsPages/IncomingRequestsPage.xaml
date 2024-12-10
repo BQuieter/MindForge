@@ -25,27 +25,23 @@
                 <DataTemplate>
                     <Grid Style="{StaticResource ProfileClickableGrid}" MouseLeftButtonDown="OpenProfile">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <StackPanel x:Name="Template" Margin="5" Orientation="Horizontal">
-                                <Image Source="pack://application:,,,/Images/Profile.png" Width="48" Height="48" Margin="0 0 10 0" Loaded="Image_Loaded"/>
-                                <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Login}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Grid>
-
-                        <Button Style="{StaticResource ButtonBase }" Grid.Column="1" ToolTip="Написать сообщение" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="GoToChat">
+                        <Image Grid.Column="0" Source="pack://application:,,,/Images/Profile.png" Width="48" Height="48" Margin="0 0 10 0" Loaded="Image_Loaded"/>
+                        <TextBlock Grid.Column="1" Style="{StaticResource BasicTextBlock}" Text="{Binding Path=Login}" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource ButtonBase }" Grid.Column="2" ToolTip="Написать сообщение" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="GoToChat">
                             <Image Source="pack://application:,,,/Images/MenuIcons/Chats/GoToChat.png" />
                         </Button>
 
-                        <Button x:Name="ApplyRequestButton" Style="{StaticResource ButtonBase }" Grid.Column="2" ToolTip="Принять запрос" Width="40" Height="40" VerticalAlignment="Center" Margin="0 0 10 0" Click="ApplyRequest">
+                        <Button x:Name="ApplyRequestButton" Style="{StaticResource ButtonBase }" Grid.Column="3" ToolTip="Принять запрос" Width="40" Height="40" VerticalAlignment="Center" Margin="0 0 10 0" Click="ApplyRequest">
                             <Image Source="pack://application:,,,/Images/MenuIcons/Friends/ApplyRequest.png"/>
                         </Button>
                             
-                       <Button x:Name="RejectRequestButton" Style="{StaticResource ButtonBase }" Grid.Column="3" ToolTip="Отклонить запрос" Width="40" Height="40" VerticalAlignment="Center" Margin="0" Click="RejectRequest">
+                       <Button x:Name="RejectRequestButton" Style="{StaticResource ButtonBase }" Grid.Column="4" ToolTip="Отклонить запрос" Width="40" Height="40" VerticalAlignment="Center" Margin="0" Click="RejectRequest">
                             <Image Source="pack://application:,,,/Images/MenuIcons/Friends/DeleteRequest.png"/>
                        </Button>
                     </Grid>

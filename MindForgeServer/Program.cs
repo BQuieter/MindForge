@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using Microsoft.VisualBasic;
 using System.Collections.ObjectModel;
+using System;
 
 
 namespace MindForgeServer
@@ -464,8 +465,115 @@ namespace MindForgeServer
                 return Results.Ok();
             });
 
+            app.MapGet("/call/create/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<CallsHub> hubContext) => {
+                string user = context.User.Identity!.Name!;
+                var chat = db.Chats.Include(c => c.Call).Include(c => c.Users).Include(u => u.User1).Include(u => u.User2).FirstOrDefault(c => c.ChatId == chatId);
+                User userDb;
+                if (chat.ChatType == 2)
+                    userDb = chat.Users.FirstOrDefault(u => u.Login == user);
+                else
+                    userDb = chat.User1.Login == user ? chat.User1 : chat.User2;
+                if (userDb is null)
+                    return Results.Unauthorized();
+                if (chat.CallId is not null)
+                    return Results.Conflict(new ErrorResponse() { ErrorCode = 409, Message="Звонок уже создан"});
+                chat.Call = new Call { ChatId = chatId, StartTime = DateTime.Now };
+                chat.Call.CallParticipants.Add(new CallParticipant() { CallId = chat.Call.CallId, UserId = userDb.UserId, JoinTime = DateTime.Now });
+                await db.SaveChangesAsync();
+                return Results.Ok();
+            });
+
+            app.MapGet("/call/leave/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<CallsHub> hubContext) => {
+                string user = context.User.Identity!.Name!;
+                var chat = db.Chats.Include(c => c.Call.CallParticipants).Include(c => c.Users).Include(u => u.User1).Include(u => u.User2).FirstOrDefault(c => c.ChatId == chatId);
+                User userDb;
+                if (chat.ChatType == 2)
+                    userDb = chat.Users.FirstOrDefault(u => u.Login == user);
+                else
+                    userDb = chat.User1.Login == user ? chat.User1 : chat.User2;
+                if (userDb is null)
+                    return Results.Unauthorized();
+                chat.Call.CallParticipants.Remove(chat.Call.CallParticipants.FirstOrDefault(c => c.User.Login == user));
+                if (chat.Call.CallParticipants.Count == 0)
+                    db.Calls.Remove(chat.Call);
+                await db.SaveChangesAsync();
+                var profileDb = db.Profiles.Include(p => p.UserNavigation).FirstOrDefault(p => p.UserNavigation.Login == user);
+                if (profileDb == null)
+                    return Results.NotFound(new ErrorResponse
+                    {
+                        ErrorCode = 404,
+                        Message = "Профиль пользователя не найден"
+                    });
+
+                var profile=  new ProfileInformation
+                {
+                    Login = profileDb.UserNavigation.Login,
+                    Description = profileDb.ProfileDescription!,
+                    ImageByte = profileDb.ProfilePhoto!
+                };
+                await hubContext.Clients.Group(chatId.ToString()).SendAsync("UserLeave",profile,chatId);
+                return Results.Ok();
+            });
+
+            app.MapGet("/call/join/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<CallsHub> hubContext) => {
+                string user = context.User.Identity!.Name!;
+                var chat = db.Chats.Include(c => c.Call.CallParticipants).Include(c => c.Users).Include(u => u.User1).Include(u => u.User2).FirstOrDefault(c => c.ChatId == chatId);
+                User userDb;
+                if (chat.ChatType == 2)
+                    userDb = chat.Users.FirstOrDefault(u => u.Login == user);
+                else
+                    userDb = chat.User1.Login == user ? chat.User1 : chat.User2;
+                if (userDb is null)
+                    return Results.Unauthorized();
+                chat.Call.CallParticipants.Add(new CallParticipant { CallId = (int)chat.CallId, UserId = db.Users.FirstOrDefault(u => u.Login == user).UserId, JoinTime = DateTime.Now });
+                await db.SaveChangesAsync();
+                var profileDb = db.Profiles.Include(p => p.UserNavigation).FirstOrDefault(p => p.UserNavigation.Login == user);
+                if (profileDb == null)
+                    return Results.NotFound(new ErrorResponse
+                    {
+                        ErrorCode = 404,
+                        Message = "Профиль пользователя не найден"
+                    });
+
+                var profile = new ProfileInformation
+                {
+                    Login = profileDb.UserNavigation.Login,
+                    Description = profileDb.ProfileDescription!,
+                    ImageByte = profileDb.ProfilePhoto!
+                };
+                await hubContext.Clients.Group(chatId.ToString()).SendAsync("UserJoin", profile, chatId);
+
+                return Results.Ok();
+            });
+
+            app.MapGet("/call/get/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
+                string user = context.User.Identity!.Name!;
+                var chat = db.Chats.Include(c => c.Call.CallParticipants).Include(c => c.Users).Include(u => u.User1).Include(u => u.User2).FirstOrDefault(c => c.ChatId == chatId);
+                User userDb;
+                if (chat.ChatType == 2)
+                    userDb = chat.Users.FirstOrDefault(u => u.Login == user);
+                else
+                    userDb = chat.User1.Login == user ? chat.User1 : chat.User2;
+                if (userDb is null)
+                    return Results.Unauthorized();
+
+                if (chat.CallId is null)
+                    return Results.NoContent();
+                List<string> participantsLogins = chat.Call.CallParticipants.Select(p => p.User.Login).ToList();
+                var participants = new ObservableCollection<ProfileInformation>(db.Profiles.Include(p => p.UserNavigation).Where(p => participantsLogins.Contains(p.UserNavigation.Login)).Select(p =>
+                        new ProfileInformation
+                        {
+                            Login = p.UserNavigation.Login,
+                            Description = p.ProfileDescription,
+                            ImageByte = p.ProfilePhoto
+                        }).ToList());
+                
+                return Results.Ok(participants);
+            });
+
             app.MapHub<FriendHub>("/friendhub");
             app.MapHub<PersonalChatHub>("/personalchathub");
+            app.MapHub<CallsHub>("/callshub");
 
             app.Map("/", (HttpContext context) => Results.Ok());
 

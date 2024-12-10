@@ -32,12 +32,12 @@ namespace MindForgeClasses
         }
     }
 
-    public class MemberDeleteEventArgs : EventArgs
+    public class MemberEventArgs : EventArgs
     {
         public ProfileInformation User { get; set; }
         public int ChatId { get; set; }
 
-        public MemberDeleteEventArgs(ProfileInformation user, int chatID)
+        public MemberEventArgs(ProfileInformation user, int chatID)
         {
             User = user;
             ChatId = chatID;

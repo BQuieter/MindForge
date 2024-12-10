@@ -13,6 +13,8 @@ public partial class User
 
     public int Role { get; set; }
 
+    public virtual List<CallParticipant> CallParticipants { get; set; } = new List<CallParticipant>();
+
     public virtual List<Chat> ChatUser1s { get; set; } = new List<Chat>();
 
     public virtual List<Chat> ChatUser2s { get; set; } = new List<Chat>();

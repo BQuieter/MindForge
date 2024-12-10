@@ -1,0 +1,46 @@
+﻿<Page x:Class="MindForgeClient.Pages.Call.CallPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MindForgeClient"
+      mc:Ignorable="d" 
+      d:DesignHeight="200" d:DesignWidth="736" Loaded="Page_Loaded" Unloaded="Page_Unloaded"
+      Title="CallPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="100" MaxHeight="300"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <ItemsControl x:Name="ParticipantItemsControl" Grid.Row="0" Width="auto" HorizontalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Width="96" Height="96" Margin="10 0 10 0" Loaded="Image_Loaded"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <Button x:Name="JoinButton" Grid.Row="1" Style="{StaticResource ButtonBase}" Width="40" Height="40" Margin="0" HorizontalAlignment="Center" ToolTip="Присоединиться к звонку" Click="JoinButton_Click">
+            <Image Source="pack://application:,,,/Images/MenuIcons/Call/JoinCall.png" Width="30" Height="30"/>
+        </Button>
+        
+        <Grid x:Name="InCallGrid" Grid.Row="1" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="MuteButton" Grid.Column="0" Style="{StaticResource ButtonBase}" Width="40" Height="40" Margin="0 0 20 0" HorizontalAlignment="Right" ToolTip="Выключить микрофон">
+                <Image Source="pack://application:,,,/Images/MenuIcons/Call/MuteMicrophone.png" Width="30" Height="30"/>
+            </Button>
+            <Button Grid.Column="1" Style="{StaticResource ButtonBase}" Width="40" Height="40" Margin="20 0 0 0" HorizontalAlignment="Left" ToolTip="Выйти из звонка" Click="Leave_Click">
+                <Image Source="pack://application:,,,/Images/MenuIcons/Call/LeaveCall.png" Width="30" Height="30"/>
+            </Button>
+        </Grid>
+    </Grid>
+</Page>

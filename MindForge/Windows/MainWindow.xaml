@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MindForgeClient"
         mc:Ignorable="d"
-        Style="{StaticResource BasicWindowStyle}" Loaded="Window_Loaded"
+        Style="{StaticResource BasicWindowStyle}" Loaded="Window_Loaded" Closed="Window_Closed"
         WindowStartupLocation="CenterScreen" >
     
     <WindowChrome.WindowChrome>
@@ -42,36 +42,26 @@
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <local:MenuGrid x:Name="Friends" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick">
+                <local:MenuGrid x:Name="Friends" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick" ToolTip="Друзья">
                     <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Friends.png" Panel.ZIndex="1"/>
                     <Label Style="{StaticResource MenuLabel}" Content="Друзья"/>
                 </local:MenuGrid>
 
-                <local:MenuGrid x:Name="Chats" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick">
+                <local:MenuGrid x:Name="Chats" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick" ToolTip="Чаты">
                     <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Chats.png" Panel.ZIndex="1"/>
                     <Label Style="{StaticResource MenuLabel}" Content="Чаты"/>
                 </local:MenuGrid>
 
-                <local:MenuGrid x:Name="Groups" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick">
+                <local:MenuGrid x:Name="Groups" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick" ToolTip="Группы">
                     <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Groups.png" Panel.ZIndex="1"/>
                     <Label Style="{StaticResource MenuLabel}" Content="Группы"/>
                 </local:MenuGrid>
-                
-                <local:MenuGrid Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick">
-                    <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Communities.png" Panel.ZIndex="1"/>
-                    <Label Style="{StaticResource MenuLabel}" Content="Сообщества"/>
-                </local:MenuGrid>
-
-                <local:MenuGrid x:Name="Settings" Style="{StaticResource MenuGrid}" MouseLeftButtonDown="MenuClick">
-                    <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Settings.png" Panel.ZIndex="1"/>
-                    <Label Style="{StaticResource MenuLabel}" Content="Настройки"/>
-                </local:MenuGrid>
             </StackPanel>
-            <Grid Style="{StaticResource BaseGrid}" Grid.Row="1" MouseLeftButtonDown="Logout">
+            <Grid Style="{StaticResource BaseGrid}" Grid.Row="1" MouseLeftButtonDown="Logout" ToolTip="Выход">
                 <Image Style="{StaticResource MenuIcon}" Source="pack://application:,,,/Images/MenuIcons/Logout.png" Panel.ZIndex="1" Margin="1 0 0 0"/>
                 <Label Style="{StaticResource MenuLabel}" Content="Выход"/>
             </Grid>
-            <local:MenuGrid x:Name="Profile" Style ="{StaticResource ProfileMenuGrid}" Grid.Row="2" MouseLeftButtonDown="MenuClick">
+            <local:MenuGrid x:Name="Profile" Style ="{StaticResource ProfileMenuGrid}" Grid.Row="2" MouseLeftButtonDown="MenuClick" ToolTip="Профиль">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="45"/>
                     <ColumnDefinition/>
