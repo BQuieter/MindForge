@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using NAudio.Wave;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace MindForgeClient
@@ -13,8 +8,8 @@ namespace MindForgeClient
     internal class AudioPlayer
     {
         public readonly HubConnection hubConnection;
-        private IWavePlayer _waveOut;
-        private WaveFormat _waveFormat;
+        private IWavePlayer waveOut;
+        private WaveFormat waveFormat;
         public AudioPlayer(HubConnection hubConnection)
         {
             this.hubConnection = hubConnection;
@@ -36,34 +31,30 @@ namespace MindForgeClient
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}"); 
-                _waveOut?.Stop();
-                _waveOut?.Dispose();
+                waveOut?.Stop();
+                waveOut?.Dispose();
             }
         }
-
         private void PlayAudio(byte[] audioData, WaveFormat waveFormat)
         {
-            if (_waveOut != null)
+            if (waveOut != null)
             {
-                // Stop existing playback before starting new
-                _waveOut.Stop();
-                _waveOut.Dispose();
+                waveOut.Stop();
+                waveOut.Dispose();
             }
 
-            _waveFormat = waveFormat;
+            waveFormat = waveFormat;
             var memoryStream = new MemoryStream(audioData);
-            var rawSourceWaveStream = new RawSourceWaveStream(memoryStream, _waveFormat);
+            var rawSourceWaveStream = new RawSourceWaveStream(memoryStream, waveFormat);
 
-            _waveOut = new WaveOutEvent();
-            _waveOut.Init(rawSourceWaveStream);
-            _waveOut.Play();
+            waveOut = new WaveOutEvent();
+            waveOut.Init(rawSourceWaveStream);
+            waveOut.Play();
         }
-
-
         public void StopPlaying()
         {
-            _waveOut?.Stop();
-            _waveOut?.Dispose();
+            waveOut?.Stop();
+            waveOut?.Dispose();
         }
     }
 }

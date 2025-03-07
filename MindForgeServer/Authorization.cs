@@ -10,7 +10,7 @@ namespace MindForgeServer
 {
     public class Authorization
     {
-        static public async Task<object> Login(HttpContext context, MindForgeDbContext db)
+        static public async Task<object> Login(HttpContext context, MindForgeDbContext db, ITokenService tokenService)
         {
             var authorizationInformation = await context.Request.ReadFromJsonAsync<UserLoginInformation>();
             if (authorizationInformation == null)
@@ -30,7 +30,7 @@ namespace MindForgeServer
             profile.Status = 1;
             db.SaveChanges();
 
-            return Results.Ok(JwtTokenHelper.CreateJwtToken(user));
+            return Results.Ok(tokenService.GetJwtToken(user, tokenService));
         }
 
         [Authorize]

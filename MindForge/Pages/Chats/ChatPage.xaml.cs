@@ -1,31 +1,16 @@
 ﻿using MindForge;
 using MindForgeClasses;
 using MindForgeClient.Pages.Call;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MindForgeClient.Pages.Chats
 {
-    /// <summary>
-    /// Логика взаимодействия для ChatPage.xaml
-    /// </summary>
     public partial class ChatPage : Page
     {
         private static double? verticalOffset = null;
@@ -64,7 +49,6 @@ namespace MindForgeClient.Pages.Chats
             currentWindow.callsService.UserJoined += UserJoin!;
             currentWindow.callsService.UserLeaved += UserLeave!;
             GroupMessages();
-            //
             if (personalChatInformation is not null)
             {
                 avatars.Add(personalChatInformation.Login, App.GetImageFromByteArray(personalChatInformation.ImageByte));
@@ -98,7 +82,6 @@ namespace MindForgeClient.Pages.Chats
                 bool joined = CallHelper.InCall && CallHelper.ChatId == chatId ? true : false;
                 MainFrame.Navigate(new CallPage(chatId, joined, CallLeaveEvent));
             }
-            
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -175,9 +158,13 @@ namespace MindForgeClient.Pages.Chats
             {
                 messages.Reverse();
                 MessageGroup currentGroup = new(messages[0].SenderName, messages[0]);
-                for (int i = 1; i < messages.Count; i++)
+                for (int i = 0; i < messages.Count; i++)
                 {
-                    if (messages[i].SenderName == currentGroup.SenderName)
+                    if (personalChatInformation is not null)
+                        ChatHelper.AddMessage(applicationData.PersonalChats, messages[i], chatId);
+                    else
+                        ChatHelper.AddMessage(applicationData.GroupChats, messages[i], chatId);
+                    /*if (messages[i].SenderName == currentGroup.SenderName)
                     {
                         currentGroup.Messages.Add(messages[i]);
                     }
@@ -186,9 +173,9 @@ namespace MindForgeClient.Pages.Chats
                         currentGroup.Messages = new ObservableCollection<MessageInformation>(currentGroup.Messages);
                         groups.Add(currentGroup);
                         currentGroup = new(messages[i].SenderName, messages[i]);
-                    }
+                    }*/
                 }
-                groups.Add(currentGroup);
+                //groups.Add(currentGroup);
                 ScrollViewer.ScrollToBottom();
                 if (personalChatInformation is not null)
                     applicationData.PersonalChats[chatId] = new ObservableCollection<MessageGroup>(applicationData.PersonalChats[chatId]);
@@ -215,7 +202,6 @@ namespace MindForgeClient.Pages.Chats
             }
         }
 
-
         private void DoSomethingOnEnter() =>
             SendMessage();
 
@@ -226,7 +212,7 @@ namespace MindForgeClient.Pages.Chats
         {
             if (MessageTextBox.Text == String.Empty)
                 return;
-            MessageInformation message = new MessageInformation() {Message = MessageTextBox.Text, SenderName = applicationData.UserProfile.Login, DateTime = DateTime.Now.ToShortTimeString() };
+            MessageInformation message = new MessageInformation() {Message = MessageTextBox.Text, SenderName = applicationData.UserProfile.Login, Time = DateTime.Now.ToShortTimeString(), Date = DateTime.Now.Day, Month = DateTime.Now.Month, Year = DateTime.Now.Year  };
             if (personalChatInformation is not null)
                 ChatHelper.AddMessage(applicationData.PersonalChats, message, chatId);
             else
@@ -291,7 +277,16 @@ namespace MindForgeClient.Pages.Chats
             var profiles = new ObservableCollection<ProfileInformation> { applicationData.UserProfile };
             CallHelper.Participants = profiles;
             MainFrame.Navigate(new CallPage(chatId, true, CallLeaveEvent));
+            if (applicationData.CallsParticipants is null || !applicationData.CallsParticipants.ContainsKey(chatId))
+                applicationData.CallsParticipants.Add(chatId, new());
             applicationData.CallsParticipants[chatId].Add(applicationData.UserProfile);
+        }
+
+        private void DateString_Loaded(object sender, RoutedEventArgs e)
+        {
+            TextBlock textBlock = (sender as TextBlock)!;
+            if (string.IsNullOrEmpty(textBlock.Text))
+                textBlock.Visibility = Visibility.Collapsed;
         }
     }
 }

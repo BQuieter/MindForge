@@ -1,22 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using MindForgeClasses;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using MindForgeDbClasses;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.SignalR;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using Microsoft.VisualBasic;
 using System.Collections.ObjectModel;
-using System;
-
 
 namespace MindForgeServer
 {
@@ -27,6 +16,7 @@ namespace MindForgeServer
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddSignalR();
             builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            builder.Services.AddTransient<ITokenService, TokenService>();
             builder.Services.AddDbContext<MindForgeDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -61,12 +51,8 @@ namespace MindForgeServer
             app.UseAuthorization();
 
             app.MapPost("/registration", Registration.Registrate);
-
             app.MapPost("/login", Authorization.Login);
-
             app.MapPost("/logout", Authorization.Logout);
-            //Потом классы создай и фигани туда методы
-
             app.MapGet("/profile/{user?}", [Authorize] (string? user, MindForgeDbContext db, HttpContext context) =>
             {
                 if (user is null)
@@ -83,7 +69,6 @@ namespace MindForgeServer
                     Description = profile.ProfileDescription!,
                     ImageByte = profile.ProfilePhoto! });
             });
-
             app.MapPut("/profile", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
                 ProfileInformation profileInformation = await context.Request.ReadFromJsonAsync<ProfileInformation>();
@@ -100,7 +85,6 @@ namespace MindForgeServer
 
                 return Results.Ok();
             });
-
             app.MapGet("/professions", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
                 List<ProfessionInformation> professions = await db.Professions.Select
@@ -110,7 +94,6 @@ namespace MindForgeServer
                 }).ToListAsync();
                 return Results.Ok(professions);
             });
-
             app.MapGet("/professions/{user}", [Authorize] async (string user, MindForgeDbContext db, HttpContext context) =>
             {
                 var professions = await db.Professions.Include(a => a.Users).Where(a => a.Users.FirstOrDefault(u => u.Login == user) != null)
@@ -122,7 +105,6 @@ namespace MindForgeServer
                 return Results.Ok(professions);
 
             });
-
             app.MapPut("/professions", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
                 string userLogin = context.User.Identity!.Name!;
@@ -143,7 +125,6 @@ namespace MindForgeServer
                 return Results.Ok();
 
             });
-
             app.MapGet("/relationship/{target}", [Authorize] async (string target, MindForgeDbContext db, HttpContext context) =>
             {
                 string user = context.User.Identity!.Name!;
@@ -171,73 +152,70 @@ namespace MindForgeServer
                     IsYouInitiator = isUserInitiator
                 });
             });
-
             app.MapPost("/relationship/{target}", [Authorize] async (string target, MindForgeDbContext db, HttpContext context, IHubContext<FriendHub> hubContext) =>
-            {
-                string user = context.User.Identity!.Name!;
-                var relationshipRequest = await context.Request.ReadFromJsonAsync<RelationshipRequest>();
-                // Сделай для всего этого и выше классы и для каждого switch свой метод
-                if (relationshipRequest is null)
-                    return Results.BadRequest(new ErrorResponse
-                    {
-                        ErrorCode = 400,
-                        Message = "Некорректный запрос"
-                    });
-                int userId = (await db.Users.FirstOrDefaultAsync(p => p.Login == user))!.UserId;
-                var targetInstance = await db.Users.FirstOrDefaultAsync(p => p.Login == target);
-                if (targetInstance is null)
-                    return Results.NotFound(new ErrorResponse
-                    {
-                        ErrorCode = 404,
-                        Message = "Пользователь не найден"
-                    });
-                int targetId = targetInstance.UserId;
-                var relation = await db.Friendships.FirstOrDefaultAsync(p => (p.User1Navigation.Login == user || p.User1Navigation.Login == target) && (p.User2Navigation.Login == user || p.User2Navigation.Login == target));
-                var userProfile = await db.Profiles.FirstOrDefaultAsync(p => p.UserNavigation.Login == user);
-                ProfileInformation userInformation = new ProfileInformation { Login = user, Description = userProfile.ProfileDescription, ImageByte = userProfile.ProfilePhoto };
-                string method = "";
-                switch (relationshipRequest.RelationshipAction)
                 {
-                    case RelationshipAction.Request:
-                        if (relation is not null)
-                            return Results.Conflict(new ErrorResponse {
-                                ErrorCode = 409,
-                                Message = "Связь между пользователями уже есть"
-                            });
-                        method = "FriendRequestReceived";
-                        db.Friendships.Add(new Friendship { User1 = userId, User2 = targetId, Status = 2 });
-                        break;
-                    case RelationshipAction.Delete:
-                        if (relation is null)
-                            return Results.NotFound(new ErrorResponse
-                            {
-                                ErrorCode = 404,
-                                Message = "Связи между пользователями нет"
-                            });
-                        if (relation.Status == 1)
-                            method = "FriendDeleted";
-                        else if (relation.Status == 2 && relation.User1Navigation.Login == user)
-                            method = "FriendRequestDeleted";
-                        else if (relation.Status == 2)
-                            method = "FriendRequestRejected";
-                        db.Friendships.Remove(relation);
-                        break;
-                    case RelationshipAction.Apply:
-                        if (relation is null)
-                            return Results.NotFound(new ErrorResponse
-                            {
-                                ErrorCode = 404,
-                                Message = "Запроса на добавление нет"
-                            });
-                        method = "FriendAdded";
-                        relation.Status = 1;
-                        break;
-                }
-                await hubContext.Clients.User(target).SendAsync(method, userInformation);
-                await db.SaveChangesAsync();
-                return Results.Ok();
-            });
-
+                    string user = context.User.Identity!.Name!;
+                    var relationshipRequest = await context.Request.ReadFromJsonAsync<RelationshipRequest>();
+                    if (relationshipRequest is null)
+                        return Results.BadRequest(new ErrorResponse
+                        {
+                            ErrorCode = 400,
+                            Message = "Некорректный запрос"
+                        });
+                    int userId = (await db.Users.FirstOrDefaultAsync(p => p.Login == user))!.UserId;
+                    var targetInstance = await db.Users.FirstOrDefaultAsync(p => p.Login == target);
+                    if (targetInstance is null)
+                        return Results.NotFound(new ErrorResponse
+                        {
+                            ErrorCode = 404,
+                            Message = "Пользователь не найден"
+                        });
+                    int targetId = targetInstance.UserId;
+                    var relation = await db.Friendships.FirstOrDefaultAsync(p => (p.User1Navigation.Login == user || p.User1Navigation.Login == target) && (p.User2Navigation.Login == user || p.User2Navigation.Login == target));
+                    var userProfile = await db.Profiles.FirstOrDefaultAsync(p => p.UserNavigation.Login == user);
+                    ProfileInformation userInformation = new ProfileInformation { Login = user, Description = userProfile.ProfileDescription, ImageByte = userProfile.ProfilePhoto };
+                    string method = "";
+                    switch (relationshipRequest.RelationshipAction)
+                    {
+                        case RelationshipAction.Request:
+                            if (relation is not null)
+                                return Results.Conflict(new ErrorResponse {
+                                    ErrorCode = 409,
+                                    Message = "Связь между пользователями уже есть"
+                                });
+                            method = "FriendRequestReceived";
+                            db.Friendships.Add(new Friendship { User1 = userId, User2 = targetId, Status = 2 });
+                            break;
+                        case RelationshipAction.Delete:
+                            if (relation is null)
+                                return Results.NotFound(new ErrorResponse
+                                {
+                                    ErrorCode = 404,
+                                    Message = "Связи между пользователями нет"
+                                });
+                            if (relation.Status == 1)
+                                method = "FriendDeleted";
+                            else if (relation.Status == 2 && relation.User1Navigation.Login == user)
+                                method = "FriendRequestDeleted";
+                            else if (relation.Status == 2)
+                                method = "FriendRequestRejected";
+                            db.Friendships.Remove(relation);
+                            break;
+                        case RelationshipAction.Apply:
+                            if (relation is null)
+                                return Results.NotFound(new ErrorResponse
+                                {
+                                    ErrorCode = 404,
+                                    Message = "Запроса на добавление нет"
+                                });
+                            method = "FriendAdded";
+                            relation.Status = 1;
+                            break;
+                    }
+                    await hubContext.Clients.User(target).SendAsync(method, userInformation);
+                    await db.SaveChangesAsync();
+                    return Results.Ok();
+                });
             app.MapGet("/friends/all", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
                 string user = context.User.Identity!.Name!;
@@ -253,7 +231,6 @@ namespace MindForgeServer
                     profiles = new List<ProfileInformation>();
                 return Results.Ok(profiles);
             });
-
             app.MapGet("/requests/incoming", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
                 string user = context.User.Identity!.Name!;
@@ -270,7 +247,6 @@ namespace MindForgeServer
                     profiles = new List<ProfileInformation>();
                 return Results.Ok(profiles);
             });
-
             app.MapGet("/requests/outgoing", [Authorize] async (MindForgeDbContext db, HttpContext context) =>
             {
                 string user = context.User.Identity!.Name!;
@@ -287,7 +263,6 @@ namespace MindForgeServer
                     profiles = new List<ProfileInformation>();
                 return Results.Ok(profiles);
             });
-
             app.MapGet("/personalchats", [Authorize] async (MindForgeDbContext db, HttpContext context) => {
                 string user = context.User.Identity!.Name!;
                 var chats = await (from chat in db.Chats
@@ -307,7 +282,6 @@ namespace MindForgeServer
                     chats = new List<PersonalChatInformation>();
                 return Results.Ok(chats);
             });
-
             app.MapGet("/personalchats/{target}", [Authorize] async (string target, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
                 string user = context.User.Identity!.Name!;
                 var chat = db.Chats.FirstOrDefault(c => (c.User1.Login == user && c.User2.Login == target) || (c.User2.Login == user && c.User1.Login == target));
@@ -330,7 +304,6 @@ namespace MindForgeServer
                 }
                 return Results.Ok(chat.ChatId);
             });
-
             app.MapGet("/messages/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context) =>
             {
                 string user = context.User.Identity!.Name!;
@@ -338,10 +311,9 @@ namespace MindForgeServer
                 bool permission = chat.Users.FirstOrDefault(c => c.Login == user) is not null || (chat.User1 != null && chat.User1.Login == user) || (chat.User2 != null && chat.User2.Login == user);
                 if (!permission)
                     return Results.Unauthorized();
-                var messages = chat.Messages.OrderByDescending(m => m.TimeSent).Take(50).Select(m => new MessageInformation { Message = m.MessageText, SenderName = m.Sender is not null ? m.Sender.Login : db.Users.FirstOrDefault(u => u.UserId == m.SenderId).Login, DateTime = m.TimeSent.ToShortTimeString() }).ToList();
+                var messages = chat.Messages.OrderByDescending(m => m.TimeSent).Select(m => new MessageInformation { Message = m.MessageText, SenderName = m.Sender is not null ? m.Sender.Login : db.Users.FirstOrDefault(u => u.UserId == m.SenderId).Login, Time = m.TimeSent.ToShortTimeString(), Year = m.TimeSent.Year, Month = m.TimeSent.Month, Date = m.TimeSent.Day }).ToList();
                 return Results.Ok(messages);
             });
-
             app.MapPost("/chats/message/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) =>
             {
                 string user = context.User.Identity!.Name!;
@@ -367,7 +339,6 @@ namespace MindForgeServer
                 }
                 return Results.Ok();
             });
-
             app.MapGet("/groupchats", [Authorize] async (MindForgeDbContext db, HttpContext context) => {
                 string user = context.User.Identity!.Name!;
                 User userDb = db.Users.FirstOrDefault(u => u.Login == user);
@@ -393,7 +364,6 @@ namespace MindForgeServer
                     chats = new List<GroupChatInformation>();
                 return Results.Ok(chats);
             });
-
             app.MapPost("/groupchats/create", [Authorize] async (MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
                 string user = context.User.Identity!.Name!;
                 GroupChatInformation information = await context.Request.ReadFromJsonAsync<GroupChatInformation>();
@@ -414,7 +384,6 @@ namespace MindForgeServer
                 await hubContext.Clients.Users(members).SendAsync("GroupChatCreated", information);
                 return Results.Ok(information.ChatId);
             });
-
             app.MapPost("/groupchats/delete/{name}", [Authorize] async (string name, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
                 string user = context.User.Identity!.Name!;
                 GroupChatInformation information = await context.Request.ReadFromJsonAsync<GroupChatInformation>();
@@ -432,7 +401,6 @@ namespace MindForgeServer
                     await hubContext.Clients.User(name).SendAsync("YouDeleted", chat.ChatId);
                 return Results.Ok();
             });
-
             app.MapPost("/groupchats/add/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
                 string user = context.User.Identity!.Name!;
                 List<ProfileInformation> profiles = await context.Request.ReadFromJsonAsync<List<ProfileInformation>>();
@@ -464,7 +432,6 @@ namespace MindForgeServer
                 await hubContext.Clients.Users(usersNames).SendAsync("GroupChatCreated", chatInform);
                 return Results.Ok();
             });
-
             app.MapGet("/call/create/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<CallsHub> hubContext) => {
                 string user = context.User.Identity!.Name!;
                 var chat = db.Chats.Include(c => c.Call).Include(c => c.Users).Include(u => u.User1).Include(u => u.User2).FirstOrDefault(c => c.ChatId == chatId);
@@ -490,11 +457,10 @@ namespace MindForgeServer
                 var sendTo = chat.Users.Select(u => u.Login).ToList();
                 if (chat.User1 is not null && chat.User2 is not null)
                     sendTo.Add(chat.User1.Login == user ? chat.User2.Login : chat.User1.Login);
-
+                sendTo.Remove(user);
                 await hubContext.Clients.Users(sendTo).SendAsync("UserJoin", profile, chatId);
                 return Results.Ok();
             });
-
             app.MapGet("/call/leave/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<CallsHub> hubContext) => {
                 string user = context.User.Identity!.Name!;
                 var chat = db.Chats.Include(c => c.Call.CallParticipants).Include(c => c.Users).Include(u => u.User1).Include(u => u.User2).FirstOrDefault(c => c.ChatId == chatId);
@@ -530,7 +496,6 @@ namespace MindForgeServer
                 await hubContext.Clients.Users(sendTo).SendAsync("UserLeave",profile,chatId);
                 return Results.Ok();
             });
-
             app.MapGet("/call/join/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<CallsHub> hubContext) => {
                 string user = context.User.Identity!.Name!;
                 var chat = db.Chats.Include(c => c.Call.CallParticipants).Include(c => c.Users).Include(u => u.User1).Include(u => u.User2).FirstOrDefault(c => c.ChatId == chatId);
@@ -564,7 +529,6 @@ namespace MindForgeServer
 
                 return Results.Ok();
             });
-
             app.MapGet("/call/get/{chatId}", [Authorize] async (int chatId, MindForgeDbContext db, HttpContext context, IHubContext<PersonalChatHub> hubContext) => {
                 string user = context.User.Identity!.Name!;
                 var chat = db.Chats.Include(c => c.Call.CallParticipants).Include(c => c.Users).Include(u => u.User1).Include(u => u.User2).FirstOrDefault(c => c.ChatId == chatId);
@@ -589,7 +553,7 @@ namespace MindForgeServer
                 
                 return Results.Ok(participants);
             });
-
+            
             app.MapHub<FriendHub>("/friendhub");
             app.MapHub<PersonalChatHub>("/personalchathub");
             app.MapHub<CallsHub>("/callshub");

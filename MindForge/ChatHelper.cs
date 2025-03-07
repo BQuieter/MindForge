@@ -20,23 +20,50 @@ namespace MindForgeClient
                 MessageGroup group = null;
                 if (chat.Count- 1 >= 0)
                     group = chat[chat.Count - 1];
-                if (group is not null && group.Messages.Count > 0 && group.SenderName == messageInformation.SenderName) 
+                if (group is null || group.Messages.Count <= 0)
                 {
-                    group.Messages.Add(messageInformation);
+                    CreateMessageGroup(messageInformation, chat, true, true);
+                    return;
                 }
-                else
+                MessageInformation lastMessage = group.Messages.Last();
+
+                if (lastMessage.Year != messageInformation.Year)
                 {
-                    MessageGroup newGroup = new MessageGroup();
-                    newGroup.SenderName = messageInformation.SenderName;
-                    chat.Add(newGroup);
-                    newGroup.Messages.Add(messageInformation);
+                    CreateMessageGroup(messageInformation, chat, true, true);
+                    return;
                 }
+                if (lastMessage.Month != messageInformation.Month || lastMessage.Date != messageInformation.Date)
+                {
+                    CreateMessageGroup(messageInformation, chat, true);
+                    return;
+                }
+                if (lastMessage.SenderName != messageInformation.SenderName)
+                {
+                    CreateMessageGroup(messageInformation, chat);
+                    return;
+                }
+
+               group.Messages.Add(messageInformation);
             }
             else
             {
                 ObservableCollection<MessageGroup> chat = new ObservableCollection<MessageGroup>() { new MessageGroup(messageInformation.SenderName, messageInformation) };
                 chats.Add(chatId, chat);
             }
+        }
+
+        private static void CreateMessageGroup(MessageInformation message, ObservableCollection<MessageGroup> chat, bool showDate = false, bool showYear = false)
+        {
+            MessageGroup newGroup = new MessageGroup();
+            newGroup.ShowDate = showDate;
+            newGroup.ShowYear = showYear;
+            newGroup.SenderName = message.SenderName;
+            if (showDate)
+                newGroup.DateString = $"{message.Date} {Enums.Months[message.Month]}";
+            if (showYear)
+                newGroup.DateString = $"{message.Year}, {message.Date} {Enums.Months[message.Month]}";
+            chat.Add(newGroup);
+            newGroup.Messages.Add(message);
         }
     }
 }

@@ -1,36 +1,15 @@
-﻿using System.Text;
-using System.Text.RegularExpressions;
-using BCrypt.Net;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Shell;
-using System.Runtime.CompilerServices;
-using System.Reflection;
-using System.Net.Mail;
 using MindForgeClient;
 using MindForgeClasses;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
-using System.Printing;
 using MindForgeClient.Pages;
 using System.Windows.Threading;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MindForge
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class InitialWindow : Window
     {
         private static HttpClient httpClient;
@@ -40,7 +19,6 @@ namespace MindForge
 
             httpClient = HttpClientSingleton.httpClient!;
             this.BorderThickness = SystemParametersFix.WindowResizeBorderThickness;
-            InitialFrame.Navigate(new SignInPage());
             Dispatcher.InvokeAsync(async () =>
             {
                 await Check();

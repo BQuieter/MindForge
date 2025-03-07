@@ -10,7 +10,10 @@ namespace MindForgeClasses
     {
         public string SenderName { get; set; }
         public string Message { get; set; }
-        public string DateTime { get; set; }
+        public string Time { get; set; }
+        public int Date {  get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
         public string GroupName { get; set; }
     }
 }

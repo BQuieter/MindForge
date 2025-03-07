@@ -1,38 +1,20 @@
 ﻿using Microsoft.Win32;
 using MindForge;
 using MindForgeClasses;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Printing;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Formats.Jpeg;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace MindForgeClient.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для ProfilePage.xaml
-    /// </summary>
     public partial class ProfilePage : Page
     {
         private bool isEdit = false;
@@ -58,7 +40,7 @@ namespace MindForgeClient.Pages
         {
             if (!isEdit)
                 return;
-            System.Windows.Controls.Image image = (sender as System.Windows.Controls.Image)!;
+            Image image = (sender as Image)!;
             OpenFileDialog photoDialog = new OpenFileDialog();
             photoDialog.Filter = "Image files (*.png;*.jpg;*jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*";
             if (photoDialog.ShowDialog() == false)
@@ -166,11 +148,11 @@ namespace MindForgeClient.Pages
         private void ProfileImage_MouseEnter(object sender, MouseEventArgs e)
         {
             if (isEdit)
-                ((System.Windows.Controls.Image)sender).Cursor = Cursors.Hand;
+                ((Image)sender).Cursor = Cursors.Hand;
         }
 
         private void ProfileImage_MouseLeave(object sender, MouseEventArgs e) =>
-            ((System.Windows.Controls.Image)sender).Cursor = Cursors.Arrow;
+            ((Image)sender).Cursor = Cursors.Arrow;
 
         private static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
         {
@@ -261,7 +243,7 @@ namespace MindForgeClient.Pages
         {
             try
             {
-                string format = System.IO.Path.GetExtension(filePath);
+                string format = Path.GetExtension(filePath);
                 using (var image = SixLabors.ImageSharp.Image.Load(filePath))
                 {
                     using (var outputStream = new MemoryStream())

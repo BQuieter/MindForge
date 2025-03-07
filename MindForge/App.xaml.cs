@@ -1,12 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using MindForgeClasses;
-using MindForgeClient;
+﻿using MindForgeClient;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,9 +10,6 @@ using System.Windows.Media.Imaging;
 
 namespace MindForge
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         private Mutex mutex;
@@ -39,12 +31,12 @@ namespace MindForge
         {
             bool createdNew;
             string mutexName = "MindForge";
-            /*mutex = new Mutex(true, mutexName, out createdNew);
+            mutex = new Mutex(true, mutexName, out createdNew);
             if (!createdNew)
             {
                 WindowHelper.MaximizeWindow("MindForge");
                 this.Shutdown();
-            }*/
+            }
             InitialWindow initialWindow = new();
             initialWindow.Show();
         }

@@ -1,38 +1,18 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Extensions.DependencyInjection;
-using MindForge;
+﻿using MindForge;
 using MindForgeClasses;
 using MindForgeClient.Pages;
 using MindForgeClient.Pages.Chats;
 using MindForgeClient.Pages.Chats.Group;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
-using System.Diagnostics.Metrics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Shell;
 
 namespace MindForgeClient
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         internal ApplicationData applicationData;
@@ -177,6 +157,7 @@ namespace MindForgeClient
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SetProfileInformation();
+
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e) =>
@@ -244,7 +225,6 @@ namespace MindForgeClient
             var image = App.GetImageFromByteArray(applicationData.UserProfile.ImageByte);
             ProfileImage.Source = image;
             SetProfileImage(image);
-
         }
 
         private async void Logout(object sender, MouseButtonEventArgs e)

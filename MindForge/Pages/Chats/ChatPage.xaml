@@ -35,20 +35,21 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type classes:MessageGroup}">
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
+                            <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding DateString}" HorizontalAlignment="Center" Margin="4" FontSize="13" Loaded="DateString_Loaded"/>
+                            <StackPanel Orientation="Horizontal" Margin="0 3 0 3">
                                 <Image Width="30" Height="30" Margin="5" Source="pack://application:,,,/Images/MenuIcons/Chats/GoToChat.png" Loaded="Image_Loaded"/>
                                 <TextBlock Style="{StaticResource BasicTextBlock}" Text="{Binding SenderName}" FontWeight="Bold" Margin="5 0 0 0" VerticalAlignment="Center"/>
                             </StackPanel>
                             <ItemsControl ItemsSource="{Binding Messages}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate DataType="{x:Type classes:MessageInformation}">
-                                        <Grid Background="#252525" HorizontalAlignment="Left" Margin="0 3 0 3">
+                                        <Grid Background="#252525" HorizontalAlignment="Left" Margin="0 2 0 2">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition/>
                                                 <ColumnDefinition Width="50"/>
                                             </Grid.ColumnDefinitions>
                                             <TextBox Grid.Column="0" Style="{StaticResource Message}" Text="{Binding Message}" HorizontalAlignment="Left" Margin="5 5 0 5"/>
-                                            <TextBlock Grid.Column="1" Style="{StaticResource BasicTextBlock}" Margin="0 0 0 2" Text="{Binding DateTime}" FontSize="12" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Style="{StaticResource BasicTextBlock}" Margin="0 0 0 2" Text="{Binding Time}" FontSize="12" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

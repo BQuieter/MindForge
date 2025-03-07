@@ -1,29 +1,13 @@
 ﻿using MindForge;
 using MindForgeClasses;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MindForgeClient.Pages.FriendsPages
 {
-    /// <summary>
-    /// Логика взаимодействия для AddFriends.xaml
-    /// </summary>
     public partial class AddFriendsPage : Page
     {
         private HttpClient httpClient;

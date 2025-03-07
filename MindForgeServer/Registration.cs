@@ -13,7 +13,7 @@ namespace MindForgeServer
 {
     public class Registration
     {
-        static public async Task<object> Registrate(HttpContext context, MindForgeDbContext db)
+        static public async Task<object> Registrate(HttpContext context, MindForgeDbContext db, ITokenService tokenService)
         {
             var registrationInformation = await context.Request.ReadFromJsonAsync<UserLoginInformation>();
             if (registrationInformation == null)
@@ -28,7 +28,7 @@ namespace MindForgeServer
             if (!await CreateProfile(db,user))
                 return Results.Conflict(new ErrorResponse {ErrorCode = 409,Message = "Профиль не создан. Данный профиль пользовтеля существует"});
            
-            return Results.Ok(JwtTokenHelper.CreateJwtToken(user));
+            return Results.Ok(tokenService.GetJwtToken(user, tokenService));
         }
 
       

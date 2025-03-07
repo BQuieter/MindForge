@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using NAudio.Wave;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MindForgeClient
 {
@@ -19,7 +14,6 @@ namespace MindForgeClient
         {
             this.hubConnection = hubConnection;
         }
-
         public async Task StartStreamingAsync(int chatId)
         {
             this.chatId = chatId;
@@ -61,7 +55,6 @@ namespace MindForgeClient
                 waveIn.Dispose();
             }
         }
-
         private async void OnDataAvailable(object sender, WaveInEventArgs e)
         {
             if (CallHelper.isMuted)
@@ -77,8 +70,6 @@ namespace MindForgeClient
                 Console.WriteLine($"Error sending audio: {ex.Message}");
             }
         }
-
-
         public void StopStreaming()
         {
             cancellationTokenSource.Cancel();
